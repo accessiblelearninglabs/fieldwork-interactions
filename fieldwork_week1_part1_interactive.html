@@ -1,0 +1,425 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .fw-wrap {
+    font-family: 'Asap', sans-serif;
+    background: #ffffff;
+    color: #303e44;
+    padding: 32px 28px 28px;
+    max-width: 680px;
+  }
+
+  .fw-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #475f6a;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .fw-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #303e44;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    max-width: 480px;
+  }
+
+  /* GAP VISUAL */
+  .gap-visual {
+    position: relative;
+    height: 72px;
+    margin-bottom: 28px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f5f5f3;
+  }
+
+  .gap-policy {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: #475f6a;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    width: 46%;
+  }
+
+  .gap-practice {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    background: #d0d8da;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 14px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    width: 36%;
+  }
+
+  .gap-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .gap-policy .gap-label { color: #ffffff; }
+  .gap-practice .gap-label { color: #475f6a; }
+
+  .gap-middle {
+    position: absolute;
+    left: 46%; right: 36%;
+    top: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.6s cubic-bezier(.4,0,.2,1), right 0.6s cubic-bezier(.4,0,.2,1);
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .gap-middle-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #a0a8aa;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .gap-arrow {
+    font-size: 16px;
+    color: #b0bbbf;
+  }
+
+  /* PILLARS NAV */
+  .pillar-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .pillar-btn {
+    flex: 1;
+    padding: 9px 8px;
+    border: 1px solid #d4dce0;
+    background: #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Asap', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #7a9099;
+    transition: all 0.18s;
+    text-align: center;
+  }
+
+  .pillar-btn:hover { border-color: #475f6a; color: #475f6a; }
+
+  .pillar-btn.active-a { background: #475f6a; border-color: #475f6a; color: #ffffff; }
+  .pillar-btn.active-dj { background: #2d4a52; border-color: #2d4a52; color: #ffffff; }
+  .pillar-btn.active-el { background: #1e3540; border-color: #1e3540; color: #ffffff; }
+
+  /* PANEL */
+  .panel {
+    display: none;
+    animation: fadeUp 0.28s ease;
+  }
+  .panel.visible { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-key-sentence {
+    font-size: 15px;
+    font-style: italic;
+    color: #303e44;
+    line-height: 1.55;
+    border-left: 3px solid #475f6a;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border-radius: 0 4px 4px 0;
+    background: #f7f9fa;
+  }
+
+  .panel-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #3d5059;
+    margin-bottom: 16px;
+  }
+
+  /* KEYWORD CHIPS */
+  .keyword-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .kw-chip {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #c8d4d8;
+    color: #7a9099;
+    background: #f5f8f9;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .kw-chip.lit {
+    background: #475f6a;
+    border-color: #475f6a;
+    color: #ffffff;
+  }
+
+  /* CASE CALLOUT */
+  .case-callout {
+    border: 1px solid #d4dce0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    background: #f9fbfc;
+  }
+
+  .case-callout-label {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8fa8b2;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .case-callout-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #3d5059;
+  }
+
+  /* REFLECTION */
+  .reflection-box {
+    border: 1px dashed #b0c4cb;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 6px;
+  }
+
+  .reflection-label {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8fa8b2;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .reflection-q {
+    font-size: 14px;
+    font-style: italic;
+    color: #303e44;
+    line-height: 1.55;
+  }
+
+  /* STEP DOTS */
+  .step-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #d4dce0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .dot.active { background: #475f6a; transform: scale(1.3); }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    height: 2px;
+    background: #e8edef;
+    border-radius: 2px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: #475f6a;
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+
+</style>
+
+<div class="fw-wrap">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Interactive explainer: The policy-practice gap in accessibility, explored through three pillars — Accessibility, Disability Justice, and Emergent Learning.</h2>
+
+  <p class="fw-eyebrow">Fieldwork · Week 1, Part 1</p>
+  <p class="fw-title">The gap between policy and practice is not an accident — it is a design choice.</p>
+
+  <!-- GAP VISUAL -->
+  <div class="gap-visual" id="gap-vis">
+    <div class="gap-policy" id="gp"><span class="gap-label">Policy</span></div>
+    <div class="gap-middle" id="gm">
+      <span class="gap-arrow">↔</span>
+      <span class="gap-middle-label" id="gap-mid-label">The gap</span>
+    </div>
+    <div class="gap-practice" id="gpr"><span class="gap-label">Practice</span></div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="prog" style="width:33%"></div>
+  </div>
+
+  <!-- KEYWORD CHIPS -->
+  <div class="keyword-row" id="kw-row">
+    <span class="kw-chip" id="kw0">High-stakes environment</span>
+    <span class="kw-chip" id="kw1">Policy-practice gap</span>
+    <span class="kw-chip" id="kw2">Personal interest</span>
+    <span class="kw-chip" id="kw3">Systems of knowledge</span>
+    <span class="kw-chip" id="kw4">Problem identification</span>
+  </div>
+
+  <!-- PILLAR NAV -->
+  <div class="pillar-nav">
+    <button class="pillar-btn active-a" id="btn-a" onclick="showPanel(0)">Accessibility</button>
+    <button class="pillar-btn" id="btn-dj" onclick="showPanel(1)">Disability Justice</button>
+    <button class="pillar-btn" id="btn-el" onclick="showPanel(2)">Emergent Learning</button>
+  </div>
+
+  <!-- PANEL 0: ACCESSIBILITY -->
+  <div class="panel visible" id="panel-0">
+    <div class="panel-key-sentence">
+      Most learning systems can describe their accessibility commitments in policy but cannot demonstrate them in practice.
+    </div>
+    <p class="panel-body">
+      Every <strong>high-stakes environment</strong> — a university, a workplace training program, a professional certification body — has a published policy on accessibility. The policy is often well-written. It commits to equitable access, to removing barriers, to supporting every learner. And then a disabled student arrives on a Tuesday afternoon and finds the system has not been designed with them in mind.
+    </p>
+    <div class="case-callout">
+      <p class="case-callout-label">Access Ryerson — The case</p>
+      <p class="case-callout-text">Ryerson University (now Toronto Metropolitan University) was in full technical compliance with provincial accessibility law. Accommodations existed. Policies were published. And yet roughly two-thirds of students with disabilities never disclosed at all — because the disclosure process was itself a barrier. Compliance was being met. The <strong>systems of knowledge</strong> were not working for everyone.</p>
+    </div>
+    <div class="reflection-box">
+      <p class="reflection-label">Notice in your own context</p>
+      <p class="reflection-q">Where in your environment does the policy say the right things — but the lived experience tells a different story?</p>
+    </div>
+  </div>
+
+  <!-- PANEL 1: DISABILITY JUSTICE -->
+  <div class="panel" id="panel-1">
+    <div class="panel-key-sentence">
+      The environment you work in is not neutral — it was designed with particular bodies, minds, and experiences in mind, and those choices are still operating.
+    </div>
+    <p class="panel-body">
+      The <strong>policy-practice gap</strong> is not random. It traces the outline of the people whose participation was never assumed by the original designers. Disability justice asks us to stop asking what is wrong with the learner who is struggling, and start asking what is wrong with the system they are navigating.
+    </p>
+    <div class="case-callout">
+      <p class="case-callout-label">Access Ryerson — What they did</p>
+      <p class="case-callout-text">Rather than adding more accommodation pathways, the team conducted an environmental scan — examining the systems students were navigating, not the students themselves. Critically, disabled students led the working groups. They asked: <em>Where does the design assume a body or mind that not everyone has?</em> This is <strong>problem identification</strong> at the structural level.</p>
+    </div>
+    <div class="reflection-box">
+      <p class="reflection-label">Notice in your own context</p>
+      <p class="reflection-q">Who was not in the room when your environment was designed — and how do you see their absence in the system today?</p>
+    </div>
+  </div>
+
+  <!-- PANEL 2: EMERGENT LEARNING -->
+  <div class="panel" id="panel-2">
+    <div class="panel-key-sentence">
+      Your context is not just where you will apply the learning — it is the primary research site, and your own curiosity is the first instrument.
+    </div>
+    <p class="panel-body">
+      This is emergent learning: knowledge that arises from genuine contact with a real environment. It cannot be imported from another context. It must be grown where you are. Your <strong>personal interest</strong> in the gap you have already noticed — the friction, the thing that does not add up — is not a distraction. It is your first data point.
+    </p>
+    <div class="case-callout">
+      <p class="case-callout-label">Access Ryerson — What it reveals</p>
+      <p class="case-callout-text">The institution had to become the first instrument of its own inquiry. Until the team named the specific structural gap in their own <strong>high-stakes environment</strong>, inclusive design remained an aspiration. The environmental scan — grounded in <strong>personal interest</strong> and specific context — was what made the invisible visible.</p>
+    </div>
+    <div class="reflection-box">
+      <p class="reflection-label">Carry this forward</p>
+      <p class="reflection-q">Where does compliance end and genuine inclusion begin in your current practice? You don't need the answer yet. You just need to locate the gap.</p>
+    </div>
+  </div>
+
+  <!-- STEP DOTS -->
+  <div class="step-dots">
+    <div class="dot active" id="dot-0"></div>
+    <div class="dot" id="dot-1"></div>
+    <div class="dot" id="dot-2"></div>
+  </div>
+
+</div>
+
+<script>
+  var current = 0;
+
+  var gapStates = [
+    { policy: '46%', practice: '36%', midLeft: '46%', midRight: '36%', midLabel: 'The gap' },
+    { policy: '32%', practice: '28%', midLeft: '32%', midRight: '28%', midLabel: 'Design choices' },
+    { policy: '40%', practice: '42%', midLeft: '40%', midRight: '42%', midLabel: 'Your site' }
+  ];
+
+  var kwStates = [
+    [0, 1, 3],
+    [1, 4],
+    [0, 2, 3, 4]
+  ];
+
+  var progStates = ['33%', '66%', '100%'];
+
+  var btns = [
+    document.getElementById('btn-a'),
+    document.getElementById('btn-dj'),
+    document.getElementById('btn-el')
+  ];
+  var activeClasses = ['active-a', 'active-dj', 'active-el'];
+
+  function showPanel(idx) {
+    document.getElementById('panel-' + current).classList.remove('visible');
+    btns[current].classList.remove(activeClasses[current]);
+    document.getElementById('dot-' + current).classList.remove('active');
+
+    current = idx;
+
+    document.getElementById('panel-' + current).classList.add('visible');
+    btns[current].classList.add(activeClasses[current]);
+    document.getElementById('dot-' + current).classList.add('active');
+
+    var gs = gapStates[current];
+    document.getElementById('gp').style.width = gs.policy;
+    document.getElementById('gpr').style.width = gs.practice;
+    document.getElementById('gm').style.left = gs.midLeft;
+    document.getElementById('gm').style.right = gs.midRight;
+    document.getElementById('gap-mid-label').textContent = gs.midLabel;
+
+    document.getElementById('prog').style.width = progStates[current];
+
+    for (var i = 0; i < 5; i++) {
+      document.getElementById('kw' + i).classList.remove('lit');
+    }
+    var lit = kwStates[current];
+    for (var j = 0; j < lit.length; j++) {
+      document.getElementById('kw' + lit[j]).classList.add('lit');
+    }
+  }
+
+  showPanel(0);
+</script>
