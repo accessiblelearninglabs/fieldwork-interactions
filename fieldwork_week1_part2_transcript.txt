@@ -1,0 +1,132 @@
+FIELDWORK · WEEK 1, PART 2
+The Statement of Intent
+Accessible Learning Labs
+
+Full voiceover transcript — provided for accessibility.
+This transcript accompanies the interactive explainer at:
+accessiblelearninglabs.github.io/fieldwork-interactions/fieldwork_week1_part2_explainer.html
+
+---
+
+SEGMENT 1 — Opening
+
+A statement of intent is not a thesis.
+
+It is not a research question. It is not a plan, a hypothesis, or a prediction about what you will find.
+
+A statement of intent is something smaller and more honest than any of those things. It is a public declaration of what you are paying attention to, and why — specific enough that someone else could understand the territory you are working in, and open enough that what you find can still surprise you.
+
+Most of us skip this step. We move straight from a vague sense that something is wrong with a system to trying to fix it — without ever pausing to say, clearly and out loud: this is what I am looking at, this is my position in relation to it, and this is the context that makes it matter.
+
+This video is about that pause.
+
+---
+
+SEGMENT 2 — What it is not
+
+A statement of intent is not a thesis.
+
+It is not a research question. It is not a plan, a hypothesis, or a prediction about what you will find.
+
+It is something smaller and more honest: a public declaration of what you are paying attention to, and why — before you know what it means.
+
+Most of us skip this step. The temptation is to move straight from curiosity to conclusion — from noticing something to proposing a fix. The statement of intent is the pause in between.
+
+---
+
+SEGMENT 3 — The three elements
+
+A useful statement of intent has three elements. We call them phenomenon, point of view, and context.
+
+Each one does a specific kind of work. Together, they produce a statement that is precise enough to test — because you have named something specific — and open enough to change, because you have not yet decided what it means.
+
+---
+
+SEGMENT 4 — Element 1: Phenomenon
+
+Phenomenon is what you are observing. Not the problem you want to solve — the thing you have actually noticed. It is concrete. It is specific. It is something you could point to.
+
+A phenomenon is not "accessibility in higher education." That is a field. A phenomenon is: "In the institution I work in, captioning is required by policy but is not consistently applied in practice — and no one tracks the gap."
+
+That is something you can actually look at.
+
+---
+
+SEGMENT 5 — Element 2: Point of View
+
+Point of view is your relationship to what you are observing. Are you a designer inside this system, a facilitator who works across it, a researcher looking in from the outside?
+
+Your position shapes what you can see and what you might miss — naming it is not a confession of bias, it is an act of methodological honesty.
+
+Point of view is not "I care about accessibility." It is: "As a learning designer embedded in this department, I have access to the policy documents and the day-to-day experience of learners — but I may be too close to the system to see its assumptions clearly."
+
+---
+
+SEGMENT 6 — Element 3: Context
+
+Context is the specific environment — the institution, the program, the moment — that makes this inquiry matter right now.
+
+Context is what connects your phenomenon to the world outside your own curiosity. It answers the question: why does this need to be looked at here, and why now?
+
+Together, these three elements produce a statement that is precise enough to test and open enough to change.
+
+---
+
+SEGMENT 7 — Worked example
+
+Here is what that looks like in practice.
+
+Imagine a learning designer working in a mid-sized corporate training department. She has noticed something: their onboarding program includes a policy requiring all materials to be provided in accessible formats, but in practice, new employees who request alternative formats are told to wait — often past their first week on the job.
+
+She is not yet sure why. She has a few theories, but she has learned to hold them loosely.
+
+Her statement of intent might look like this:
+
+"I am investigating the gap between the accessible formats policy in our onboarding program and the actual experience of new employees who request alternatives. As a designer inside this system, I have shaped some of these materials myself — which means I have both useful access and real blank spots. This inquiry matters now because our department is about to scale the program to three new sites, and whatever is broken in the current design will be replicated at scale."
+
+Notice what that statement does. It names a specific phenomenon. It locates her position honestly. And it makes the stakes concrete.
+
+---
+
+SEGMENT 8 — Making it public
+
+We use the word public deliberately.
+
+A statement of intent kept in a private notebook is useful for your own thinking. A statement of intent shared with a colleague, a manager, a community, or a learner becomes something different — it becomes accountable.
+
+When you make your inquiry visible, you create the conditions for other people to add to it, challenge it, and redirect it toward what you might have missed.
+
+In inclusive design, that willingness is not just good research practice. It is an ethical position.
+
+---
+
+SEGMENT 9 — Your turn
+
+Your statement of intent does not need to be polished. It needs to be honest.
+
+Three to five sentences. A phenomenon you have actually observed. Your position in relation to it. The context that makes it matter.
+
+Write it. Share it with one person this week. Notice what they add.
+
+That is the beginning of practitioner-research. That is the beginning of Fieldwork.
+
+---
+
+SEGMENT 10 — Close
+
+Fieldwork is a 48-week series on accessibility, disability justice, and emergent learning, published by Accessible Learning Labs.
+
+Each week moves through three pillars — the legal infrastructure, the ethical compass, and the investigative method — that together make inclusive design a living practice rather than a static policy.
+
+This video is part of the Fieldwork playlist — a series of practical skills for inclusive learning designers.
+
+---
+
+END OF TRANSCRIPT
+
+Series: Fieldwork — Accessibility, Disability Justice, and Emergent Learning
+Publisher: Accessible Learning Labs
+Week: 1, Part 2
+Title: The Statement of Intent
+
+For questions about accessibility of this content, contact Accessible Learning Labs via accessiblelearninglabs.substack.com

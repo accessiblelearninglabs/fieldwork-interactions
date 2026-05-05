@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldwork · Week 1, Part 2 · The Statement of Intent</title>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --page-bg: #edf0f1;
+    --text: #303e44;
+    --accent: #475f6a;
+    --accent-light: #e4eaed;
+    --accent-mid: #b8ccd3;
+    --muted: #6b8490;
+    --font: 'Asap', sans-serif;
+    --slide-radius: 8px;
+    --duration: 18000;
+  }
+
+  html, body {
+    font-family: var(--font);
+    background: var(--page-bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP HEADER ── */
+  .site-header {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.7rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-header .series { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+  .site-header .title  { font-size: 13px; font-weight: 500; }
+
+  /* ── MAIN LAYOUT ── */
+  .stage {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 0;
+    min-height: calc(100vh - 44px);
+  }
+
+  /* ── LEFT: SLIDE PANEL ── */
+  .slide-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem 1.5rem 2rem;
+    gap: 1rem;
+  }
+
+  .slide-viewport {
+    position: relative;
+    background: var(--bg);
+    border-radius: var(--slide-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(48,62,68,0.10);
+    aspect-ratio: 16/9;
+    width: 100%;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .accent-bar { height: 5px; background: var(--accent); flex-shrink: 0; }
+
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1rem, 3vw, 2.5rem) clamp(1rem, 4vw, 3rem);
+  }
+  .slide-body.top { justify-content: flex-start; padding-top: clamp(0.75rem, 2vw, 1.5rem); }
+
+  .eyebrow {
+    font-size: clamp(8px, 1vw, 10px);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .headline {
+    font-size: clamp(14px, 2.8vw, 26px);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .headline.xl { font-size: clamp(18px, 4vw, 34px); }
+
+  .rule {
+    width: 32px; height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 0.6rem 0;
+  }
+
+  .sub {
+    font-size: clamp(10px, 1.6vw, 14px);
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .trio {
+    display: flex;
+    gap: clamp(4px, 0.8vw, 10px);
+    margin-top: clamp(0.5rem, 1.5vw, 1.25rem);
+  }
+  .trio-card {
+    flex: 1;
+    background: var(--accent-light);
+    border-radius: 5px;
+    padding: clamp(6px, 1vw, 12px);
+    border-left: 3px solid var(--accent);
+  }
+  .trio-card.on { background: var(--accent); border-left-color: transparent; }
+  .trio-card .tc-label {
+    font-size: clamp(8px, 0.9vw, 10px);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .trio-card.on .tc-label { color: rgba(255,255,255,0.8); }
+  .trio-card .tc-body { font-size: clamp(9px, 1vw, 11px); color: var(--text); line-height: 1.4; }
+  .trio-card.on .tc-body { color: #fff; }
+
+  .bq {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 5px 5px 0;
+    padding: clamp(6px, 1.2vw, 12px) clamp(8px, 1.5vw, 14px);
+    margin-top: clamp(0.5rem, 1.2vw, 1rem);
+    font-size: clamp(9px, 1.3vw, 12.5px);
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .ann {
+    display: inline-block;
+    font-size: clamp(7px, 0.8vw, 9px);
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--accent-mid);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-top: 3px;
+    font-style: normal;
+  }
+
+  .strikerow {
+    display: flex;
+    gap: clamp(6px, 1vw, 12px);
+    flex-wrap: wrap;
+    margin-top: clamp(0.4rem, 1vw, 0.8rem);
+  }
+  .strike {
+    font-size: clamp(10px, 1.5vw, 14px);
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(6px, 1vw, 12px);
+    margin-top: clamp(0.5rem, 1.2vw, 1rem);
+  }
+  .col-block {
+    background: var(--accent-light);
+    border-radius: 5px;
+    padding: clamp(6px, 1vw, 12px);
+  }
+  .col-block.dark { background: var(--accent); }
+  .col-block .cb-label {
+    font-size: clamp(8px, 0.9vw, 10px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .col-block.dark .cb-label { color: rgba(255,255,255,0.75); }
+  .col-block .cb-body { font-size: clamp(9px, 1.1vw, 12px); color: var(--text); line-height: 1.45; }
+  .col-block.dark .cb-body { color: #fff; }
+
+  .prompt-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(5px, 0.8vw, 10px);
+    margin-top: clamp(0.5rem, 1.2vw, 1rem);
+  }
+  .prompt-item { display: flex; align-items: flex-start; gap: 8px; }
+  .prompt-dot {
+    flex-shrink: 0; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--accent); margin-top: 4px;
+  }
+  .prompt-text { font-size: clamp(10px, 1.4vw, 13px); color: var(--text); line-height: 1.45; }
+
+  .end-word {
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.05;
+  }
+  .end-word span { color: var(--accent); }
+
+  .slide-footer {
+    padding: clamp(4px, 0.8vw, 8px) clamp(1rem, 3vw, 2.5rem);
+    border-top: 1px solid var(--accent-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .sf-series { font-size: clamp(7px, 0.9vw, 9px); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .sf-num    { font-size: clamp(8px, 1vw, 10px); color: var(--muted); font-weight: 500; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    height: 4px;
+    background: var(--accent-light);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.25s linear;
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ctrl-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s;
+  }
+  .ctrl-btn:disabled { opacity: 0.35; cursor: default; }
+  .ctrl-btn.pause-btn { background: var(--bg); color: var(--accent); border: 1.5px solid var(--accent); min-width: 78px; }
+
+  .dot-row { display: flex; gap: 5px; flex: 1; justify-content: center; }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-mid); cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .dot.on { background: var(--accent); transform: scale(1.3); }
+
+  .slide-counter { font-size: 12px; color: var(--muted); min-width: 40px; text-align: right; }
+
+  /* ── RIGHT: SCRIPT PANEL ── */
+  .script-panel {
+    background: var(--text);
+    color: #e8eef1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.75rem 1.5rem;
+    gap: 1rem;
+    min-height: calc(100vh - 44px);
+  }
+
+  .script-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 0.25rem;
+  }
+
+  .script-segment-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-mid);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .script-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #d6e0e4;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+
+  .script-text p { margin-bottom: 1rem; }
+  .script-text p:last-child { margin-bottom: 0; }
+
+  .script-text em {
+    font-style: italic;
+    color: #b8ccd3;
+  }
+
+  .script-text strong {
+    font-weight: 600;
+    color: #e8eef1;
+  }
+
+  .script-note {
+    font-size: 11px;
+    color: var(--accent-mid);
+    line-height: 1.5;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-style: italic;
+  }
+
+  /* scrollbar for script */
+  .script-text::-webkit-scrollbar { width: 4px; }
+  .script-text::-webkit-scrollbar-track { background: transparent; }
+  .script-text::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .stage { grid-template-columns: 1fr; }
+    .script-panel { min-height: auto; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="series">Fieldwork · Accessible Learning Labs</span>
+  <span class="title">Week 1, Part 2 · The Statement of Intent</span>
+</header>
+
+<div class="stage">
+
+  <!-- ═══ LEFT: SLIDES ═══ -->
+  <div class="slide-panel">
+
+    <div class="slide-viewport" id="viewport">
+
+      <!-- SLIDE 1 -->
+      <div class="slide active" id="slide-0">
+        <div class="accent-bar"></div>
+        <div class="slide-body">
+          <div class="eyebrow">Fieldwork · Week 1, Part 2 · Accessible Learning Labs</div>
+          <div class="headline xl">The Statement<br>of Intent</div>
+          <div class="rule"></div>
+          <div class="sub">How to translate a broad curiosity into a concrete public inquiry — precise enough to test, open enough to change.</div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">1 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="slide" id="slide-1">
+        <div class="accent-bar"></div>
+        <div class="slide-body">
+          <div class="eyebrow">What a statement of intent is not</div>
+          <div class="headline">A statement of intent<br>is not a thesis.</div>
+          <div class="rule"></div>
+          <div class="sub" style="margin-bottom: 0.75rem;">Not a research question. Not a plan. Not a prediction.</div>
+          <div class="strikerow">
+            <span class="strike">Thesis</span>
+            <span style="color:var(--muted);font-size:13px">·</span>
+            <span class="strike">Hypothesis</span>
+            <span style="color:var(--muted);font-size:13px">·</span>
+            <span class="strike">Plan</span>
+            <span style="color:var(--muted);font-size:13px">·</span>
+            <span class="strike">Prediction</span>
+          </div>
+          <div style="margin-top:0.9rem;font-size:clamp(10px,1.5vw,13px);line-height:1.6;color:var(--text);">
+            It is something smaller and more honest: a public declaration of what you are paying attention to, and why — before you know what it means.
+          </div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">2 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="slide" id="slide-2">
+        <div class="accent-bar"></div>
+        <div class="slide-body">
+          <div class="eyebrow">The three elements</div>
+          <div class="headline">Three elements.<br>One intention.</div>
+          <div class="trio">
+            <div class="trio-card">
+              <div class="tc-label">Phenomenon</div>
+              <div class="tc-body">What you have actually noticed</div>
+            </div>
+            <div class="trio-card">
+              <div class="tc-label">Point of View</div>
+              <div class="tc-body">Your relationship to what you see</div>
+            </div>
+            <div class="trio-card">
+              <div class="tc-label">Context</div>
+              <div class="tc-body">Why here, and why now</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">3 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="slide" id="slide-3">
+        <div class="accent-bar"></div>
+        <div class="slide-body top">
+          <div class="trio" style="margin-top:0;margin-bottom:clamp(0.5rem,1.2vw,1rem);">
+            <div class="trio-card on"><div class="tc-label">Phenomenon</div></div>
+            <div class="trio-card"><div class="tc-label">Point of View</div></div>
+            <div class="trio-card"><div class="tc-label">Context</div></div>
+          </div>
+          <div class="eyebrow">Element 1</div>
+          <div class="headline">What you have actually noticed.</div>
+          <div class="sub" style="margin-top:0.3rem;">Not the problem you want to solve — the thing you can point to. Concrete. Specific. Observable.</div>
+          <div class="bq">"Captioning is required by policy but is not consistently applied in practice — and no one tracks the gap."</div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">4 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 -->
+      <div class="slide" id="slide-4">
+        <div class="accent-bar"></div>
+        <div class="slide-body top">
+          <div class="trio" style="margin-top:0;margin-bottom:clamp(0.5rem,1.2vw,1rem);">
+            <div class="trio-card"><div class="tc-label">Phenomenon</div></div>
+            <div class="trio-card on"><div class="tc-label">Point of View</div></div>
+            <div class="trio-card"><div class="tc-label">Context</div></div>
+          </div>
+          <div class="eyebrow">Element 2</div>
+          <div class="headline">Your relationship to what you are observing.</div>
+          <div class="sub" style="margin-top:0.3rem;">Naming it is not a confession of bias — it is an act of methodological honesty.</div>
+          <div class="bq">"As a learning designer embedded in this department, I may be too close to the system to see its assumptions clearly."</div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">5 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 -->
+      <div class="slide" id="slide-5">
+        <div class="accent-bar"></div>
+        <div class="slide-body top">
+          <div class="trio" style="margin-top:0;margin-bottom:clamp(0.5rem,1.2vw,1rem);">
+            <div class="trio-card"><div class="tc-label">Phenomenon</div></div>
+            <div class="trio-card"><div class="tc-label">Point of View</div></div>
+            <div class="trio-card on"><div class="tc-label">Context</div></div>
+          </div>
+          <div class="eyebrow">Element 3</div>
+          <div class="headline">Why here, and why now.</div>
+          <div class="sub" style="margin-top:0.3rem;">The environment that makes this inquiry matter — connecting your phenomenon to the world beyond your own curiosity.</div>
+          <div class="bq">"This inquiry matters now because our department is about to scale the program to three new sites, and whatever is broken will be replicated at scale."</div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">6 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 -->
+      <div class="slide" id="slide-6">
+        <div class="accent-bar"></div>
+        <div class="slide-body top">
+          <div class="eyebrow">Worked example — what it looks like together</div>
+          <div class="headline" style="font-size:clamp(13px,2.2vw,18px);">A statement in three parts.</div>
+          <div class="bq" style="margin-top:0.6rem;font-size:clamp(9px,1.3vw,12px);">
+            "I am investigating the gap between the accessible formats policy in our onboarding program and the actual experience of new employees who request alternatives.
+            <div style="margin-top:3px;"><span class="ann">Phenomenon</span></div>
+            As a designer inside this system, I have shaped some of these materials myself — which means I have both useful access and real blank spots.
+            <div style="margin-top:3px;"><span class="ann">Point of view</span></div>
+            This inquiry matters now because our department is about to scale the program to three new sites, and whatever is broken in the current design will be replicated at scale."
+            <div style="margin-top:3px;"><span class="ann">Context</span></div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">7 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 8 -->
+      <div class="slide" id="slide-7">
+        <div class="accent-bar"></div>
+        <div class="slide-body">
+          <div class="eyebrow">What makes it a statement of intent</div>
+          <div class="headline">Make it visible.</div>
+          <div class="rule"></div>
+          <div class="two-col">
+            <div class="col-block">
+              <div class="cb-label">Kept private</div>
+              <div class="cb-body">Useful for your own thinking. Stays yours.</div>
+            </div>
+            <div class="col-block dark">
+              <div class="cb-label">Made public</div>
+              <div class="cb-body">Becomes accountable. Invites others in. Changes through contact.</div>
+            </div>
+          </div>
+          <div style="margin-top:0.9rem;font-size:clamp(9px,1.4vw,12px);color:var(--muted);line-height:1.55;">
+            In inclusive design, that willingness is not just good research practice. It is an ethical position.
+          </div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">8 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 9 -->
+      <div class="slide" id="slide-8">
+        <div class="accent-bar"></div>
+        <div class="slide-body">
+          <div class="eyebrow">Your turn</div>
+          <div class="headline">Three to five sentences.<br>Write it. Share it.</div>
+          <div class="prompt-list">
+            <div class="prompt-item">
+              <div class="prompt-dot"></div>
+              <div class="prompt-text">A phenomenon you have actually observed.</div>
+            </div>
+            <div class="prompt-item">
+              <div class="prompt-dot"></div>
+              <div class="prompt-text">Your position in relation to it — including what you might not be able to see from where you stand.</div>
+            </div>
+            <div class="prompt-item">
+              <div class="prompt-dot"></div>
+              <div class="prompt-text">The context that makes it matter here, and now.</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem;font-size:clamp(9px,1.4vw,12px);color:var(--muted);line-height:1.5;font-style:italic;">
+            Share it with one person this week. Notice what they add.
+          </div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">9 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 10 -->
+      <div class="slide" id="slide-9">
+        <div class="accent-bar"></div>
+        <div class="slide-body">
+          <div class="eyebrow">Accessible Learning Labs</div>
+          <div class="end-word">Field<span>work</span></div>
+          <div class="rule"></div>
+          <div class="sub">Accessibility · Disability Justice · Emergent Learning</div>
+          <div style="margin-top:1.25rem;font-size:clamp(10px,1.5vw,13px);color:var(--muted);line-height:1.55;">
+            This video is part of the Fieldwork playlist — a series of practical skills for inclusive learning designers.
+          </div>
+        </div>
+        <div class="slide-footer">
+          <span class="sf-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+          <span class="sf-num">10 / 10</span>
+        </div>
+      </div>
+
+    </div><!-- /viewport -->
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="ctrl-btn" id="prev-btn" onclick="prevSlide()" disabled>← Prev</button>
+      <div class="dot-row" id="dot-row"></div>
+      <button class="ctrl-btn pause-btn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+      <button class="ctrl-btn" id="next-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+  </div><!-- /slide-panel -->
+
+  <!-- ═══ RIGHT: SCRIPT ═══ -->
+  <div class="script-panel">
+    <div class="script-label">Voiceover script</div>
+    <div class="script-segment-title" id="script-segment">Opening</div>
+    <div class="script-text" id="script-text">
+      <p>A statement of intent is not a thesis.</p>
+      <p>It is not a research question. It is not a plan, a hypothesis, or a prediction about what you will find.</p>
+      <p>A statement of intent is something smaller and more honest than any of those things. It is a public declaration of what you are paying attention to, and why — specific enough that someone else could understand the territory you are working in, and open enough that what you find can still surprise you.</p>
+      <p>Most of us skip this step. We move straight from a vague sense that something is wrong with a system to trying to fix it — without ever pausing to say, clearly and out loud: <em>this is what I am looking at, this is my position in relation to it, and this is the context that makes it matter.</em></p>
+      <p>This video is about that pause.</p>
+    </div>
+    <div class="script-note" id="script-note">Transcript provided for accessibility. Full transcript available as a text file alongside this video.</div>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+var SLIDES = [
+  {
+    segment: 'Opening',
+    duration: 22000,
+    script: `<p>A statement of intent is not a thesis.</p>
+<p>It is not a research question. It is not a plan, a hypothesis, or a prediction about what you will find.</p>
+<p>A statement of intent is something smaller and more honest than any of those things. It is a public declaration of what you are paying attention to, and why — specific enough that someone else could understand the territory you are working in, and open enough that what you find can still surprise you.</p>
+<p>Most of us skip this step. We move straight from a vague sense that something is wrong with a system to trying to fix it — without ever pausing to say, clearly and out loud: <em>this is what I am looking at, this is my position in relation to it, and this is the context that makes it matter.</em></p>
+<p>This video is about that pause.</p>`
+  },
+  {
+    segment: 'What it is not',
+    duration: 20000,
+    script: `<p>A statement of intent is not a thesis.</p>
+<p>It is not a research question. It is not a plan, a hypothesis, or a prediction about what you will find.</p>
+<p>It is something smaller and more honest: a public declaration of what you are paying attention to, and why — <strong>before you know what it means.</strong></p>
+<p>Most of us skip this step. The temptation is to move straight from curiosity to conclusion — from noticing something to proposing a fix. The statement of intent is the pause in between.</p>`
+  },
+  {
+    segment: 'The three elements',
+    duration: 18000,
+    script: `<p>A useful statement of intent has three elements. We call them <strong>phenomenon</strong>, <strong>point of view</strong>, and <strong>context</strong>.</p>
+<p>Each one does a specific kind of work. Together, they produce a statement that is precise enough to test — because you have named something specific — and open enough to change, because you have not yet decided what it means.</p>`
+  },
+  {
+    segment: 'Element 1 — Phenomenon',
+    duration: 22000,
+    script: `<p><strong>Phenomenon</strong> is what you are observing. Not the problem you want to solve — the thing you have actually noticed. It is concrete. It is specific. It is something you could point to.</p>
+<p>A phenomenon is not <em>"accessibility in higher education."</em> That is a field. A phenomenon is: <em>"In the institution I work in, captioning is required by policy but is not consistently applied in practice — and no one tracks the gap."</em></p>
+<p>That is something you can actually look at.</p>`
+  },
+  {
+    segment: 'Element 2 — Point of View',
+    duration: 22000,
+    script: `<p><strong>Point of view</strong> is your relationship to what you are observing. Are you a designer inside this system, a facilitator who works across it, a researcher looking in from the outside?</p>
+<p>Your position shapes what you can see and what you might miss — naming it is not a confession of bias, it is an act of methodological honesty.</p>
+<p>Point of view is not <em>"I care about accessibility."</em> It is: <em>"As a learning designer embedded in this department, I have access to the policy documents and the day-to-day experience of learners — but I may be too close to the system to see its assumptions clearly."</em></p>`
+  },
+  {
+    segment: 'Element 3 — Context',
+    duration: 20000,
+    script: `<p><strong>Context</strong> is the specific environment — the institution, the program, the moment — that makes this inquiry matter right now.</p>
+<p>Context is what connects your phenomenon to the world outside your own curiosity. It answers the question: <em>why does this need to be looked at here, and why now?</em></p>
+<p>Together, these three elements produce a statement that is precise enough to test and open enough to change.</p>`
+  },
+  {
+    segment: 'Worked example',
+    duration: 28000,
+    script: `<p>Here is what that looks like in practice.</p>
+<p>Imagine a learning designer working in a mid-sized corporate training department. She has noticed something: their onboarding program includes a policy requiring all materials to be provided in accessible formats, but in practice, new employees who request alternative formats are told to wait — often past their first week on the job.</p>
+<p>She is not yet sure why. She has a few theories, but she has learned to hold them loosely.</p>
+<p>Her statement of intent might look like this: <em>"I am investigating the gap between the accessible formats policy in our onboarding program and the actual experience of new employees who request alternatives. As a designer inside this system, I have shaped some of these materials myself — which means I have both useful access and real blank spots. This inquiry matters now because our department is about to scale the program to three new sites, and whatever is broken in the current design will be replicated at scale."</em></p>
+<p>Notice what that statement does. It names a specific phenomenon. It locates her position honestly. And it makes the stakes concrete.</p>`
+  },
+  {
+    segment: 'Making it public',
+    duration: 20000,
+    script: `<p>We use the word <em>public</em> deliberately.</p>
+<p>A statement of intent kept in a private notebook is useful for your own thinking. A statement of intent shared with a colleague, a manager, a community, or a learner becomes something different — it becomes <strong>accountable</strong>.</p>
+<p>When you make your inquiry visible, you create the conditions for other people to add to it, challenge it, and redirect it toward what you might have missed.</p>
+<p>In inclusive design, that willingness is not just good research practice. It is an ethical position.</p>`
+  },
+  {
+    segment: 'Your turn',
+    duration: 18000,
+    script: `<p>Your statement of intent does not need to be polished. It needs to be honest.</p>
+<p>Three to five sentences. A phenomenon you have actually observed. Your position in relation to it. The context that makes it matter.</p>
+<p>Write it. Share it with one person this week. Notice what they add.</p>
+<p>That is the beginning of practitioner-research. That is the beginning of Fieldwork.</p>`
+  },
+  {
+    segment: 'Close',
+    duration: 15000,
+    script: `<p>Fieldwork is a 48-week series on accessibility, disability justice, and emergent learning, published by Accessible Learning Labs.</p>
+<p>Each week moves through three pillars — the legal infrastructure, the ethical compass, and the investigative method — that together make inclusive design a living practice rather than a static policy.</p>
+<p>This video is part of the Fieldwork playlist — a series of practical skills for inclusive learning designers.</p>`
+  }
+];
+
+var current = 0;
+var paused = false;
+var timer = null;
+var startTime = null;
+var elapsed = 0;
+var progressFrame = null;
+
+var dotRow = document.getElementById('dot-row');
+SLIDES.forEach(function(_, i) {
+  var d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' on' : '');
+  d.onclick = (function(n){ return function(){ goTo(n, true); }; })(i);
+  dotRow.appendChild(d);
+});
+
+function updateUI() {
+  document.getElementById('script-segment').textContent = SLIDES[current].segment;
+  document.getElementById('script-text').innerHTML = SLIDES[current].script;
+  document.querySelectorAll('.slide').forEach(function(s, i) {
+    s.classList.toggle('active', i === current);
+  });
+  document.querySelectorAll('.dot').forEach(function(d, i) {
+    d.classList.toggle('on', i === current);
+  });
+  document.getElementById('prev-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = current === SLIDES.length - 1;
+  document.getElementById('progress-bar').style.width = '0%';
+  document.getElementById('script-text').scrollTop = 0;
+}
+
+function startTimer() {
+  clearTimeout(timer);
+  cancelAnimationFrame(progressFrame);
+  if (paused) return;
+  startTime = Date.now() - elapsed;
+  var dur = SLIDES[current].duration;
+  var bar = document.getElementById('progress-bar');
+
+  function tick() {
+    if (paused) return;
+    var pct = Math.min(100, ((Date.now() - startTime) / dur) * 100);
+    bar.style.width = pct + '%';
+    if (pct < 100) {
+      progressFrame = requestAnimationFrame(tick);
+    }
+  }
+  progressFrame = requestAnimationFrame(tick);
+
+  timer = setTimeout(function() {
+    if (!paused && current < SLIDES.length - 1) {
+      elapsed = 0;
+      goTo(current + 1, false);
+    }
+  }, dur - elapsed);
+}
+
+function goTo(n, manual) {
+  if (manual) { elapsed = 0; }
+  clearTimeout(timer);
+  cancelAnimationFrame(progressFrame);
+  current = n;
+  updateUI();
+  if (!paused) startTimer();
+}
+
+function nextSlide() {
+  if (current < SLIDES.length - 1) { elapsed = 0; goTo(current + 1, true); }
+}
+function prevSlide() {
+  if (current > 0) { elapsed = 0; goTo(current - 1, true); }
+}
+
+function togglePause() {
+  paused = !paused;
+  var btn = document.getElementById('pause-btn');
+  if (paused) {
+    clearTimeout(timer);
+    cancelAnimationFrame(progressFrame);
+    elapsed = Date.now() - startTime;
+    btn.textContent = '▶ Resume';
+  } else {
+    btn.textContent = '⏸ Pause';
+    startTimer();
+  }
+}
+
+updateUI();
+startTimer();
+</script>
+
+</body>
+</html>
