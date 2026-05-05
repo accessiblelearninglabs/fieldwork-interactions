@@ -1,0 +1,661 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --text: #303e44;
+    --accent: #475f6a;
+    --accent-light: #e8eef1;
+    --accent-mid: #c2d0d6;
+    --muted: #6b8490;
+    --pill-bg: #303e44;
+    --pill-text: #ffffff;
+    --font: 'Asap', sans-serif;
+  }
+
+  #deck-wrap {
+    font-family: var(--font);
+    color: var(--text);
+    background: #f0f2f3;
+    padding: 1.5rem 1rem;
+    min-height: 500px;
+  }
+
+  .slide-frame {
+    background: var(--bg);
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    aspect-ratio: 16/9;
+    display: none;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  .slide-frame.active { display: flex; }
+
+  .slide-accent-bar {
+    height: 5px;
+    background: var(--accent);
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 3rem;
+  }
+
+  .slide-body.padded-top { padding-top: 2rem; padding-bottom: 1.5rem; justify-content: flex-start; }
+
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .slide-headline {
+    font-size: clamp(18px, 3.5vw, 28px);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .slide-headline.large {
+    font-size: clamp(22px, 4.5vw, 36px);
+    line-height: 1.15;
+  }
+
+  .slide-sub {
+    font-size: clamp(12px, 2vw, 15px);
+    color: var(--muted);
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  .slide-rule {
+    width: 36px;
+    height: 3px;
+    background: var(--accent);
+    margin: 1rem 0;
+    border-radius: 2px;
+  }
+
+  .trio {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .trio-item {
+    flex: 1;
+    background: var(--accent-light);
+    border-radius: 6px;
+    padding: 0.85rem 0.9rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  .trio-item.active-item {
+    background: var(--accent);
+  }
+
+  .trio-item.active-item .trio-label,
+  .trio-item.active-item .trio-body {
+    color: #ffffff;
+  }
+
+  .trio-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .trio-body {
+    font-size: 11.5px;
+    color: var(--text);
+    line-height: 1.45;
+  }
+
+  .pill {
+    display: inline-block;
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 0.75rem 1rem;
+    background: var(--accent-light);
+    border-radius: 0 6px 6px 0;
+    margin-top: 1.25rem;
+    font-size: clamp(11px, 1.8vw, 13.5px);
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .annotation-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+  }
+
+  .ann-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent-mid);
+    color: var(--accent);
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: clamp(11px, 1.8vw, 13px);
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .col-block {
+    background: var(--accent-light);
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+  }
+
+  .col-block .col-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .col-block .col-body {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .col-block.dark {
+    background: var(--accent);
+  }
+
+  .col-block.dark .col-label,
+  .col-block.dark .col-body {
+    color: #fff;
+  }
+
+  .slide-footer {
+    padding: 0.6rem 3rem;
+    border-top: 1px solid var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .footer-series {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-num {
+    font-size: 9px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .nav-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 18px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-btn:disabled {
+    background: var(--accent-mid);
+    cursor: default;
+  }
+
+  .nav-counter {
+    font-family: var(--font);
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .dot-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 0.5rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-mid);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .dot.on { background: var(--accent); }
+
+  .word-cross {
+    position: relative;
+    display: inline-block;
+    color: var(--muted);
+  }
+  .word-cross::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 2px;
+    background: var(--accent);
+    transform: translateY(-50%);
+  }
+
+  .big-prompt {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 1.25rem;
+  }
+
+  .prompt-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .prompt-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 5px;
+  }
+
+  .prompt-text {
+    font-size: clamp(12px, 1.9vw, 14px);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .end-logo {
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .end-logo span { color: var(--accent); }
+</style>
+
+<div id="deck-wrap">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide-frame active" id="slide-1">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body">
+      <div class="eyebrow">Fieldwork · Week 1, Part 2 · Accessible Learning Labs</div>
+      <div class="slide-headline large">The Statement<br>of Intent</div>
+      <div class="slide-rule"></div>
+      <div class="slide-sub">How to translate a broad curiosity into a concrete public inquiry — precise enough to test, open enough to change.</div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">1 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: What it is not -->
+  <div class="slide-frame" id="slide-2">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body">
+      <div class="eyebrow">What a statement of intent is not</div>
+      <div class="slide-headline">A statement of intent<br>is not a thesis.</div>
+      <div class="slide-rule"></div>
+      <div class="slide-sub" style="margin-bottom: 1.25rem;">Not a research question. Not a plan. Not a prediction.</div>
+      <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <span style="font-size: 13px; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px;">Thesis</span>
+        <span style="font-size: 13px; color: var(--muted);">·</span>
+        <span style="font-size: 13px; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px;">Hypothesis</span>
+        <span style="font-size: 13px; color: var(--muted);">·</span>
+        <span style="font-size: 13px; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px;">Plan</span>
+        <span style="font-size: 13px; color: var(--muted);">·</span>
+        <span style="font-size: 13px; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px;">Prediction</span>
+      </div>
+      <div style="margin-top: 1.25rem; font-size: clamp(12px, 1.9vw, 14px); color: var(--text); line-height: 1.6;">
+        It is something smaller and more honest: a public declaration of what you are paying attention to, and why — before you know what it means.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">2 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Three elements overview -->
+  <div class="slide-frame" id="slide-3">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body">
+      <div class="eyebrow">The three elements</div>
+      <div class="slide-headline">Three elements.<br>One intention.</div>
+      <div class="trio">
+        <div class="trio-item">
+          <div class="trio-label">Phenomenon</div>
+          <div class="trio-body">What you have actually noticed</div>
+        </div>
+        <div class="trio-item">
+          <div class="trio-label">Point of View</div>
+          <div class="trio-body">Your relationship to what you see</div>
+        </div>
+        <div class="trio-item">
+          <div class="trio-label">Context</div>
+          <div class="trio-body">Why here, and why now</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">3 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Phenomenon -->
+  <div class="slide-frame" id="slide-4">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body padded-top">
+      <div class="trio" style="margin-top: 0; margin-bottom: 1.25rem;">
+        <div class="trio-item active-item">
+          <div class="trio-label">Phenomenon</div>
+        </div>
+        <div class="trio-item">
+          <div class="trio-label">Point of View</div>
+        </div>
+        <div class="trio-item">
+          <div class="trio-label">Context</div>
+        </div>
+      </div>
+      <div class="eyebrow">Element 1</div>
+      <div class="slide-headline">What you have actually noticed.</div>
+      <div class="slide-sub" style="margin-top: 0.5rem;">Not the problem you want to solve — the thing you can point to. Concrete. Specific. Observable.</div>
+      <div class="blockquote">
+        "Captioning is required by policy but is not consistently applied in practice — and no one tracks the gap."
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">4 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Point of View -->
+  <div class="slide-frame" id="slide-5">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body padded-top">
+      <div class="trio" style="margin-top: 0; margin-bottom: 1.25rem;">
+        <div class="trio-item">
+          <div class="trio-label">Phenomenon</div>
+        </div>
+        <div class="trio-item active-item">
+          <div class="trio-label">Point of View</div>
+        </div>
+        <div class="trio-item">
+          <div class="trio-label">Context</div>
+        </div>
+      </div>
+      <div class="eyebrow">Element 2</div>
+      <div class="slide-headline">Your relationship to what you are observing.</div>
+      <div class="slide-sub" style="margin-top: 0.5rem;">Naming it is not a confession of bias — it is an act of methodological honesty.</div>
+      <div class="blockquote">
+        "As a learning designer embedded in this department, I have access to the policy documents and the day-to-day experience of learners — but I may be too close to the system to see its assumptions clearly."
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">5 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Context -->
+  <div class="slide-frame" id="slide-6">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body padded-top">
+      <div class="trio" style="margin-top: 0; margin-bottom: 1.25rem;">
+        <div class="trio-item">
+          <div class="trio-label">Phenomenon</div>
+        </div>
+        <div class="trio-item">
+          <div class="trio-label">Point of View</div>
+        </div>
+        <div class="trio-item active-item">
+          <div class="trio-label">Context</div>
+        </div>
+      </div>
+      <div class="eyebrow">Element 3</div>
+      <div class="slide-headline">Why here, and why now.</div>
+      <div class="slide-sub" style="margin-top: 0.5rem;">The environment that makes this inquiry matter — connecting your phenomenon to the world outside your own curiosity.</div>
+      <div class="blockquote">
+        "This inquiry matters now because our department is about to scale the program to three new sites, and whatever is broken in the current design will be replicated at scale."
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">6 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Worked example full -->
+  <div class="slide-frame" id="slide-7">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body padded-top">
+      <div class="eyebrow">Worked example — what it looks like together</div>
+      <div class="slide-headline" style="font-size: clamp(15px, 2.5vw, 19px);">A statement in three parts.</div>
+      <div class="blockquote" style="margin-top: 0.9rem; font-size: clamp(10px, 1.6vw, 12.5px);">
+        "I am investigating the gap between the accessible formats policy in our onboarding program and the actual experience of new employees who request alternatives.
+        <div class="annotation-row"><span class="ann-tag">Phenomenon</span></div>
+        As a designer inside this system, I have shaped some of these materials myself — which means I have both useful access and real blank spots.
+        <div class="annotation-row"><span class="ann-tag">Point of view</span></div>
+        This inquiry matters now because our department is about to scale the program to three new sites, and whatever is broken in the current design will be replicated at scale."
+        <div class="annotation-row"><span class="ann-tag">Context</span></div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">7 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Make it public -->
+  <div class="slide-frame" id="slide-8">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body">
+      <div class="eyebrow">What makes it a statement of intent</div>
+      <div class="slide-headline">Make it visible.</div>
+      <div class="slide-rule"></div>
+      <div class="two-col">
+        <div class="col-block">
+          <div class="col-label">Kept private</div>
+          <div class="col-body">Useful for your own thinking. Stays yours.</div>
+        </div>
+        <div class="col-block dark">
+          <div class="col-label">Made public</div>
+          <div class="col-body">Becomes accountable. Invites others in. Changes through contact.</div>
+        </div>
+      </div>
+      <div style="margin-top: 1.1rem; font-size: clamp(11px, 1.8vw, 13px); color: var(--muted); line-height: 1.55;">
+        In inclusive design, that willingness is not just good research practice. It is an ethical position.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">8 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Your turn -->
+  <div class="slide-frame" id="slide-9">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body">
+      <div class="eyebrow">Your turn</div>
+      <div class="slide-headline">Three to five sentences.<br>Write it. Share it.</div>
+      <div class="big-prompt">
+        <div class="prompt-item">
+          <div class="prompt-dot"></div>
+          <div class="prompt-text">A phenomenon you have actually observed.</div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-dot"></div>
+          <div class="prompt-text">Your position in relation to it — including what you might not be able to see from where you stand.</div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-dot"></div>
+          <div class="prompt-text">The context that makes it matter here, and now.</div>
+        </div>
+      </div>
+      <div style="margin-top: 1.25rem; font-size: clamp(11px, 1.8vw, 13px); color: var(--muted); line-height: 1.5; font-style: italic;">
+        Share it with one person this week. Notice what they add.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">9 / 10</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Close -->
+  <div class="slide-frame" id="slide-10">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-body" style="justify-content: center; align-items: flex-start;">
+      <div class="eyebrow">Accessible Learning Labs</div>
+      <div class="end-logo">Field<span>work</span></div>
+      <div class="slide-rule"></div>
+      <div class="slide-sub" style="max-width: 380px;">Accessibility · Disability Justice · Emergent Learning</div>
+      <div style="margin-top: 1.5rem; font-size: clamp(11px, 1.8vw, 13px); color: var(--muted); line-height: 1.55;">
+        This video is part of the Fieldwork playlist — a series of practical skills for inclusive learning designers.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="footer-series">Fieldwork Playlist · Practical skills for inclusive learning designers</span>
+      <span class="footer-num">10 / 10</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="nav-row">
+    <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>← Prev</button>
+    <span class="nav-counter" id="nav-counter">1 / 10</span>
+    <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next →</button>
+  </div>
+  <div class="dot-row" id="dot-row"></div>
+
+</div>
+
+<script>
+  var total = 10;
+  var current = 1;
+
+  var dotRow = document.getElementById('dot-row');
+  for (var i = 1; i <= total; i++) {
+    var d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' on' : '');
+    d.setAttribute('data-n', i);
+    d.onclick = (function(n){ return function(){ goTo(n); }; })(i);
+    dotRow.appendChild(d);
+  }
+
+  function goTo(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    document.querySelectorAll('.dot')[current-1].classList.remove('on');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    document.querySelectorAll('.dot')[current-1].classList.add('on');
+    document.getElementById('nav-counter').textContent = current + ' / ' + total;
+    document.getElementById('prev-btn').disabled = current === 1;
+    document.getElementById('next-btn').disabled = current === total;
+  }
+
+  function changeSlide(dir) {
+    var next = current + dir;
+    if (next >= 1 && next <= total) goTo(next);
+  }
+</script>
