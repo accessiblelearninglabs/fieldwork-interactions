@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldwork — Inclusive Audit Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=ASAP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand-dark: #303e44;
+  --brand-mid: #475f6a;
+  --brand-light: #e8eced;
+  --brand-border: rgba(71,95,106,0.2);
+  --brand-border-strong: rgba(71,95,106,0.4);
+  --f: 'ASAP', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--f);
+  background: #f4f5f5;
+  color: var(--brand-dark);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+}
+
+.page { max-width: 680px; margin: 0 auto; }
+
+.site-header { margin-bottom: 2.5rem; padding-bottom: 1.25rem; border-bottom: 0.5px solid var(--brand-border-strong); }
+.site-name { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-mid); margin-bottom: 4px; }
+.doc-title { font-size: 22px; font-weight: 500; color: var(--brand-dark); line-height: 1.3; margin-bottom: 6px; }
+.doc-meta { font-size: 13px; color: var(--brand-mid); }
+
+.intro { font-size: 14px; color: var(--brand-mid); line-height: 1.65; margin-bottom: 1.75rem; border-left: 2px solid var(--brand-border-strong); padding-left: 14px; }
+
+.top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px; }
+.mode-toggle { display: flex; background: var(--brand-light); border: 0.5px solid var(--brand-border); border-radius: 8px; padding: 3px; gap: 3px; }
+.mode-btn { font-size: 13px; font-family: var(--f); padding: 5px 16px; border-radius: 6px; border: none; background: transparent; color: var(--brand-mid); cursor: pointer; transition: background 0.15s, color 0.15s; }
+.mode-btn.active { background: #fff; color: var(--brand-dark); border: 0.5px solid var(--brand-border-strong); font-weight: 500; }
+
+.prog-bar { display: flex; gap: 6px; margin-bottom: 1.5rem; }
+.prog-seg { height: 3px; border-radius: 2px; flex: 1; background: var(--brand-border); transition: background 0.3s; }
+.prog-seg.done { background: var(--brand-mid); }
+
+.pillar-nav { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.ptab { font-size: 13px; font-family: var(--f); padding: 7px 16px; border-radius: 8px; border: 0.5px solid var(--brand-border); background: #fff; color: var(--brand-mid); cursor: pointer; transition: all 0.15s; }
+.ptab:hover { border-color: var(--brand-border-strong); color: var(--brand-dark); }
+.ptab.active { background: var(--brand-dark); color: #fff; border-color: var(--brand-dark); font-weight: 500; }
+.ptab.done::after { content: " \2713"; }
+
+.pcard { background: #fff; border-radius: 12px; border: 0.5px solid var(--brand-border); overflow: hidden; margin-bottom: 1.25rem; }
+.phead { padding: 1.25rem 1.5rem 1rem; border-bottom: 0.5px solid var(--brand-border); background: var(--brand-light); }
+.ptag { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-mid); margin-bottom: 5px; }
+.pname { font-size: 20px; font-weight: 500; color: var(--brand-dark); margin-bottom: 3px; }
+.psub { font-size: 13px; color: var(--brand-mid); }
+
+.pbody { padding: 1.25rem 1.5rem; }
+.slabel { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-mid); margin-bottom: 7px; }
+.btext { font-size: 14px; line-height: 1.7; color: var(--brand-dark); margin-bottom: 10px; }
+
+.keyq { border-left: 2px solid var(--brand-mid); border-radius: 0; padding: 10px 14px; font-size: 14px; color: var(--brand-dark); line-height: 1.55; font-style: italic; margin-bottom: 1.25rem; background: var(--brand-light); }
+
+.divider { border: none; border-top: 0.5px solid var(--brand-border); margin: 1.25rem 0; }
+
+.pbox { background: var(--brand-light); border-radius: 8px; padding: 10px 14px; font-size: 14px; color: var(--brand-dark); line-height: 1.6; margin-bottom: 10px; border: 0.5px solid var(--brand-border); }
+
+.team-only { display: none; }
+.team-mode .team-only { display: block; }
+
+.tbadge { font-size: 11px; font-weight: 500; background: var(--brand-dark); color: #fff; border-radius: 4px; padding: 2px 8px; margin-bottom: 6px; display: inline-flex; align-items: center; gap: 5px; }
+
+.notes-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-mid); margin-bottom: 6px; }
+.notes-area { width: 100%; border: 0.5px solid var(--brand-border); border-radius: 8px; background: #fff; color: var(--brand-dark); font-family: var(--f); font-size: 14px; padding: 10px 12px; resize: vertical; min-height: 80px; line-height: 1.6; transition: border-color 0.15s; }
+.notes-area:focus { outline: none; border-color: var(--brand-mid); }
+.notes-area::placeholder { color: var(--brand-mid); opacity: 0.65; }
+
+.done-btn { width: 100%; margin-top: 1rem; padding: 10px; font-size: 14px; font-weight: 500; font-family: var(--f); border-radius: 8px; border: 0.5px solid var(--brand-border-strong); background: #fff; color: var(--brand-dark); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.done-btn:hover { background: var(--brand-light); }
+.done-btn.completed { background: var(--brand-dark); color: #fff; border-color: var(--brand-dark); }
+
+.venn-section { background: #fff; border-radius: 12px; border: 0.5px solid var(--brand-border); padding: 1.5rem; margin-bottom: 1.25rem; }
+.venn-title { font-size: 16px; font-weight: 500; color: var(--brand-dark); margin-bottom: 5px; }
+.venn-sub { font-size: 13px; color: var(--brand-mid); margin-bottom: 1.25rem; line-height: 1.55; }
+.venn-svg-wrap { display: flex; justify-content: center; }
+.venn-note { font-size: 13px; color: var(--brand-mid); background: var(--brand-light); border-radius: 8px; padding: 10px 14px; line-height: 1.55; margin-top: 1.25rem; }
+
+.sum-card { background: #fff; border-radius: 12px; border: 0.5px solid var(--brand-border); padding: 1.5rem; display: none; }
+.sum-card.visible { display: block; }
+.sum-title { font-size: 16px; font-weight: 500; color: var(--brand-dark); margin-bottom: 4px; }
+.sum-sub { font-size: 13px; color: var(--brand-mid); margin-bottom: 1.25rem; }
+.sum-row { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--brand-border); }
+.sum-row:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.sr-tag { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-mid); margin-bottom: 4px; }
+.sr-text { font-size: 14px; color: var(--brand-dark); line-height: 1.6; white-space: pre-wrap; }
+.sr-empty { font-size: 14px; color: var(--brand-mid); font-style: italic; }
+
+.action-row { display: flex; gap: 10px; margin-top: 1.25rem; flex-wrap: wrap; }
+.action-btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; font-size: 14px; font-family: var(--f); border-radius: 8px; border: 0.5px solid var(--brand-border-strong); background: #fff; color: var(--brand-dark); cursor: pointer; transition: background 0.15s; text-decoration: none; }
+.action-btn:hover { background: var(--brand-light); }
+.action-btn.primary { background: var(--brand-dark); color: #fff; border-color: var(--brand-dark); }
+.action-btn.primary:hover { background: var(--brand-mid); }
+
+.site-footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 0.5px solid var(--brand-border); font-size: 12px; color: var(--brand-mid); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.site-footer a { color: var(--brand-mid); text-decoration: none; }
+.site-footer a:hover { color: var(--brand-dark); }
+
+@media print {
+  body { background: #fff; padding: 1rem; }
+  .pillar-nav, .mode-toggle, .done-btn, .action-row, .venn-section { display: none !important; }
+  .pcard, .sum-card { border: 0.5px solid #ccc; break-inside: avoid; }
+  .sum-card { display: block !important; }
+  [id^="s"] { display: block !important; }
+  .team-only { display: none !important; }
+  .site-footer { display: none; }
+}
+
+@media (max-width: 480px) {
+  .doc-title { font-size: 18px; }
+  .pillar-nav { gap: 6px; }
+  .ptab { font-size: 12px; padding: 6px 12px; }
+}
+
+svg text { font-family: 'ASAP', sans-serif; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="site-header">
+    <div class="site-name">Fieldwork · Accessible Learning Labs</div>
+    <h1 class="doc-title">Inclusive Audit Tool</h1>
+    <div class="doc-meta">Week 2 · Accessibility, Disability Justice, and Emergent Learning</div>
+  </header>
+
+  <p class="intro" id="introText">This tool walks you through each of the three pillars — what it is, what it asks of your environment, and how to observe it in practice — before you begin your audit. Record your findings as you go. A summary you can print or save generates automatically.</p>
+
+  <div class="top-bar">
+    <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--brand-mid);">Mode</div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="bSolo" onclick="setMode('solo')">&#128100; Solo</button>
+      <button class="mode-btn" id="bTeam" onclick="setMode('team')">&#128101; Team</button>
+    </div>
+  </div>
+
+  <div class="prog-bar" role="progressbar" aria-label="Audit progress">
+    <div class="prog-seg" id="p1"></div>
+    <div class="prog-seg" id="p2"></div>
+    <div class="prog-seg" id="p3"></div>
+  </div>
+
+  <nav class="pillar-nav" aria-label="Pillar navigation">
+    <button class="ptab active" id="t1" onclick="show(1)">1. Accessibility</button>
+    <button class="ptab" id="t2" onclick="show(2)">2. Disability justice</button>
+    <button class="ptab" id="t3" onclick="show(3)">3. Emergent learning</button>
+  </nav>
+
+  <main id="auditWrap">
+
+    <div id="s1">
+      <div class="pcard">
+        <div class="phead">
+          <div class="ptag">Pillar 1 &middot; Infrastructure</div>
+          <div class="pname">Accessibility</div>
+          <div class="psub">The legal and technical floor that makes participation possible</div>
+        </div>
+        <div class="pbody">
+          <div class="slabel">What it is</div>
+          <p class="btext">Accessibility is the removal of physical, technological, and attitudinal barriers to learning. It is grounded in legal frameworks &mdash; the Accessible Canada Act, the ADA, the AODA &mdash; and technical standards like WCAG 2.1 (perceivable, operable, understandable, robust). It is the floor, not the ceiling: compliance establishes minimum conditions for participation, not equity of experience.</p>
+          <blockquote class="keyq">&ldquo;Does this policy treat legal compliance as a starting point &mdash; or as the destination?&rdquo;</blockquote>
+          <div class="slabel">What to look for</div>
+          <p class="btext">Retrieve your institution&rsquo;s accessibility policy or a recent compliance report. Is the language reactive (&ldquo;accommodations provided on request&rdquo;) or proactive (&ldquo;designed for access from the outset&rdquo;)? Note whether it names specific standards or stays general.</p>
+          <hr class="divider">
+          <div class="slabel">Observation prompt</div>
+          <div class="pbox">Locate one piece of content in your environment. Apply the WCAG lens: perceivable, operable, understandable, robust. Where does it pass? Where does it fail &mdash; and for whom?</div>
+          <div class="team-only">
+            <div class="tbadge">Team prompt</div>
+            <div class="pbox">Each person audits one piece of content independently, then compare. Where do your observations converge &mdash; and where do they differ? What does the difference reveal about whose experience of the system is most visible to your team?</div>
+          </div>
+          <hr class="divider">
+          <div class="notes-label">Your observations</div>
+          <textarea class="notes-area" id="n1" placeholder="What did you find? What is the loudest signal here?"></textarea>
+          <button class="done-btn" id="d1" onclick="markDone(1)">&#10003; Mark complete</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="s2" style="display:none">
+      <div class="pcard">
+        <div class="phead">
+          <div class="ptag">Pillar 2 &middot; Ethics</div>
+          <div class="pname">Disability justice</div>
+          <div class="psub">The compass that asks who leads, who benefits, and who is still missing</div>
+        </div>
+        <div class="pbody">
+          <div class="slabel">What it is</div>
+          <p class="btext">Disability justice moves beyond the legal floor to a political question: who was in the room when this system was designed, and whose needs were written in as default? It centres intersectionality &mdash; a framework developed by legal scholar Kimberl&eacute; Crenshaw to describe how race, gender, class, disability, and other axes of identity compound one another, producing forms of exclusion that single-axis frameworks cannot see or address. A core principle is the leadership of those most impacted: inclusion designed without input from those excluded tends to replicate the conditions that created the gap.</p>
+          <blockquote class="keyq">&ldquo;Do the people leading this program reflect the communities most affected by its gaps?&rdquo;</blockquote>
+          <div class="slabel">What to look for</div>
+          <p class="btext">Look at who holds decision-making authority in the program you are auditing. Then look at who it serves. Apply an intersectional lens: are these the same people? Where are the power gaps? You are looking for evidence of whose perspective shapes the design.</p>
+          <hr class="divider">
+          <div class="slabel">Observation prompt</div>
+          <div class="pbox">Name one historically, persistently, or systemically marginalized (HPSM) group of learners in your current environment. What would need to change if their experience were the design brief &mdash; not an edge case?</div>
+          <div class="team-only">
+            <div class="tbadge">Team prompt</div>
+            <div class="pbox">Each person names one HPSM group in your environment. Map where they overlap. Which exclusions were visible to everyone &mdash; and which required someone to name them?</div>
+          </div>
+          <hr class="divider">
+          <div class="notes-label">Your observations</div>
+          <textarea class="notes-area" id="n2" placeholder="Who leads? Who is absent from the design process? What does that absence cost?"></textarea>
+          <button class="done-btn" id="d2" onclick="markDone(2)">&#10003; Mark complete</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="s3" style="display:none">
+      <div class="pcard">
+        <div class="phead">
+          <div class="ptag">Pillar 3 &middot; Pedagogy</div>
+          <div class="pname">Emergent learning</div>
+          <div class="psub">The method that keeps the system responsive</div>
+        </div>
+        <div class="pbody">
+          <div class="slabel">What it is</div>
+          <p class="btext">Emergent learning treats curriculum as a living system rather than a fixed delivery mechanism. Rooted in Freire&rsquo;s critique of the &ldquo;banking model&rdquo; &mdash; where learners are passive recipients &mdash; it creates conditions for real-time adaptation, peer-based inquiry, and context-driven response. Adaptation is not a sign of failure; it is skilled practice. Systems that can adapt are more resilient than those that cannot.</p>
+          <blockquote class="keyq">&ldquo;Can you find one moment where someone responded to what was actually occurring &mdash; rather than following a fixed plan?&rdquo;</blockquote>
+          <div class="slabel">What to look for</div>
+          <p class="btext">Observe a live or recorded session, or review a collaborative workspace. Look for genuine response: a facilitator who changed direction based on learner feedback, a peer reframe that shifted the group. If you cannot find one, that absence is a data point.</p>
+          <hr class="divider">
+          <div class="slabel">Observation prompt</div>
+          <div class="pbox">Identify one moment where your environment responded to learners rather than delivered to them. What made that possible &mdash; and what would need to change for it to be the norm?</div>
+          <div class="team-only">
+            <div class="tbadge">Team prompt</div>
+            <div class="pbox">Each person shares one example of emergence they observed. Then ask collectively: were those conditions deliberate or accidental &mdash; and how do you build more of them?</div>
+          </div>
+          <hr class="divider">
+          <div class="notes-label">Your observations</div>
+          <textarea class="notes-area" id="n3" placeholder="Where is adaptation happening? Where is the system most rigid &mdash; and who bears that cost?"></textarea>
+          <button class="done-btn" id="d3" onclick="markDone(3)">&#10003; Mark complete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="venn-section">
+      <div class="venn-title">Map the silos</div>
+      <div class="venn-sub">Where the circles overlap, your system is integrating the pillars. Where they do not, the gap is your research territory.</div>
+      <div class="venn-svg-wrap">
+        <svg width="340" height="210" viewBox="0 0 340 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three overlapping circles representing Accessibility, Disability Justice, and Emergent Learning">
+          <title>Three-pillar Venn diagram</title>
+          <desc>Three partially overlapping circles showing how Accessibility, Disability Justice, and Emergent Learning intersect to form sustainable learning systems</desc>
+          <circle cx="140" cy="88" r="75" fill="#303e44" fill-opacity="0.08" stroke="#303e44" stroke-opacity="0.25" stroke-width="1.5"/>
+          <circle cx="200" cy="88" r="75" fill="#475f6a" fill-opacity="0.08" stroke="#475f6a" stroke-opacity="0.25" stroke-width="1.5"/>
+          <circle cx="170" cy="148" r="75" fill="#303e44" fill-opacity="0.06" stroke="#303e44" stroke-opacity="0.2" stroke-width="1.5"/>
+          <text x="90" y="44" text-anchor="middle" font-size="12" font-weight="500" fill="#303e44">Accessibility</text>
+          <text x="253" y="44" text-anchor="middle" font-size="12" font-weight="500" fill="#303e44">Disability justice</text>
+          <text x="170" y="205" text-anchor="middle" font-size="12" font-weight="500" fill="#303e44">Emergent learning</text>
+          <text x="170" y="112" text-anchor="middle" font-size="11" fill="#475f6a">sustainable</text>
+          <text x="170" y="125" text-anchor="middle" font-size="11" fill="#475f6a">learning</text>
+        </svg>
+      </div>
+      <div class="venn-note">After completing all three pillars, consider where your environment integrates these elements and where they operate as isolated silos. The gaps are not failures &mdash; they are the starting point for your inquiry.</div>
+    </div>
+
+    <div class="sum-card" id="sumCard">
+      <div class="sum-title">Audit summary</div>
+      <div class="sum-sub">Your observations across all three pillars. Print or save as PDF for your research notes.</div>
+      <div class="sum-row"><div class="sr-tag">Pillar 1 &middot; Accessibility</div><div id="sr1" class="sr-empty">No observations recorded.</div></div>
+      <div class="sum-row"><div class="sr-tag">Pillar 2 &middot; Disability justice</div><div id="sr2" class="sr-empty">No observations recorded.</div></div>
+      <div class="sum-row"><div class="sr-tag">Pillar 3 &middot; Emergent learning</div><div id="sr3" class="sr-empty">No observations recorded.</div></div>
+      <div class="action-row">
+        <button class="action-btn primary" onclick="window.print()">&#128424; Print or save as PDF</button>
+        <button class="action-btn" onclick="copyToClipboard()">&#128203; Copy summary</button>
+      </div>
+    </div>
+
+  </main>
+
+
+  <section style="background:#fff;border-radius:12px;border:0.5px solid var(--brand-border);padding:1.5rem;margin-bottom:1.25rem;" aria-labelledby="refs-heading">
+    <h2 id="refs-heading" style="font-size:16px;font-weight:500;color:var(--brand-dark);margin-bottom:4px;">References</h2>
+    <p style="font-size:13px;color:var(--brand-mid);margin-bottom:1.25rem;">Sources informing the framework used in this tool.</p>
+    <div style="margin-bottom:0.9rem;padding-bottom:0.9rem;border-bottom:0.5px solid var(--brand-border);">
+      <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--brand-mid);margin-bottom:4px;">Intersectionality</p>
+      <p style="font-size:13px;line-height:1.65;color:var(--brand-dark);">Crenshaw, K. W. <em>Mapping the Margins: Intersectionality, Identity Politics, and Violence Against Women of Color.</em> Stanford Law Review, 43(6), 1241&ndash;1299. 1991.</p>
+    </div>
+    <div style="margin-bottom:0.9rem;padding-bottom:0.9rem;border-bottom:0.5px solid var(--brand-border);">
+      <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--brand-mid);margin-bottom:4px;">Disability justice</p>
+      <p style="font-size:13px;line-height:1.65;color:var(--brand-dark);">Sins Invalid. <em>10 Principles of Disability Justice.</em> 2015.</p>
+    </div>
+    <div style="margin-bottom:0.9rem;padding-bottom:0.9rem;border-bottom:0.5px solid var(--brand-border);">
+      <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--brand-mid);margin-bottom:4px;">Emergent learning</p>
+      <p style="font-size:13px;line-height:1.65;color:var(--brand-dark);">Freire, P. <em>Pedagogy of the Oppressed.</em> 1970.</p>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--brand-mid);margin-bottom:4px;">Technical standards</p>
+      <p style="font-size:13px;line-height:1.65;color:var(--brand-dark);">Web Content Accessibility Guidelines (WCAG) 2.1. W3C, 2018.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <span>Fieldwork &mdash; Accessible Learning Labs</span>
+    <a href="https://accessiblelearninglabs.com" target="_blank" rel="noopener">accessiblelearninglabs.com</a>
+  </footer>
+
+</div>
+
+<script>
+var done = {1:false, 2:false, 3:false};
+
+function setMode(m) {
+  document.getElementById('bSolo').classList.toggle('active', m==='solo');
+  document.getElementById('bTeam').classList.toggle('active', m==='team');
+  document.getElementById('auditWrap').classList.toggle('team-mode', m==='team');
+  document.getElementById('introText').textContent = m==='solo'
+    ? 'This tool walks you through each of the three pillars — what it is, what it asks of your environment, and how to observe it in practice — before you begin your audit. Record your findings as you go. A summary you can print or save generates automatically.'
+    : 'Team mode is active. Each pillar includes both a solo observation prompt and a team discussion prompt. Work through the concept individually, then use the team prompt to compare observations with your colleagues.';
+}
+
+function show(n) {
+  [1,2,3].forEach(function(i) {
+    document.getElementById('s'+i).style.display = i===n ? 'block' : 'none';
+    var t = document.getElementById('t'+i);
+    t.className = 'ptab' + (done[i] ? ' done' : '') + (i===n ? ' active' : '');
+  });
+}
+
+function markDone(n) {
+  done[n] = true;
+  var b = document.getElementById('d'+n);
+  b.classList.add('completed');
+  b.textContent = '\u2713 Complete';
+  document.getElementById('p'+n).classList.add('done');
+  updateSum();
+  if (n < 3) {
+    setTimeout(function(){ show(n+1); }, 280);
+  } else {
+    document.getElementById('sumCard').classList.add('visible');
+    document.getElementById('sumCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function updateSum() {
+  [1,2,3].forEach(function(i) {
+    var v = document.getElementById('n'+i).value.trim();
+    var el = document.getElementById('sr'+i);
+    if (v) { el.className = 'sr-text'; el.textContent = v; }
+    else { el.className = 'sr-empty'; el.textContent = 'No observations recorded.'; }
+  });
+}
+
+function copyToClipboard() {
+  var text = ['Fieldwork — Inclusive Audit Summary', ''];
+  var labels = ['Pillar 1 · Accessibility', 'Pillar 2 · Disability justice', 'Pillar 3 · Emergent learning'];
+  [1,2,3].forEach(function(i) {
+    text.push(labels[i-1]);
+    var v = document.getElementById('n'+i).value.trim();
+    text.push(v || 'No observations recorded.');
+    text.push('');
+  });
+  navigator.clipboard.writeText(text.join('\n')).then(function() {
+    var btn = document.querySelector('.action-btn:not(.primary)');
+    var orig = btn.textContent;
+    btn.textContent = '\u2713 Copied';
+    setTimeout(function(){ btn.textContent = orig; }, 2000);
+  });
+}
+
+[1,2,3].forEach(function(i) {
+  document.getElementById('n'+i).addEventListener('input', function() {
+    if (done[i]) updateSum();
+  });
+});
+</script>
+
+</body>
+</html>
