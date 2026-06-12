@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Environmental Systems Scan — Graduate Academic Environment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --text:    #303e44;
+  --accent:  #475f6a;
+  --light:   #e8edef;
+  --mid:     #c2cfd4;
+  --white:   #ffffff;
+  --gap-assumption: #d4e8e0;
+  --gap-assumption-border: #6aaa8e;
+  --gap-assumption-text: #1e5a42;
+  --gap-drop: #f5ddd8;
+  --gap-drop-border: #c27060;
+  --gap-drop-text: #7a2e20;
+  --gap-peer: #dce8f0;
+  --gap-peer-border: #5e8ea8;
+  --gap-peer-text: #1e4a60;
+  --gap-reframe: #f0e8d0;
+  --gap-reframe-border: #b89050;
+  --gap-reframe-text: #6a4e10;
+  --gap-tbd: #f0f0ee;
+  --gap-tbd-border: #a0a89a;
+  --gap-tbd-text: #4a5248;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+body {
+  font-family: 'Asap', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  min-height: 100vh;
+  padding: 0;
+}
+
+.page-header {
+  background: var(--accent);
+  color: var(--white);
+  padding: 28px 40px 24px;
+}
+.page-header h1 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+}
+.page-header p {
+  font-size: 13px;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 14px 40px;
+  background: var(--light);
+  border-bottom: 1px solid var(--mid);
+  font-size: 12px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.canvas-wrap {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+
+svg.map {
+  display: block;
+  min-width: 700px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.system-node {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.system-node:hover .node-ring { stroke-opacity: 1; }
+.system-node:hover .node-label-bg { fill-opacity: 1; }
+.system-node.active .node-ring { stroke-width: 2.5; stroke-opacity: 1; }
+
+.node-ring {
+  fill: var(--white);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-opacity: 0.7;
+  transition: stroke-width 0.15s, stroke-opacity 0.15s;
+}
+
+.centre-node circle {
+  fill: var(--accent);
+}
+
+.connector {
+  stroke: var(--mid);
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 4 3;
+}
+
+.node-title {
+  font-family: 'Asap', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--accent);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.node-subtitle {
+  font-family: 'Asap', sans-serif;
+  font-size: 11px;
+  fill: var(--text);
+  opacity: 0.7;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.centre-label {
+  font-family: 'Asap', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--white);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.centre-sublabel {
+  font-family: 'Asap', sans-serif;
+  font-size: 11px;
+  fill: var(--white);
+  opacity: 0.8;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.status-pip {
+  r: 4;
+  stroke: var(--white);
+  stroke-width: 1;
+}
+
+.detail-panel {
+  display: none;
+  padding: 0 40px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.detail-panel.visible { display: block; }
+
+.panel-inner {
+  border: 1px solid var(--mid);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.panel-header {
+  background: var(--accent);
+  color: var(--white);
+  padding: 16px 20px 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.panel-header-text h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.panel-header-text p {
+  font-size: 12px;
+  opacity: 0.72;
+  font-style: italic;
+}
+.close-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--white);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'Asap', sans-serif;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.close-btn:hover { background: rgba(255,255,255,0.25); }
+
+.panel-body {
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  border: 1px solid transparent;
+}
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.card-text {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.card-text em { font-style: italic; }
+
+.card.assumption {
+  background: var(--gap-assumption);
+  border-color: var(--gap-assumption-border);
+}
+.card.assumption .card-label { color: var(--gap-assumption-text); }
+.card.assumption .card-text { color: var(--gap-assumption-text); }
+
+.card.drop {
+  background: var(--gap-drop);
+  border-color: var(--gap-drop-border);
+}
+.card.drop .card-label { color: var(--gap-drop-text); }
+.card.drop .card-text { color: var(--gap-drop-text); }
+
+.card.reframe {
+  background: var(--gap-reframe);
+  border-color: var(--gap-reframe-border);
+}
+.card.reframe .card-label { color: var(--gap-reframe-text); }
+.card.reframe .card-text { color: var(--gap-reframe-text); }
+
+.card.peer {
+  background: var(--gap-peer);
+  border-color: var(--gap-peer-border);
+}
+.card.peer .card-label { color: var(--gap-peer-text); }
+.card.peer .card-text { color: var(--gap-peer-text); }
+
+.card.tbd {
+  background: var(--gap-tbd);
+  border-color: var(--gap-tbd-border);
+  border-style: dashed;
+}
+.card.tbd .card-label { color: var(--gap-tbd-text); }
+.card.tbd .card-text { color: var(--gap-tbd-text); font-style: italic; }
+
+.intro-note {
+  padding: 16px 40px 0;
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.7;
+  line-height: 1.6;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+
+.footer {
+  padding: 20px 40px;
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.5;
+  text-align: center;
+  border-top: 1px solid var(--light);
+  margin-top: 32px;
+}
+.footer a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .page-header, .legend, .detail-panel, .intro-note { padding-left: 16px; padding-right: 16px; }
+  .legend { gap: 8px 14px; }
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Environmental systems scan — graduate academic environment</h1>
+  <p>In progress · Fieldwork Week 3 · Select a node to explore each system</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--gap-assumption);border:1px solid var(--gap-assumption-border)"></div>
+    Assumed participant
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--gap-drop);border:1px solid var(--gap-drop-border)"></div>
+    Gap identified
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--gap-reframe);border:1px solid var(--gap-reframe-border)"></div>
+    Reframe written
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--gap-peer);border:1px solid var(--gap-peer-border)"></div>
+    Peer question
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--gap-tbd);border:1px dashed var(--gap-tbd-border)"></div>
+    Still to investigate
+  </div>
+</div>
+
+<p class="intro-note">This map is in process. One reframe is complete. Click any system node to explore its assumptions, gaps, and open questions.</p>
+
+<div class="canvas-wrap">
+<svg class="map" viewBox="0 0 700 480" role="img" aria-label="Node map of five delivery systems surrounding a graduate student centre node. Select each node to view details.">
+
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#c2cfd4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Connectors (drawn first, behind nodes) -->
+<line class="connector" x1="350" y1="196" x2="350" y2="240"/>
+<line class="connector" x1="236" y1="260" x2="286" y2="268"/>
+<line class="connector" x1="464" y1="260" x2="414" y2="268"/>
+<line class="connector" x1="242" y1="358" x2="296" y2="312"/>
+<line class="connector" x1="458" y1="358" x2="404" y2="312"/>
+
+<!-- ── Centre node ── -->
+<g class="centre-node">
+  <circle cx="350" cy="280" r="52" fill="#475f6a"/>
+  <text class="centre-label" x="350" y="272">Graduate</text>
+  <text class="centre-label" x="350" y="288">student</text>
+  <text class="centre-sublabel" x="350" y="304">Neurobiology thesis</text>
+</g>
+
+<!-- ── Node 1: Thesis supervision (top) ── -->
+<g class="system-node" id="node-supervision" onclick="showPanel('supervision')" role="button" tabindex="0" aria-label="Thesis supervision — click to expand">
+  <ellipse cx="350" cy="158" rx="88" ry="34" class="node-ring"/>
+  <text class="node-title" x="350" y="153">Thesis supervision</text>
+  <text class="node-subtitle" x="350" y="168">Meetings · feedback · guidance</text>
+  <circle class="status-pip" cx="310" cy="143" r="4" fill="#6aaa8e"/>
+  <circle class="status-pip" cx="323" cy="140" r="4" fill="#c27060"/>
+  <circle class="status-pip" cx="336" cy="138" r="4" fill="#b89050"/>
+</g>
+
+<!-- ── Node 2: LMS (left) ── -->
+<g class="system-node" id="node-lms" onclick="showPanel('lms')" role="button" tabindex="0" aria-label="Course management system — click to expand">
+  <ellipse cx="172" cy="275" rx="88" ry="34" class="node-ring"/>
+  <text class="node-title" x="172" y="270">Course management</text>
+  <text class="node-subtitle" x="172" y="284">LMS · content · assessment</text>
+  <circle class="status-pip" cx="130" cy="261" r="4" fill="#6aaa8e"/>
+  <circle class="status-pip" cx="143" cy="258" r="4" fill="#c27060"/>
+  <circle class="status-pip" cx="156" cy="256" r="4" fill="#a0a89a"/>
+</g>
+
+<!-- ── Node 3: Library (right) ── -->
+<g class="system-node" id="node-library" onclick="showPanel('library')" role="button" tabindex="0" aria-label="Library and research access — click to expand">
+  <ellipse cx="528" cy="275" rx="88" ry="34" class="node-ring"/>
+  <text class="node-title" x="528" y="270">Library and research</text>
+  <text class="node-subtitle" x="528" y="284">Access · resources · stacks</text>
+  <circle class="status-pip" cx="486" cy="261" r="4" fill="#6aaa8e"/>
+  <circle class="status-pip" cx="499" cy="258" r="4" fill="#c27060"/>
+  <circle class="status-pip" cx="512" cy="256" r="4" fill="#a0a89a"/>
+</g>
+
+<!-- ── Node 4: Disability services (bottom-left) ── -->
+<g class="system-node" id="node-disability" onclick="showPanel('disability')" role="button" tabindex="0" aria-label="Disability services — click to expand">
+  <ellipse cx="196" cy="390" rx="88" ry="34" class="node-ring"/>
+  <text class="node-title" x="196" y="385">Disability services</text>
+  <text class="node-subtitle" x="196" y="399">Accommodations · support</text>
+  <circle class="status-pip" cx="154" cy="376" r="4" fill="#6aaa8e"/>
+  <circle class="status-pip" cx="167" cy="373" r="4" fill="#c27060"/>
+  <circle class="status-pip" cx="180" cy="371" r="4" fill="#5e8ea8"/>
+</g>
+
+<!-- ── Node 5: Scheduling & assessment (bottom-right) ── -->
+<g class="system-node" id="node-assessment" onclick="showPanel('assessment')" role="button" tabindex="0" aria-label="Scheduling and assessment — click to expand">
+  <ellipse cx="504" cy="390" rx="88" ry="34" class="node-ring"/>
+  <text class="node-title" x="504" y="385">Scheduling and</text>
+  <text class="node-title" x="504" y="399">assessment</text>
+  <circle class="status-pip" cx="462" cy="376" r="4" fill="#6aaa8e"/>
+  <circle class="status-pip" cx="475" cy="373" r="4" fill="#c27060"/>
+  <circle class="status-pip" cx="488" cy="371" r="4" fill="#5e8ea8"/>
+</g>
+
+<!-- Status pip key (bottom right) -->
+<text font-family="Asap, sans-serif" font-size="10" fill="#475f6a" opacity="0.6" x="610" y="440">● assumption  ● gap  ● other</text>
+
+</svg>
+</div>
+
+<!-- ── Detail panels (one per node, hidden by default) ── -->
+
+<div class="detail-panel" id="panel-supervision">
+  <div class="panel-inner">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <h2>Thesis supervision</h2>
+        <p>Meetings · feedback · guidance</p>
+      </div>
+      <button class="close-btn" onclick="closePanel('supervision')">Close ✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="card assumption">
+        <div class="card-label">Assumed participant</div>
+        <div class="card-text">Available 9–5 on weekdays, fluent in email, able to attend synchronous in-person or video meetings, with a stable schedule that doesn't shift week to week.</div>
+      </div>
+      <div class="card drop">
+        <div class="card-label">Gap identified</div>
+        <div class="card-text">No asynchronous communication option built into the supervision model. Overnight and shift-based availability is not accommodated by default. Gaps in supervision can accumulate across weeks without a formal mechanism to flag them.</div>
+      </div>
+      <div class="card reframe">
+        <div class="card-label">Reframe written ✓</div>
+        <div class="card-text"><em>"Student missed the meeting"</em> → <em>"The supervision system assumed 9–5 weekday availability. The student's overnight care schedule made that window consistently inaccessible."</em> The failure is a design failure, not an attendance failure.</div>
+      </div>
+      <div class="card peer">
+        <div class="card-label">Peer question</div>
+        <div class="card-text">Where is ambiguity built into supervision expectations — and what does that cost neurodivergent students specifically? Are expectations about feedback timelines, revision rounds, and communication norms written down anywhere, or are they assumed?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-panel" id="panel-lms">
+  <div class="panel-inner">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <h2>Course management system</h2>
+        <p>LMS · content · assessment</p>
+      </div>
+      <button class="close-btn" onclick="closePanel('lms')">Close ✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="card assumption">
+        <div class="card-label">Assumed participant</div>
+        <div class="card-text">Has reliable desktop or laptop access, consistent institutional wifi, no assistive technology requirements, and the capacity to engage with time-locked or session-bound content formats.</div>
+      </div>
+      <div class="card drop">
+        <div class="card-label">Gap identified</div>
+        <div class="card-text">Content is not consistently available offline. Screen reader compatibility has not been tested across all module types. Video content lacks reliable captions. Assignment submission interfaces vary in accessibility across course sections.</div>
+      </div>
+      <div class="card tbd">
+        <div class="card-label">Still to investigate</div>
+        <div class="card-text">Are multiple assessment formats available, or is written text the default across all courses? Who can request alternatives, and through what process?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-panel" id="panel-library">
+  <div class="panel-inner">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <h2>Library and research access</h2>
+        <p>Access · resources · stacks</p>
+      </div>
+      <button class="close-btn" onclick="closePanel('library')">Close ✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="card assumption">
+        <div class="card-label">Assumed participant</div>
+        <div class="card-text">Can access the physical campus consistently, maintains an uninterrupted institutional login, and can navigate print-first collections without physical barriers. Assumes standard working-hours access to librarian support.</div>
+      </div>
+      <div class="card drop">
+        <div class="card-label">Gap identified</div>
+        <div class="card-text">Physical access to stacks is not consistently barrier-free. Interlibrary loan timelines assume a researcher with flexible scheduling. After-hours and remote access to specialist support is limited or unavailable.</div>
+      </div>
+      <div class="card tbd">
+        <div class="card-label">Still to investigate</div>
+        <div class="card-text">What is the financial cost of required research materials beyond institutional access? Are there hidden monetary barriers — required textbooks, specific software, or travel to collect materials — that are not acknowledged in programme costs?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-panel" id="panel-disability">
+  <div class="panel-inner">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <h2>Disability services</h2>
+        <p>Accommodations · support</p>
+      </div>
+      <button class="close-btn" onclick="closePanel('disability')">Close ✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="card assumption">
+        <div class="card-label">Assumed participant</div>
+        <div class="card-text">Student initiates contact, self-discloses, re-registers each term, and follows up with individual instructors to ensure accommodations are actioned. The system assumes the administrative labour falls on the student.</div>
+      </div>
+      <div class="card drop">
+        <div class="card-label">Gap identified</div>
+        <div class="card-text">Accommodation letters are issued to instructors but are not consistently actioned. There is no formal mechanism for the student to verify that accommodations are in place without additional follow-up. The burden of ensuring compliance rests with the person least positioned to enforce it.</div>
+      </div>
+      <div class="card peer">
+        <div class="card-label">Peer question</div>
+        <div class="card-text">Are student perspectives actually centred in how accommodations are designed — or do well-intentioned interventions still happen <em>to</em> students rather than <em>with</em> them? And when a gap in the system causes harm, who is accountable? Does the institution take responsibility for accommodation failures, or is the student expected to manage the gap?</div>
+      </div>
+      <div class="card tbd">
+        <div class="card-label">Still to investigate</div>
+        <div class="card-text">What happens when the same gap recurs? Is there a mechanism for pattern recognition across student complaints, or does each case remain isolated?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-panel" id="panel-assessment">
+  <div class="panel-inner">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <h2>Scheduling and assessment</h2>
+        <p>Exams · rubrics · feedback timing</p>
+      </div>
+      <button class="close-btn" onclick="closePanel('assessment')">Close ✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="card assumption">
+        <div class="card-label">Assumed participant</div>
+        <div class="card-text">Can sit exams during standard scheduled windows, brings shared cultural knowledge to course texts and examples, and has access to the same real-time information as all other students during assessments.</div>
+      </div>
+      <div class="card drop">
+        <div class="card-label">Gap identified</div>
+        <div class="card-text">Students sitting exams in alternate locations or times may not receive the same mid-exam information — corrections, clarifications, typo notices — as students in the primary room. Cultural knowledge assumed by texts and rubrics is not acknowledged as an assumption; gaps are read as student deficits.</div>
+      </div>
+      <div class="card peer">
+        <div class="card-label">Peer question</div>
+        <div class="card-text">What prior cultural knowledge is embedded in the learning itself — in the texts selected, the examples used, the references assumed to be shared? A gap in cultural background is frequently misread as a deficit in reading ability or intelligence rather than as a gap in representation. Does the material reflect a range of cultural contexts? Are student evaluations collected mid-course and used to adjust current teaching — or only gathered at the end, when it is too late to change anything for the students who completed it?</div>
+      </div>
+      <div class="card tbd">
+        <div class="card-label">Still to investigate</div>
+        <div class="card-text">Is there a mechanism to ensure real-time exam communications reach all students equally, regardless of where they are sitting? How is this currently managed, and who is responsible when it fails?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  Fieldwork — Accessible Learning Labs &nbsp;·&nbsp;
+  <a href="https://accessiblelearninglabs.github.io/environment-scanner/" target="_blank" rel="noopener">Environment Scanner</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.accessiblelearninglabs.com/fieldwork" target="_blank" rel="noopener">accessiblelearninglabs.com/fieldwork</a>
+</footer>
+
+<script>
+const panels = ['supervision','lms','library','disability','assessment'];
+const nodeMap = {
+  supervision: 'node-supervision',
+  lms: 'node-lms',
+  library: 'node-library',
+  disability: 'node-disability',
+  assessment: 'node-assessment'
+};
+
+function showPanel(id) {
+  panels.forEach(p => {
+    document.getElementById('panel-' + p).classList.remove('visible');
+    const n = document.getElementById(nodeMap[p]);
+    if (n) n.classList.remove('active');
+  });
+  const panel = document.getElementById('panel-' + id);
+  if (panel) {
+    panel.classList.add('visible');
+    const node = document.getElementById(nodeMap[id]);
+    if (node) node.classList.add('active');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+
+function closePanel(id) {
+  document.getElementById('panel-' + id).classList.remove('visible');
+  const node = document.getElementById(nodeMap[id]);
+  if (node) node.classList.remove('active');
+}
+
+document.querySelectorAll('.system-node').forEach(node => {
+  node.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); }
+  });
+});
+</script>
+</body>
+</html>
