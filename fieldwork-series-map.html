@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldwork — the series map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#303e44;
+    --accent:#475f6a;
+    --muted:#6b7880;
+    --line:#e4e8ea;
+    --surface:#f6f8f9;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Asap",system-ui,sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:4rem 1.5rem 5rem;}
+
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin:0 0 1rem;
+  }
+  h1{
+    font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;
+    margin:0 0 .9rem;letter-spacing:-.01em;
+  }
+  .lede{font-size:1.05rem;color:var(--ink);margin:0 0 0;max-width:54ch;}
+
+  .legend{
+    display:flex;flex-wrap:wrap;gap:1.1rem 2rem;
+    margin:1.6rem 0 0;padding:1.3rem 0 0;border-top:1px solid var(--line);
+  }
+  .legend div{max-width:15rem;}
+  .legend .flabel{margin-bottom:.2rem;}
+  .legend p{margin:0;font-size:.85rem;color:var(--muted);line-height:1.45;}
+
+  .controls{margin:2.2rem 0 0;}
+  .toggle-all{
+    font:inherit;font-size:.8rem;font-weight:500;letter-spacing:.02em;
+    color:var(--accent);background:none;border:1px solid var(--line);
+    border-radius:999px;padding:.35rem .9rem;cursor:pointer;
+  }
+  .toggle-all:hover{border-color:var(--accent);}
+  .toggle-all:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .phase{margin:2.6rem 0 0;}
+  .phase-head{margin:0 0 .4rem;}
+  .phase-eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;}
+  .phase-title{font-size:1.2rem;font-weight:600;margin:.2rem 0 .25rem;}
+  .phase-goal{font-size:.9rem;color:var(--muted);font-style:italic;margin:0;}
+
+  .weeks{position:relative;list-style:none;margin:1rem 0 0;padding:0;}
+  .weeks::before{content:"";position:absolute;left:7px;top:18px;bottom:18px;width:2px;background:var(--line);}
+  .week{position:relative;}
+
+  .wbtn{
+    display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;
+    width:100%;text-align:left;background:none;border:0;
+    border-bottom:1px solid var(--line);
+    padding:.95rem .25rem .95rem 30px;cursor:pointer;color:var(--ink);font:inherit;
+  }
+  .wbtn:hover .wtitle{color:var(--accent);}
+  .wbtn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px;}
+  .wnode{
+    position:absolute;left:1px;top:1.25rem;width:14px;height:14px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--line);transition:background .2s,border-color .2s;
+  }
+  .week[data-open="true"] .wnode{border-color:var(--accent);background:var(--accent);}
+  .wnum{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;font-weight:600;}
+  .wtitle{font-size:1.02rem;font-weight:500;color:var(--ink);transition:color .15s;}
+  .wchev{font-size:1.4rem;line-height:1;color:var(--accent);font-weight:400;width:1rem;text-align:center;}
+
+  .panel{padding:.4rem .25rem 1.3rem 30px;}
+  .panel[hidden]{display:none;}
+  .facet{margin:0 0 .85rem;}
+  .facet:last-child{margin-bottom:0;}
+  .flabel{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.2rem;}
+  .facet p{margin:0;font-size:.95rem;line-height:1.55;color:var(--ink);max-width:58ch;}
+
+  @keyframes reveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+  .panel:not([hidden]){animation:reveal .26s ease;}
+  @media (prefers-reduced-motion:reduce){.panel:not([hidden]){animation:none;}.wnode{transition:none;}}
+
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted);}
+  footer a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line);}
+  footer a:hover{border-color:var(--accent);}
+
+  .noscript{margin:2rem 0;padding:1rem 1.2rem;background:var(--surface);border-radius:8px;font-size:.9rem;color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Accessible Learning Labs</p>
+    <h1>Fieldwork — the series map</h1>
+    <p class="lede">A 24-week public inquiry that turns reading into research. Open any week to see what a participant encounters, what they build, and what they carry back into their practice.</p>
+    <div class="legend" aria-hidden="false">
+      <div><span class="flabel">Encounter</span><p>The concept and the tension the week opens with.</p></div>
+      <div><span class="flabel">Build</span><p>The real artifact produced — a component of one accumulating body of work.</p></div>
+      <div><span class="flabel">Take back</span><p>The capability the participant can use in their own work.</p></div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="toggle-all" id="toggleAll" aria-pressed="false">Expand all</button>
+  </div>
+
+  <noscript>
+    <p class="noscript">This map is interactive — please enable JavaScript to open each week. A full text version is available in the Fieldwork participant value map.</p>
+  </noscript>
+
+  <main id="series" aria-label="Fieldwork series, four phases of six weeks"></main>
+
+  <footer>
+    <p>Fieldwork is published by Accessible Learning Labs · <a href="https://www.accessiblelearninglabs.com">accessiblelearninglabs.com</a></p>
+  </footer>
+</div>
+
+<script>
+const PHASES = [
+  {
+    n:1, title:"Foundations & thesis discovery",
+    goal:"Align personal interest with the thesis and establish the research problem.",
+    weeks:[
+      {n:1, title:"The gap between policy and practice",
+        e:"Locate the precise place where official accessibility policy and the lived learner experience pull apart — and treat it as something you can investigate, not just endure.",
+        b:"A Statement of Intent naming the phenomenon, your point of view, and the context that makes it urgent.",
+        t:"Name a real, high-stakes problem in your own setting with a defensible point of view — the first move from practitioner to practitioner-researcher."},
+      {n:2, title:"Deconstructing the hypothesis",
+        e:"See the three pillars — accessibility, disability justice, emergent learning — as they actually operate in your environment, integrated or quietly siloed.",
+        b:"A three-pillar analysis of your setting, with a group audit of where each one shows up.",
+        t:"Diagnose whether your environment connects the pillars or isolates them, and name whose exclusion is built into the legal floor."},
+      {n:3, title:"Systems that carry — and drop — knowledge",
+        e:"Map the real delivery systems your organization uses to carry knowledge, and notice where participation is assumed rather than designed.",
+        b:"An environmental scan mapping those systems and their structural gaps.",
+        t:"Surface where support is consistently dropped for certain learners — before you design anything new."},
+      {n:4, title:"Developing the research question",
+        e:"Narrow a broad, honest curiosity into a single question precise enough to answer and brave enough to name who is excluded.",
+        b:"A refined research question, pressure-tested with peers.",
+        t:"Frame a question answerable within real constraints that keeps the most excluded learner at its centre."},
+      {n:5, title:"Ethical constraints as design constraints",
+        e:"Treat time, resources, access, and consent not as obstacles to the work but as part of its design — and consent as a relationship, not a form.",
+        b:"A feasibility and resource map, with a plan for ongoing informed consent.",
+        t:"Scope an investigation you can honestly carry, and engage marginalized participants ethically from the very start."},
+      {n:6, title:"The proposal as a living blueprint",
+        e:"Gather everything so far into a blueprint clear enough to guide you and flexible enough to change as the work teaches you.",
+        b:"A one-page research proposal with explicit success criteria.",
+        t:"State your objectives, method, and significance so any reader could judge whether the inquiry succeeded — and keep it adaptive."}
+    ]
+  },
+  {
+    n:2, title:"Literature review & theoretical scaffolding",
+    goal:"Situate the inquiry within existing legal, social, and pedagogical frameworks.",
+    weeks:[
+      {n:7, title:"Legal frameworks — the floor",
+        e:"Meet the law (ACA, AODA, ADA) for what it is: a floor that holds you up, never a ceiling that tells you you've arrived.",
+        b:"A legal-frameworks audit of your environment, naming what the law leaves out.",
+        t:"Use legal literacy as a design tool — and ask, of any standard, who it still fails."},
+      {n:8, title:"Technical standards — the grammar",
+        e:"Gain real command of WCAG 2.1 while holding the harder truth: a page can pass every check and still reach no one.",
+        b:"A WCAG scan of one piece of your own digital content.",
+        t:"Tell the difference between content that passes a checklist and content that actually teaches."},
+      {n:9, title:"Disability justice — the compass",
+        e:"Move past single-issue thinking into intersectionality and the leadership of those most impacted — the ethics that decide who design is really for.",
+        b:"A power-and-voice map of your context, with an intersectional reading of your question.",
+        t:"See clearly who leads, who benefits, and who is most affected — and design accordingly."},
+      {n:10, title:"Emergent learning — the method",
+        e:"Trade the old model that treats the learner as an account to deposit into for one where learning is alive, relational, and shared.",
+        b:"An observation of where learning is already emerging, plus one condition you design to invite more of it.",
+        t:"Create the conditions that let learning emerge, rather than steering it toward a fixed outcome."},
+      {n:11, title:"Neuroeducation & brain health",
+        e:"Learn what the brain actually needs in order to learn — active engagement, spacing, emotion — and where 'neurotypical by default' quietly excludes.",
+        b:"One session redesigned with active learning and spaced repetition, audited for neurotypical defaults.",
+        t:"Design with how brains really work, and catch the assumptions that would have forced others to retrofit."},
+      {n:12, title:"Identifying research gaps",
+        e:"Bring the literature to its real purpose: not mastering each field, but finding the place where their absence, together, is hurting someone.",
+        b:"A gap statement, stress-tested with peers.",
+        t:"Name the specific synthesis gap your inquiry is positioned to close — the most generative place to stand."}
+    ]
+  },
+  {
+    n:3, title:"Investigation & methodology",
+    goal:"Conduct field research to gather qualitative and quantitative data.",
+    weeks:[
+      {n:13, title:"Choosing methodology",
+        e:"Choose how you'll come to know what you know — mixed methods that honour both measurable scale and lived depth.",
+        b:"A methodology choice with a written defence.",
+        t:"Defend an approach that balances numbers and narrative, and say plainly what you'll count as evidence."},
+      {n:14, title:"Stakeholder engagement & co-design",
+        e:"Move from asking permission to sharing the pen — designing with the people most affected, before the decisions are made.",
+        b:"A stakeholder map showing who is missing, with a co-design plan.",
+        t:"Bring excluded learners into the work early, as co-designers rather than late-stage approvers."},
+      {n:15, title:"Listening as a research practice",
+        e:"Learn to listen as a discipline — close, patient, non-extractive — to the people the system has been quietest about.",
+        b:"One participatory interview or focus group, with notes on what you heard.",
+        t:"Understand lived barriers from the inside, and hear the outlier data your questions didn't anticipate."},
+      {n:16, title:"Quantitative data as provocation",
+        e:"Let numbers do what they do well — reveal patterns — while refusing to let them have the last word.",
+        b:"A short, piloted survey of your context.",
+        t:"Surface broader patterns and use them to ask better questions, not to close the conversation."},
+      {n:17, title:"Ongoing ethical oversight",
+        e:"Hold ethics as a living relationship that travels with the research as it changes, not a box ticked once at the start.",
+        b:"A reviewed consent and confidentiality protocol, with an accountability mechanism.",
+        t:"Keep participants safe and informed as the inquiry shifts beneath you."},
+      {n:18, title:"Collaborative inquiry",
+        e:"Discover what becomes visible only in company — the findings that hold up when more than one practitioner looks.",
+        b:"A hosted preliminary-findings session and the robust patterns it surfaces.",
+        t:"Test which of your findings survive other perspectives, and which were only ever local."}
+    ]
+  },
+  {
+    n:4, title:"Analysis, design & synthesis",
+    goal:"Translate findings into inclusive learning content and finalize the thesis.",
+    weeks:[
+      {n:19, title:"Meaning-making",
+        e:"Turn what you gathered into meaning without flattening the specificity that made it worth gathering.",
+        b:"Coded qualitative data and thematic analysis, done with a peer.",
+        t:"Produce findings that are both deep and broad — and that keep lived experience intact."},
+      {n:20, title:"Cross-case analysis",
+        e:"Learn to tell a local problem from a structural one — the pattern of exclusion that outlasts any single context.",
+        b:"A cross-case analysis naming shared systemic patterns.",
+        t:"Generate insights that hold across environments, not just in yours."},
+      {n:21, title:"Backward design for social change",
+        e:"Begin at the end — with what transformation looks like for the learner the system has served least — and design back toward it.",
+        b:"An end-goal statement to design backward from.",
+        t:"Align every later choice to a destination defined by the most marginalized learner, not the average one."},
+      {n:22, title:"Prototype development",
+        e:"Make something real and testable, born accessible from its first rough draft rather than corrected into accessibility later.",
+        b:"An accessible prototype or sample lesson, tested with a real person.",
+        t:"Surface the assumptions you couldn't see — by building, and testing with someone usually left out."},
+      {n:23, title:"Iteration & public feedback",
+        e:"Treat feedback as part of the design itself — reflection in the moment and after it — and let the community's insight reshape the work.",
+        b:"A documented feedback session with recorded refinements.",
+        t:"Refine in public, honouring the people whose insight you're building on."},
+      {n:24, title:"Culmination & dissemination",
+        e:"Return what you learned to the community that made it possible, in a form they can actually use — and let it keep living past you.",
+        b:"A finalized body of work, shared as an accessible, living resource.",
+        t:"Hand back a usable resource that goes on adapting in contexts you'll never control — the full arc from reader to practitioner-researcher."}
+    ]
+  }
+];
+
+const series = document.getElementById('series');
+let idc = 0;
+
+PHASES.forEach(phase => {
+  const sec = document.createElement('section');
+  sec.className = 'phase';
+
+  const head = document.createElement('div');
+  head.className = 'phase-head';
+  head.innerHTML =
+    '<p class="phase-eyebrow">Phase ' + phase.n + '</p>' +
+    '<h2 class="phase-title">' + phase.title + '</h2>' +
+    '<p class="phase-goal">' + phase.goal + '</p>';
+  sec.appendChild(head);
+
+  const ol = document.createElement('ol');
+  ol.className = 'weeks';
+
+  phase.weeks.forEach(w => {
+    const id = 'panel-' + (++idc);
+    const li = document.createElement('li');
+    li.className = 'week';
+
+    const btn = document.createElement('button');
+    btn.className = 'wbtn';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', id);
+    btn.innerHTML =
+      '<span class="wnode" aria-hidden="true"></span>' +
+      '<span><span class="wnum">Week ' + w.n + '</span>' +
+      '<span class="wtitle">' + w.title + '</span></span>' +
+      '<span class="wchev" aria-hidden="true">+</span>';
+
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = id;
+    panel.hidden = true;
+    panel.innerHTML =
+      '<div class="facet"><span class="flabel">Encounter</span><p>' + w.e + '</p></div>' +
+      '<div class="facet"><span class="flabel">Build</span><p>' + w.b + '</p></div>' +
+      '<div class="facet"><span class="flabel">Take back</span><p>' + w.t + '</p></div>';
+
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      setWeek(btn, panel, li, !open);
+      syncToggleAll();
+    });
+
+    li.appendChild(btn);
+    li.appendChild(panel);
+    ol.appendChild(li);
+  });
+
+  sec.appendChild(ol);
+  series.appendChild(sec);
+});
+
+function setWeek(btn, panel, li, open){
+  btn.setAttribute('aria-expanded', String(open));
+  panel.hidden = !open;
+  li.setAttribute('data-open', String(open));
+  btn.querySelector('.wchev').textContent = open ? '\u2212' : '+';
+}
+
+const toggleAllBtn = document.getElementById('toggleAll');
+function allButtons(){ return Array.from(document.querySelectorAll('.wbtn')); }
+function syncToggleAll(){
+  const anyClosed = allButtons().some(b => b.getAttribute('aria-expanded') !== 'true');
+  toggleAllBtn.textContent = anyClosed ? 'Expand all' : 'Collapse all';
+  toggleAllBtn.setAttribute('aria-pressed', String(!anyClosed));
+}
+toggleAllBtn.addEventListener('click', () => {
+  const expand = toggleAllBtn.textContent === 'Expand all';
+  allButtons().forEach(b => {
+    const panel = document.getElementById(b.getAttribute('aria-controls'));
+    setWeek(b, panel, b.closest('.week'), expand);
+  });
+  syncToggleAll();
+});
+</script>
+</body>
+</html>
