@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldwork — the series map (linear, accessible version)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#303e44;
+    --accent:#475f6a;
+    --muted:#6b7880;
+    --line:#e4e8ea;
+    --surface:#f6f8f9;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Asap",system-ui,sans-serif;font-weight:400;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:4rem 1.5rem 5rem;}
+
+  .skip{
+    position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;
+    padding:.6rem 1rem;border-radius:0 0 6px 0;z-index:10;
+  }
+  .skip:focus{left:0;}
+
+  .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 1rem;}
+  h1{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;margin:0 0 .9rem;letter-spacing:-.01em;}
+  .lede{font-size:1.05rem;margin:0 0 .5rem;}
+
+  .howto{margin:1.5rem 0 0;padding:1.2rem 1.3rem;background:var(--surface);border-radius:8px;}
+  .howto h2{font-size:.95rem;font-weight:600;margin:0 0 .5rem;}
+  .howto p{margin:0 0 .5rem;font-size:.92rem;color:var(--ink);}
+  .howto p:last-child{margin-bottom:0;}
+  .howto dl{margin:.6rem 0 0;}
+  .howto dt{font-weight:600;color:var(--accent);font-size:.9rem;margin-top:.5rem;}
+  .howto dd{margin:0 0 0 0;font-size:.9rem;color:var(--ink);}
+
+  .phase{margin:3rem 0 0;padding-top:1.4rem;border-top:2px solid var(--line);}
+  h2.phase-title{font-size:1.3rem;font-weight:600;margin:0 0 .3rem;}
+  .phase-goal{font-size:.95rem;color:var(--muted);margin:0 0 1rem;}
+
+  h3.week-title{font-size:1.08rem;font-weight:600;margin:1.8rem 0 .6rem;}
+  .facet{margin:0 0 .7rem;font-size:.97rem;line-height:1.6;}
+  .facet:last-child{margin-bottom:0;}
+  .facet .label{color:var(--accent);font-weight:600;}
+
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted);}
+  footer a{color:var(--accent);}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+<a class="skip" href="#series">Skip to the series</a>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Accessible Learning Labs</p>
+    <h1>Fieldwork — the series map</h1>
+    <p class="lede">Linear, accessible version. A 24-week public inquiry that turns reading into research.</p>
+
+    <section class="howto" aria-label="How to read this document">
+      <h2>How to read this</h2>
+      <p>This is the plain-text, screen-reader and keyboard-friendly version of the interactive series map. Nothing is hidden and nothing needs to be opened: every week appears in full, in order. Use your screen reader's heading navigation to move between phases (heading level 2) and weeks (heading level 3).</p>
+      <p>Each week names three things:</p>
+      <dl>
+        <dt>Encounter</dt>
+        <dd>The concept and the tension the week opens with.</dd>
+        <dt>Build</dt>
+        <dd>The real artifact produced — a component of one accumulating body of work.</dd>
+        <dt>Take back</dt>
+        <dd>The capability the participant can use in their own practice.</dd>
+      </dl>
+    </section>
+  </header>
+
+  <main id="series">
+
+    <section class="phase" aria-labelledby="phase-1">
+      <h2 class="phase-title" id="phase-1">Phase 1 — Foundations &amp; thesis discovery</h2>
+      <p class="phase-goal">Goal: align personal interest with the thesis and establish the research problem.</p>
+
+      <h3 class="week-title">Week 1 — The gap between policy and practice</h3>
+      <p class="facet"><span class="label">Encounter.</span> Locate the precise place where official accessibility policy and the lived learner experience pull apart — and treat it as something you can investigate, not just endure.</p>
+      <p class="facet"><span class="label">Build.</span> A Statement of Intent naming the phenomenon, your point of view, and the context that makes it urgent.</p>
+      <p class="facet"><span class="label">Take back.</span> Name a real, high-stakes problem in your own setting with a defensible point of view — the first move from practitioner to practitioner-researcher.</p>
+
+      <h3 class="week-title">Week 2 — Deconstructing the hypothesis</h3>
+      <p class="facet"><span class="label">Encounter.</span> See the three pillars — accessibility, disability justice, emergent learning — as they actually operate in your environment, integrated or quietly siloed.</p>
+      <p class="facet"><span class="label">Build.</span> A three-pillar analysis of your setting, with a group audit of where each one shows up.</p>
+      <p class="facet"><span class="label">Take back.</span> Diagnose whether your environment connects the pillars or isolates them, and name whose exclusion is built into the legal floor.</p>
+
+      <h3 class="week-title">Week 3 — Systems that carry — and drop — knowledge</h3>
+      <p class="facet"><span class="label">Encounter.</span> Map the real delivery systems your organization uses to carry knowledge, and notice where participation is assumed rather than designed.</p>
+      <p class="facet"><span class="label">Build.</span> An environmental scan mapping those systems and their structural gaps.</p>
+      <p class="facet"><span class="label">Take back.</span> Surface where support is consistently dropped for certain learners — before you design anything new.</p>
+
+      <h3 class="week-title">Week 4 — Developing the research question</h3>
+      <p class="facet"><span class="label">Encounter.</span> Narrow a broad, honest curiosity into a single question precise enough to answer and brave enough to name who is excluded.</p>
+      <p class="facet"><span class="label">Build.</span> A refined research question, pressure-tested with peers.</p>
+      <p class="facet"><span class="label">Take back.</span> Frame a question answerable within real constraints that keeps the most excluded learner at its centre.</p>
+
+      <h3 class="week-title">Week 5 — Ethical constraints as design constraints</h3>
+      <p class="facet"><span class="label">Encounter.</span> Treat time, resources, access, and consent not as obstacles to the work but as part of its design — and consent as a relationship, not a form.</p>
+      <p class="facet"><span class="label">Build.</span> A feasibility and resource map, with a plan for ongoing informed consent.</p>
+      <p class="facet"><span class="label">Take back.</span> Scope an investigation you can honestly carry, and engage marginalized participants ethically from the very start.</p>
+
+      <h3 class="week-title">Week 6 — The proposal as a living blueprint</h3>
+      <p class="facet"><span class="label">Encounter.</span> Gather everything so far into a blueprint clear enough to guide you and flexible enough to change as the work teaches you.</p>
+      <p class="facet"><span class="label">Build.</span> A one-page research proposal with explicit success criteria.</p>
+      <p class="facet"><span class="label">Take back.</span> State your objectives, method, and significance so any reader could judge whether the inquiry succeeded — and keep it adaptive.</p>
+    </section>
+
+    <section class="phase" aria-labelledby="phase-2">
+      <h2 class="phase-title" id="phase-2">Phase 2 — Literature review &amp; theoretical scaffolding</h2>
+      <p class="phase-goal">Goal: situate the inquiry within existing legal, social, and pedagogical frameworks.</p>
+
+      <h3 class="week-title">Week 7 — Legal frameworks — the floor</h3>
+      <p class="facet"><span class="label">Encounter.</span> Meet the law (ACA, AODA, ADA) for what it is: a floor that holds you up, never a ceiling that tells you you've arrived.</p>
+      <p class="facet"><span class="label">Build.</span> A legal-frameworks audit of your environment, naming what the law leaves out.</p>
+      <p class="facet"><span class="label">Take back.</span> Use legal literacy as a design tool — and ask, of any standard, who it still fails.</p>
+
+      <h3 class="week-title">Week 8 — Technical standards — the grammar</h3>
+      <p class="facet"><span class="label">Encounter.</span> Gain real command of WCAG 2.1 while holding the harder truth: a page can pass every check and still reach no one.</p>
+      <p class="facet"><span class="label">Build.</span> A WCAG scan of one piece of your own digital content.</p>
+      <p class="facet"><span class="label">Take back.</span> Tell the difference between content that passes a checklist and content that actually teaches.</p>
+
+      <h3 class="week-title">Week 9 — Disability justice — the compass</h3>
+      <p class="facet"><span class="label">Encounter.</span> Move past single-issue thinking into intersectionality and the leadership of those most impacted — the ethics that decide who design is really for.</p>
+      <p class="facet"><span class="label">Build.</span> A power-and-voice map of your context, with an intersectional reading of your question.</p>
+      <p class="facet"><span class="label">Take back.</span> See clearly who leads, who benefits, and who is most affected — and design accordingly.</p>
+
+      <h3 class="week-title">Week 10 — Emergent learning — the method</h3>
+      <p class="facet"><span class="label">Encounter.</span> Trade the old model that treats the learner as an account to deposit into for one where learning is alive, relational, and shared.</p>
+      <p class="facet"><span class="label">Build.</span> An observation of where learning is already emerging, plus one condition you design to invite more of it.</p>
+      <p class="facet"><span class="label">Take back.</span> Create the conditions that let learning emerge, rather than steering it toward a fixed outcome.</p>
+
+      <h3 class="week-title">Week 11 — Neuroeducation &amp; brain health</h3>
+      <p class="facet"><span class="label">Encounter.</span> Learn what the brain actually needs in order to learn — active engagement, spacing, emotion — and where "neurotypical by default" quietly excludes.</p>
+      <p class="facet"><span class="label">Build.</span> One session redesigned with active learning and spaced repetition, audited for neurotypical defaults.</p>
+      <p class="facet"><span class="label">Take back.</span> Design with how brains really work, and catch the assumptions that would have forced others to retrofit.</p>
+
+      <h3 class="week-title">Week 12 — Identifying research gaps</h3>
+      <p class="facet"><span class="label">Encounter.</span> Bring the literature to its real purpose: not mastering each field, but finding the place where their absence, together, is hurting someone.</p>
+      <p class="facet"><span class="label">Build.</span> A gap statement, stress-tested with peers.</p>
+      <p class="facet"><span class="label">Take back.</span> Name the specific synthesis gap your inquiry is positioned to close — the most generative place to stand.</p>
+    </section>
+
+    <section class="phase" aria-labelledby="phase-3">
+      <h2 class="phase-title" id="phase-3">Phase 3 — Investigation &amp; methodology</h2>
+      <p class="phase-goal">Goal: conduct field research to gather qualitative and quantitative data.</p>
+
+      <h3 class="week-title">Week 13 — Choosing methodology</h3>
+      <p class="facet"><span class="label">Encounter.</span> Choose how you'll come to know what you know — mixed methods that honour both measurable scale and lived depth.</p>
+      <p class="facet"><span class="label">Build.</span> A methodology choice with a written defence.</p>
+      <p class="facet"><span class="label">Take back.</span> Defend an approach that balances numbers and narrative, and say plainly what you'll count as evidence.</p>
+
+      <h3 class="week-title">Week 14 — Stakeholder engagement &amp; co-design</h3>
+      <p class="facet"><span class="label">Encounter.</span> Move from asking permission to sharing the pen — designing with the people most affected, before the decisions are made.</p>
+      <p class="facet"><span class="label">Build.</span> A stakeholder map showing who is missing, with a co-design plan.</p>
+      <p class="facet"><span class="label">Take back.</span> Bring excluded learners into the work early, as co-designers rather than late-stage approvers.</p>
+
+      <h3 class="week-title">Week 15 — Listening as a research practice</h3>
+      <p class="facet"><span class="label">Encounter.</span> Learn to listen as a discipline — close, patient, non-extractive — to the people the system has been quietest about.</p>
+      <p class="facet"><span class="label">Build.</span> One participatory interview or focus group, with notes on what you heard.</p>
+      <p class="facet"><span class="label">Take back.</span> Understand lived barriers from the inside, and hear the outlier data your questions didn't anticipate.</p>
+
+      <h3 class="week-title">Week 16 — Quantitative data as provocation</h3>
+      <p class="facet"><span class="label">Encounter.</span> Let numbers do what they do well — reveal patterns — while refusing to let them have the last word.</p>
+      <p class="facet"><span class="label">Build.</span> A short, piloted survey of your context.</p>
+      <p class="facet"><span class="label">Take back.</span> Surface broader patterns and use them to ask better questions, not to close the conversation.</p>
+
+      <h3 class="week-title">Week 17 — Ongoing ethical oversight</h3>
+      <p class="facet"><span class="label">Encounter.</span> Hold ethics as a living relationship that travels with the research as it changes, not a box ticked once at the start.</p>
+      <p class="facet"><span class="label">Build.</span> A reviewed consent and confidentiality protocol, with an accountability mechanism.</p>
+      <p class="facet"><span class="label">Take back.</span> Keep participants safe and informed as the inquiry shifts beneath you.</p>
+
+      <h3 class="week-title">Week 18 — Collaborative inquiry</h3>
+      <p class="facet"><span class="label">Encounter.</span> Discover what becomes visible only in company — the findings that hold up when more than one practitioner looks.</p>
+      <p class="facet"><span class="label">Build.</span> A hosted preliminary-findings session and the robust patterns it surfaces.</p>
+      <p class="facet"><span class="label">Take back.</span> Test which of your findings survive other perspectives, and which were only ever local.</p>
+    </section>
+
+    <section class="phase" aria-labelledby="phase-4">
+      <h2 class="phase-title" id="phase-4">Phase 4 — Analysis, design &amp; synthesis</h2>
+      <p class="phase-goal">Goal: translate findings into inclusive learning content and finalize the thesis.</p>
+
+      <h3 class="week-title">Week 19 — Meaning-making</h3>
+      <p class="facet"><span class="label">Encounter.</span> Turn what you gathered into meaning without flattening the specificity that made it worth gathering.</p>
+      <p class="facet"><span class="label">Build.</span> Coded qualitative data and thematic analysis, done with a peer.</p>
+      <p class="facet"><span class="label">Take back.</span> Produce findings that are both deep and broad — and that keep lived experience intact.</p>
+
+      <h3 class="week-title">Week 20 — Cross-case analysis</h3>
+      <p class="facet"><span class="label">Encounter.</span> Learn to tell a local problem from a structural one — the pattern of exclusion that outlasts any single context.</p>
+      <p class="facet"><span class="label">Build.</span> A cross-case analysis naming shared systemic patterns.</p>
+      <p class="facet"><span class="label">Take back.</span> Generate insights that hold across environments, not just in yours.</p>
+
+      <h3 class="week-title">Week 21 — Backward design for social change</h3>
+      <p class="facet"><span class="label">Encounter.</span> Begin at the end — with what transformation looks like for the learner the system has served least — and design back toward it.</p>
+      <p class="facet"><span class="label">Build.</span> An end-goal statement to design backward from.</p>
+      <p class="facet"><span class="label">Take back.</span> Align every later choice to a destination defined by the most marginalized learner, not the average one.</p>
+
+      <h3 class="week-title">Week 22 — Prototype development</h3>
+      <p class="facet"><span class="label">Encounter.</span> Make something real and testable, born accessible from its first rough draft rather than corrected into accessibility later.</p>
+      <p class="facet"><span class="label">Build.</span> An accessible prototype or sample lesson, tested with a real person.</p>
+      <p class="facet"><span class="label">Take back.</span> Surface the assumptions you couldn't see — by building, and testing with someone usually left out.</p>
+
+      <h3 class="week-title">Week 23 — Iteration &amp; public feedback</h3>
+      <p class="facet"><span class="label">Encounter.</span> Treat feedback as part of the design itself — reflection in the moment and after it — and let the community's insight reshape the work.</p>
+      <p class="facet"><span class="label">Build.</span> A documented feedback session with recorded refinements.</p>
+      <p class="facet"><span class="label">Take back.</span> Refine in public, honouring the people whose insight you're building on.</p>
+
+      <h3 class="week-title">Week 24 — Culmination &amp; dissemination</h3>
+      <p class="facet"><span class="label">Encounter.</span> Return what you learned to the community that made it possible, in a form they can actually use — and let it keep living past you.</p>
+      <p class="facet"><span class="label">Build.</span> A finalized body of work, shared as an accessible, living resource.</p>
+      <p class="facet"><span class="label">Take back.</span> Hand back a usable resource that goes on adapting in contexts you'll never control — the full arc from reader to practitioner-researcher.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Fieldwork is published by Accessible Learning Labs · <a href="https://www.accessiblelearninglabs.com">accessiblelearninglabs.com</a></p>
+  </footer>
+</div>
+</body>
+</html>
