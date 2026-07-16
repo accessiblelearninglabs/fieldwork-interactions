@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Watch a question break and get rebuilt — Fieldwork, Week 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#303e44;
+    --accent:#475f6a;
+    --muted:#66727a;
+    --hair:#e3e6e7;
+    --panel:#f5f6f6;
+    --measure:38rem;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Asap',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    font-size:17px;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--measure);margin:0 auto;padding:clamp(2.5rem,6vw,5rem) 1.4rem 4rem}
+
+  .eyebrow{
+    font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:1.1rem;
+  }
+  h1{
+    font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.12;font-weight:700;
+    letter-spacing:-.015em;margin-bottom:1rem;
+  }
+  .standfirst{font-size:1.14rem;color:var(--muted);font-weight:400;max-width:32rem}
+
+  .rule{height:1px;background:var(--hair);border:0;margin:2.6rem 0}
+
+  .lede{margin-bottom:.4rem}
+  p{margin-bottom:1.05rem}
+  p:last-child{margin-bottom:0}
+
+  /* pass marker */
+  .pass{margin-top:3rem}
+  .pass-tag{
+    display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accent);
+    padding-bottom:.5rem;margin-bottom:1.2rem;border-bottom:2px solid var(--accent);
+  }
+
+  /* question specimen */
+  .spec{margin:1.5rem 0}
+  .spec-label{font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:.55rem;letter-spacing:.01em}
+  .spec-q{
+    font-size:clamp(1.25rem,3.2vw,1.6rem);line-height:1.34;font-weight:500;
+    color:var(--ink);padding-left:1.1rem;border-left:2px solid var(--hair);
+  }
+  .spec.arrived .spec-q{border-left:3px solid var(--accent);font-weight:600}
+
+  /* test / prompt list */
+  .checks{list-style:none;margin:1.3rem 0}
+  .checks li{
+    padding:.7rem 0 .8rem;border-top:1px solid var(--hair);
+    display:grid;grid-template-columns:auto 1fr;column-gap:.85rem;
+  }
+  .checks li:last-child{border-bottom:1px solid var(--hair)}
+  .q{font-weight:600;color:var(--ink)}
+  .verdict{color:var(--muted);grid-column:2}
+  .mark{
+    font-weight:700;font-size:.82rem;letter-spacing:.06em;color:var(--accent);
+    align-self:start;padding-top:.15rem;min-width:2.6rem;
+  }
+
+  .fracture{
+    margin-top:1.6rem;padding:1.15rem 1.25rem;background:var(--panel);
+    border-left:3px solid var(--accent);
+  }
+  .fracture .spec-label{color:var(--accent);text-transform:uppercase;letter-spacing:.1em;font-size:.72rem}
+
+  .note{color:var(--muted);font-size:1rem;margin-top:1.4rem}
+
+  /* the card */
+  .card{
+    margin-top:3.5rem;border:1.5px solid var(--ink);padding:1.9rem 1.8rem 2.1rem;
+  }
+  .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.4rem}
+  .card h2{font-size:1.3rem;font-weight:700;letter-spacing:-.01em}
+  .card-sub{color:var(--muted);font-size:.98rem;margin-bottom:1.6rem}
+  .step{margin-top:1.5rem}
+  .step:first-of-type{margin-top:0}
+  .step-tag{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.55rem}
+  .step ul{list-style:none;margin:0}
+  .step li{padding:.32rem 0 .32rem 1.1rem;position:relative;color:var(--ink)}
+  .step li::before{content:"";position:absolute;left:0;top:.85em;width:.45rem;height:1px;background:var(--accent)}
+
+  .printbtn{
+    margin-top:1.9rem;font-family:inherit;font-size:.86rem;font-weight:600;letter-spacing:.02em;
+    color:var(--bg);background:var(--ink);border:0;padding:.7rem 1.2rem;cursor:pointer;
+  }
+  .printbtn:hover{background:var(--accent)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  footer{margin-top:3.4rem;padding-top:1.6rem;border-top:1px solid var(--hair);color:var(--muted);font-size:.94rem}
+  footer a{color:var(--accent)}
+
+  @media (prefers-reduced-motion:no-preference){
+    .wrap{animation:fade .5s ease both}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  }
+
+  @media print{
+    :root{--muted:#333}
+    body{font-size:12pt}
+    .wrap{max-width:none;padding:0}
+    .no-print{display:none !important}
+    .card{page-break-before:always;border-color:#000;margin-top:0}
+    .pass,.spec,.fracture{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Fieldwork · Week 4 companion</div>
+    <h1>Watch a question break, and get rebuilt</h1>
+    <p class="standfirst">The three-pass pressure test, worked once on a single question — so you can hear the difference between a question that admires a problem and one you can carry.</p>
+  </header>
+
+  <hr class="rule">
+
+  <p class="lede">The steps are simple to follow. The hard part is judgment: hearing the moment a question has drifted back to the average learner, and telling a sentence you can finish from one you can only gesture toward. That is learned by watching a question change. Here is one, moved through the three passes. The narrowing is deliberately shown with a wrong turn left in, because the wrong turn is where most of the learning is.</p>
+
+  <div class="spec">
+    <div class="spec-label">The starting question</div>
+    <p class="spec-q">How can we make our online course more accessible for everyone?</p>
+  </div>
+  <p>It reads well. It is the most generous-sounding question in the room, and that is exactly why it is hard to move: nothing in it is wrong, so nothing in it can be tested.</p>
+
+  <!-- PASS 1 -->
+  <section class="pass" aria-labelledby="p1">
+    <span class="pass-tag" id="p1">Pass 1 · Alone</span>
+    <p>Run the three private tests. Each one asks the question to do a job it cannot yet do.</p>
+    <ul class="checks">
+      <li><span class="mark">No</span><span class="q">Can I see one person?</span><span class="verdict"><em>Everyone</em> has no face. There is no one to follow through a Tuesday.</span></li>
+      <li><span class="mark">No</span><span class="q">Can I carry it through my real weeks?</span><span class="verdict">“Accessible” names no scope. It has no edge you could reach and call the study done.</span></li>
+      <li><span class="mark">No</span><span class="q">Can it still surprise me?</span><span class="verdict">“More accessible” already contains its answer: add accessibility. It can only be confirmed.</span></li>
+    </ul>
+    <div class="spec">
+      <div class="spec-label">Rewrite after Pass 1</div>
+      <p class="spec-q">How can we improve completion rates for learners with disabilities in our online course?</p>
+    </div>
+    <p>Narrower, and it now names a group. It feels like progress — enough that it would be easy to stop here. This is the version to take to someone else.</p>
+  </section>
+
+  <!-- PASS 2 -->
+  <section class="pass" aria-labelledby="p2">
+    <span class="pass-tag" id="p2">Pass 2 · With a peer</span>
+    <p>Read it aloud, unedited, to a colleague — here, one who works closer to the learners than you do. Ask for fractures, not praise.</p>
+    <ul class="checks">
+      <li><span class="mark">—</span><span class="q">Whom does it leave out?</span><span class="verdict">“Learners with disabilities” is a category, not a person. A learner using a screen reader and a learner managing chronic fatigue share almost nothing about their day.</span></li>
+      <li><span class="mark">—</span><span class="q">Where would it stick in a real week?</span><span class="verdict">“Completion rates” needs institutional data you may not hold — and reports the result only after the learner has already gone.</span></li>
+      <li><span class="mark">—</span><span class="q">Is the answer already implied?</span><span class="verdict">“Improve completion” assumes the course is sound and the learner needs help finishing it. The design is quietly exempted from the question.</span></li>
+    </ul>
+    <div class="fracture">
+      <div class="spec-label">The fracture you don’t see coming</div>
+      <p style="margin-bottom:0">Asked <em>“if the person were in the room, what would they change?”</em>, the peer names something the question never reaches: it never asks whether finishing the course <em>as built</em> was possible on the learner’s terms — or whether completion was the outcome the learner was after at all. The evening sessions the course assumes may be the barrier itself. The question has been measuring persistence, when the thing worth studying is the design’s assumptions about time.</p>
+    </div>
+  </section>
+
+  <!-- PASS 3 -->
+  <section class="pass" aria-labelledby="p3">
+    <span class="pass-tag" id="p3">Pass 3 · Alone</span>
+    <p>Rewrite from the fractures — narrower where it sprawled, honest about whom it names, open where it had already decided.</p>
+    <div class="spec arrived">
+      <div class="spec-label">Rewrite after Pass 3</div>
+      <p class="spec-q">What in our course’s design — its schedule, its pacing, its assumptions about time and energy — decides whether an adult learner managing chronic fatigue can take part on their own terms?</p>
+    </div>
+    <p class="note">It names one person. It locates the question in the design, not in the learner’s persistence. It stays open — it asks what <em>decides</em>, not how to <em>fix</em>. And it is carriable: you can examine the design, and you can talk with the person. It is not finished; it may narrow again once you do. That is the point. It is now solid enough to hand over a second time.</p>
+  </section>
+
+  <!-- CARD -->
+  <section class="card" aria-labelledby="card-h">
+    <div class="card-head">
+      <h2 id="card-h">Pressure-test card</h2>
+    </div>
+    <p class="card-sub">Take this into the conversation. One sentence, three passes.</p>
+
+    <div class="step">
+      <div class="step-tag">Pass 1 · Alone</div>
+      <ul>
+        <li>Draft one sentence that names, by role or lived experience, the learner your environment excludes most reliably.</li>
+        <li>Can I see one person?</li>
+        <li>Can I carry it through my real weeks?</li>
+        <li>Can it still surprise me?</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-tag">Pass 2 · With a peer</div>
+      <ul>
+        <li>Read it aloud, unedited. Ask for fractures, not praise.</li>
+        <li>Whom does this let me see — and whom does it leave out?</li>
+        <li>Where would this stick in a real week?</li>
+        <li>Is the answer already implied by how it’s phrased?</li>
+        <li>If the person this is about were in the room, what would they change?</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-tag">Pass 3 · Alone</div>
+      <ul>
+        <li>Rewrite from the fractures. Keep both versions — the distance between them is the work.</li>
+      </ul>
+    </div>
+
+    <button class="printbtn no-print" onclick="window.print()">Print the card</button>
+  </section>
+
+  <footer>
+    <p>Part of the Fieldwork playlist — practical skills for inclusive learning designers. This page is the linear, screen-reader- and keyboard-friendly version. <a href="#">Back to the essay</a>.</p>
+  </footer>
+</div>
+</body>
+</html>
