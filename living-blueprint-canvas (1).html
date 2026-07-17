@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Living Blueprint Canvas — Fieldwork Week 6</title>
+<meta name="description" content="A one-page research-proposal canvas. Complete six fields to produce a plan that is clear enough to guide the work and open enough to revise. Accessible Learning Labs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#303e44;
+    --accent:#475f6a;
+    --muted:#5c6a71;
+    --line:#e4e8ea;
+    --field-border:#7a878e;
+    --surface:#f6f8f9;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Asap",system-ui,sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:3.5rem 1.5rem 5rem;}
+
+  a{color:var(--accent);}
+  a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible,details>summary:focus-visible{
+    outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;
+  }
+
+  .skip{
+    position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;
+    padding:.6rem .9rem;border-radius:0 0 var(--radius) 0;z-index:10;
+  }
+  .skip:focus{left:0;}
+  #canvas:focus{outline:none;}
+
+  /* Header */
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin:0 0 1rem;
+  }
+  h1{
+    font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;
+    margin:0 0 .7rem;letter-spacing:-.01em;
+  }
+  .lede{font-size:1.05rem;margin:0 0 1.4rem;max-width:56ch;}
+  .how{
+    font-size:.92rem;color:var(--muted);margin:0;max-width:60ch;
+    padding-top:1.3rem;border-top:1px solid var(--line);
+  }
+  .how strong{color:var(--ink);font-weight:500;}
+
+  /* Toolbar */
+  .toolbar{
+    display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;
+    margin:1.8rem 0 0;
+  }
+  .btn{
+    font:inherit;font-size:.82rem;font-weight:500;
+    color:var(--accent);background:none;border:1px solid var(--field-border);
+    border-radius:999px;padding:.4rem .95rem;cursor:pointer;
+    transition:border-color .18s,color .18s,background .18s;
+  }
+  .btn:hover{border-color:var(--accent);}
+  .btn[disabled]{opacity:.5;cursor:default;}
+  .btn.confirm{color:#fff;background:var(--accent);border-color:var(--accent);}
+  .status{
+    font-size:.78rem;color:var(--muted);margin-left:auto;
+    padding:.4rem 0;min-height:1.2em;
+  }
+
+  /* Fields */
+  main{margin-top:.5rem;}
+  .field{margin:2.4rem 0 0;padding-top:2.1rem;border-top:1px solid var(--line);}
+  .field-num{
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;
+  }
+  .field-label{
+    display:block;font-size:1.18rem;font-weight:600;
+    margin:.15rem 0 .35rem;letter-spacing:-.005em;
+  }
+  .field-label label{font:inherit;color:inherit;cursor:pointer;}
+  .field-q{font-size:.95rem;color:var(--ink);margin:0 0 .85rem;max-width:60ch;}
+
+  textarea{
+    width:100%;min-height:5.5rem;resize:vertical;
+    font:inherit;color:var(--ink);background:var(--surface);
+    border:1px solid var(--field-border);border-radius:var(--radius);
+    padding:.8rem .9rem;line-height:1.55;
+  }
+  textarea::placeholder{color:#9aa4a9;}
+
+  details{margin:.7rem 0 0;}
+  details>summary{
+    display:inline-flex;align-items:center;gap:.4rem;
+    font-size:.82rem;color:var(--accent);cursor:pointer;
+    list-style:none;width:max-content;
+  }
+  details>summary::-webkit-details-marker{display:none;}
+  details>summary::before{content:"+";font-weight:600;}
+  details[open]>summary::before{content:"–";}
+  .example{
+    margin:.55rem 0 0;padding:.85rem .95rem;
+    background:var(--surface);border-left:2px solid var(--line);
+    border-radius:0 var(--radius) var(--radius) 0;
+    font-size:.92rem;color:var(--ink);
+  }
+  .example .tag{
+    display:block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin-bottom:.35rem;
+  }
+
+  /* Done checklist */
+  .done{margin:2.9rem 0 0;padding:1.6rem;background:var(--surface);border-radius:var(--radius);}
+  .done h2{font-size:1.05rem;font-weight:600;margin:0 0 .3rem;}
+  .done p{font-size:.9rem;color:var(--muted);margin:0 0 1rem;}
+  .checklist{list-style:none;margin:0;padding:0;}
+  .checklist li{display:flex;gap:.65rem;padding:.4rem 0;font-size:.95rem;line-height:1.5;}
+  .checklist input[type=checkbox]{
+    margin-top:.28rem;width:1rem;height:1rem;flex:none;accent-color:var(--accent);
+  }
+
+  /* Footer */
+  footer{margin:3.2rem 0 0;padding-top:1.6rem;border-top:1px solid var(--line);}
+  .foot-note{font-size:.85rem;color:var(--muted);margin:0 0 .8rem;max-width:62ch;}
+  .byline{font-size:.8rem;color:var(--muted);margin:0;}
+  .byline em{font-style:italic;}
+
+  .printout{display:none;}
+
+  @media (max-width:480px){
+    .wrap{padding:2.6rem 1.15rem 4rem;}
+    .status{margin-left:0;width:100%;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+
+  @media print{
+    :root{--surface:#fff;}
+    .skip,.toolbar,.status,.how,.done .print-hide{display:none !important;}
+    .wrap{padding:0;max-width:none;}
+    .field{break-inside:avoid;border-top:1px solid #ccc;}
+    details{display:block;}
+    details>summary{display:none;}
+    .example{display:block;}
+    textarea{display:none;}
+    .printout{
+      display:block;white-space:pre-wrap;min-height:1.2rem;
+      padding:.6rem .7rem;border:1px solid #ccc;border-radius:var(--radius);
+      font-size:.95rem;
+    }
+    .printout:empty::after{content:"—";color:#999;}
+    a{color:inherit;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#canvas">Skip to the canvas</a>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Fieldwork · Week 6 · Part 2 · Accessible Learning Labs</p>
+    <h1>Living Blueprint Canvas</h1>
+    <p class="lede">A one-page research proposal, completed field by field. Clear enough to guide the work, and open enough to revise as the work develops.</p>
+    <p class="how"><strong>Complete the six fields in order.</strong> Each has a guiding question and a composite example. Entries stay in this browser and are not sent anywhere; use <strong>Download</strong> or <strong>Print</strong> to keep a copy. Keep the whole to one page.</p>
+
+    <div class="toolbar" role="group" aria-label="Canvas actions">
+      <button type="button" class="btn" id="download">Download</button>
+      <button type="button" class="btn" id="print">Print</button>
+      <button type="button" class="btn" id="copy">Copy</button>
+      <button type="button" class="btn" id="clear">Clear</button>
+      <p class="status" id="status" role="status" aria-live="polite">0 of 6 fields complete</p>
+    </div>
+  </header>
+
+  <main id="canvas" tabindex="-1">
+    <section class="field">
+      <p class="field-num">Field 1</p>
+      <h2 class="field-label"><label for="f1">Objective</label></h2>
+      <p class="field-q" id="q1">What are you asking, and for whom? State the question, scoped to what you can carry.</p>
+      <textarea id="f1" aria-describedby="q1 ex1" placeholder="The question, and who it is for."></textarea>
+      <details>
+        <summary>Show example</summary>
+        <div class="example" id="ex1">
+          <span class="tag">Example · composite</span>
+          How do adult learners who rely on screen readers experience our onboarding course, and where does it drop them?
+        </div>
+      </details>
+    </section>
+
+    <section class="field">
+      <p class="field-num">Field 2</p>
+      <h2 class="field-label"><label for="f2">Method</label></h2>
+      <p class="field-q" id="q2">How will you gather evidence and make sense of it? Could someone else follow these steps?</p>
+      <textarea id="f2" aria-describedby="q2 ex2" placeholder="How you will gather and interpret evidence."></textarea>
+      <details>
+        <summary>Show example</summary>
+        <div class="example" id="ex2">
+          <span class="tag">Example · composite</span>
+          Three accessibility walkthroughs of the course with screen-reader users, recorded with consent. Barriers coded against WCAG and against what users say actually stopped them.
+        </div>
+      </details>
+    </section>
+
+    <section class="field">
+      <p class="field-num">Field 3</p>
+      <h2 class="field-label"><label for="f3">Significance</label></h2>
+      <p class="field-q" id="q3">What changes, and for whom? Does this name a change in someone's experience, not only a gap in the literature?</p>
+      <textarea id="f3" aria-describedby="q3 ex3" placeholder="What changes, and for whom."></textarea>
+      <details>
+        <summary>Show example</summary>
+        <div class="example" id="ex3">
+          <span class="tag">Example · composite</span>
+          A named list of barriers the team can fix before the next cohort, so the learners currently dropped are no longer designed out.
+        </div>
+      </details>
+    </section>
+
+    <section class="field">
+      <p class="field-num">Field 4</p>
+      <h2 class="field-label"><label for="f4">Success criteria</label></h2>
+      <p class="field-q" id="q4">How would any reader judge whether it worked? Is success defined by the most excluded learner, or by what would satisfy you?</p>
+      <textarea id="f4" aria-describedby="q4 ex4" placeholder="How any reader could judge whether it worked."></textarea>
+      <details>
+        <summary>Show example</summary>
+        <div class="example" id="ex4">
+          <span class="tag">Example · composite</span>
+          At least the top three barriers removed and re-tested with the same users, who confirm the course now reaches them.
+        </div>
+      </details>
+    </section>
+
+    <section class="field">
+      <p class="field-num">Field 5</p>
+      <h2 class="field-label"><label for="f5">The one non-negotiable</label></h2>
+      <p class="field-q" id="q5">The commitment that must not change. Which commitment, if broken, would mean the inquiry lost the person it was for?</p>
+      <textarea id="f5" aria-describedby="q5 ex5" placeholder="The single commitment that must not change."></textarea>
+      <details>
+        <summary>Show example</summary>
+        <div class="example" id="ex5">
+          <span class="tag">Example · composite</span>
+          The screen-reader users judge whether it works. Not the analytics, and not the team.
+        </div>
+      </details>
+    </section>
+
+    <section class="field">
+      <p class="field-num">Field 6</p>
+      <h2 class="field-label"><label for="f6">What I expect to revise</label></h2>
+      <p class="field-q" id="q6">The parts you expect the work to correct. Where do you already anticipate reality editing the plan?</p>
+      <textarea id="f6" aria-describedby="q6 ex6" placeholder="The parts you expect the work to correct."></textarea>
+      <details>
+        <summary>Show example</summary>
+        <div class="example" id="ex6">
+          <span class="tag">Example · composite</span>
+          The method. Three walkthroughs may be too few, and the coding scheme will likely change once real barriers appear.
+        </div>
+      </details>
+    </section>
+
+    <div class="done">
+      <h2>Done looks like this</h2>
+      <p>A self-check, not a score. Nothing here is submitted.</p>
+      <ul class="checklist">
+        <li><input type="checkbox" id="c1"><label for="c1">All six fields fit on one page.</label></li>
+        <li><input type="checkbox" id="c2"><label for="c2">A reader can tell who the inquiry is for, what you will do, and what would change.</label></li>
+        <li><input type="checkbox" id="c3"><label for="c3">Fields 5 and 6 state, in words, what is fixed and what is open to change.</label></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p class="foot-note">This page is the linear, keyboard- and screen-reader-navigable form of the canvas; distinctions between what is fixed and what is revisable are stated in words, not signalled by colour. Examples are composite illustrations, not real projects.</p>
+    <p class="byline"><strong>Accessible Learning Labs</strong> · Fieldwork &nbsp;<em>— a proposal should be clear enough to guide you and loose enough to be corrected by what you find.</em></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var FIELDS = ["f1","f2","f3","f4","f5","f6"];
+  var LABELS = {
+    f1:"Objective", f2:"Method", f3:"Significance",
+    f4:"Success criteria", f5:"The one non-negotiable", f6:"What I expect to revise"
+  };
+  var KEY = "all_living_blueprint_v1";
+  var statusEl = document.getElementById("status");
+  var storageOK = false;
+
+  function els(){ return FIELDS.map(function(id){ return document.getElementById(id); }); }
+
+  function save(){
+    if(!storageOK) return;
+    try{
+      var data = {};
+      els().forEach(function(t){ data[t.id] = t.value; });
+      localStorage.setItem(KEY, JSON.stringify(data));
+      flash("Saved to this browser");
+    }catch(e){ /* storage unavailable — entries remain for this session */ }
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      storageOK = true;
+      if(raw){
+        var data = JSON.parse(raw);
+        els().forEach(function(t){ if(typeof data[t.id] === "string") t.value = data[t.id]; });
+      }
+    }catch(e){ storageOK = false; }
+  }
+
+  var lastStatus = "";
+  function setStatus(text){
+    if(text !== lastStatus){ lastStatus = text; statusEl.textContent = text; }
+  }
+  function baseText(){
+    var done = els().filter(function(t){ return t.value.trim() !== ""; }).length;
+    return done + " of 6 fields complete";
+  }
+  function updateCount(){ setStatus(baseText()); }
+
+  var flashTimer;
+  function flash(msg){
+    setStatus(msg + " · " + baseText());
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(updateCount, 1600);
+  }
+
+  function buildMarkdown(){
+    var lines = [
+      "# Living Blueprint — Research Proposal",
+      "_Fieldwork · Week 6 · Part 2 · Accessible Learning Labs_",
+      ""
+    ];
+    els().forEach(function(t, i){
+      lines.push("## " + (i+1) + ". " + LABELS[t.id]);
+      lines.push(t.value.trim() ? t.value.trim() : "—");
+      lines.push("");
+    });
+    return lines.join("\n");
+  }
+
+  function download(){
+    try{
+      var blob = new Blob([buildMarkdown()], {type:"text/markdown"});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = "living-blueprint.md";
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 500);
+      flash("Downloaded");
+    }catch(e){ flash("Download unavailable here"); }
+  }
+
+  function copy(){
+    var text = buildMarkdown();
+    function done(){ flash("Copied"); }
+    function fallback(){
+      try{
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly","");
+        ta.style.position="absolute"; ta.style.left="-9999px";
+        document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); document.body.removeChild(ta); done();
+      }catch(e){ flash("Copy unavailable here"); }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    }else{ fallback(); }
+  }
+
+  // Two-step clear (no native dialog)
+  var clearBtn = document.getElementById("clear");
+  var clearArmed = false, clearTimer;
+  function resetClear(){
+    clearArmed = false;
+    clearBtn.textContent = "Clear";
+    clearBtn.classList.remove("confirm");
+  }
+  clearBtn.addEventListener("click", function(){
+    if(!clearArmed){
+      clearArmed = true;
+      clearBtn.textContent = "Confirm clear";
+      clearBtn.classList.add("confirm");
+      clearTimer = setTimeout(resetClear, 4000);
+      return;
+    }
+    clearTimeout(clearTimer);
+    els().forEach(function(t){ t.value = ""; });
+    try{ if(storageOK) localStorage.removeItem(KEY); }catch(e){}
+    resetClear();
+    updateCount();
+    els()[0].focus();
+  });
+
+  // Mirror values into print blocks so typed text prints reliably
+  function preparePrint(){
+    els().forEach(function(t){
+      var out = t.nextElementSibling && t.nextElementSibling.classList && t.nextElementSibling.classList.contains("printout")
+        ? t.nextElementSibling : null;
+      if(!out){
+        out = document.createElement("div");
+        out.className = "printout";
+        out.setAttribute("aria-hidden","true");
+        t.parentNode.insertBefore(out, t.nextSibling);
+      }
+      out.textContent = t.value;
+    });
+  }
+
+  // Wire up
+  load();
+  updateCount();
+  els().forEach(function(t){
+    t.addEventListener("input", function(){ updateCount(); });
+    t.addEventListener("change", save);
+    t.addEventListener("blur", save);
+  });
+  document.getElementById("download").addEventListener("click", download);
+  document.getElementById("copy").addEventListener("click", copy);
+  document.getElementById("print").addEventListener("click", function(){ preparePrint(); window.print(); });
+  window.addEventListener("beforeprint", preparePrint);
+})();
+</script>
+</body>
+</html>
