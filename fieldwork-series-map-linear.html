@@ -12,7 +12,7 @@
     --bg:#ffffff;
     --ink:#303e44;
     --accent:#475f6a;
-    --muted:#6b7880;
+    --muted:#67747c;
     --line:#e4e8ea;
     --surface:#f6f8f9;
   }
@@ -25,6 +25,8 @@
   }
   .wrap{max-width:680px;margin:0 auto;padding:4rem 1.5rem 5rem;}
 
+  .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}
   .skip{
     position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;
     padding:.6rem 1rem;border-radius:0 0 6px 0;z-index:10;
@@ -65,7 +67,7 @@
     <h1>Fieldwork — the series map</h1>
     <p class="lede">Linear, accessible version. A 24-part public inquiry (over 48 weeks) that turns reading into research.</p>
 
-    <section class="howto" aria-label="How to read this document">
+    <section class="howto">
       <h2>How to read this</h2>
       <p>This is the plain-text, screen-reader and keyboard-friendly version of the interactive series map. Nothing is hidden and nothing needs to be opened: every week appears in full, in order. Use your screen reader's heading navigation to move between phases (heading level 2) and weeks (heading level 3).</p>
       <p>Each week names three things:</p>
@@ -82,7 +84,7 @@
 
   <main id="series">
 
-    <section class="phase" aria-labelledby="phase-1">
+    <section class="phase">
       <h2 class="phase-title" id="phase-1">Phase 1 — Foundations &amp; thesis discovery</h2>
       <p class="phase-goal">Goal: align personal interest with the thesis and establish the research problem.</p>
 
@@ -117,7 +119,7 @@
       <p class="facet"><span class="label">Take back.</span> State your objectives, method, and significance so any reader could judge whether the inquiry succeeded — and keep it adaptive.</p>
     </section>
 
-    <section class="phase" aria-labelledby="phase-2">
+    <section class="phase">
       <h2 class="phase-title" id="phase-2">Phase 2 — Literature review &amp; theoretical scaffolding</h2>
       <p class="phase-goal">Goal: situate the inquiry within existing legal, social, and pedagogical frameworks.</p>
 
@@ -152,7 +154,7 @@
       <p class="facet"><span class="label">Take back.</span> Name the specific synthesis gap your inquiry is positioned to close — the most generative place to stand.</p>
     </section>
 
-    <section class="phase" aria-labelledby="phase-3">
+    <section class="phase">
       <h2 class="phase-title" id="phase-3">Phase 3 — Investigation &amp; methodology</h2>
       <p class="phase-goal">Goal: conduct field research to gather qualitative and quantitative data.</p>
 
@@ -187,7 +189,7 @@
       <p class="facet"><span class="label">Take back.</span> Test which of your findings survive other perspectives, and which were only ever local.</p>
     </section>
 
-    <section class="phase" aria-labelledby="phase-4">
+    <section class="phase">
       <h2 class="phase-title" id="phase-4">Phase 4 — Analysis, design &amp; synthesis</h2>
       <p class="phase-goal">Goal: translate findings into inclusive learning content and finalize the thesis.</p>
 
@@ -225,7 +227,7 @@
   </main>
 
   <footer>
-    <p>Fieldwork is published by Accessible Learning Labs · <a href="https://www.accessiblelearninglabs.com">accessiblelearninglabs.com</a></p>
+    <p>Fieldwork is published by Accessible Learning Labs · <a href="https://www.accessiblelearninglabs.com"><span class="vh">Accessible Learning Labs website</span><span aria-hidden="true">accessiblelearninglabs.com</span></a></p>
   </footer>
 </div>
 </body>
