@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldwork Toolkit — Competency Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --text: #303e44;
+    --accent: #475f6a;
+    --accent-light: rgba(71,95,106,0.08);
+    --accent-mid: rgba(71,95,106,0.18);
+    --cluster-structural: rgba(71,95,106,0.06);
+    --cluster-relational: rgba(48,62,68,0.05);
+    --cluster-dynamic: rgba(71,95,106,0.04);
+    --node-structural: #475f6a;
+    --node-relational: #303e44;
+    --node-dynamic: #6b8a96;
+    --edge: rgba(71,95,106,0.22);
+    --edge-hover: rgba(71,95,106,0.6);
+    --font: 'Asap', sans-serif;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    font-family: var(--font);
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  #canvas-wrap {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .cluster-label {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    fill: var(--accent);
+    opacity: 0.5;
+  }
+
+  .cluster-zone {
+    fill: none;
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    opacity: 0.4;
+  }
+
+  .edge {
+    stroke: var(--edge);
+    stroke-width: 1.2;
+    fill: none;
+    transition: stroke 0.2s, stroke-width 0.2s, opacity 0.2s;
+  }
+
+  .edge.strong {
+    stroke-width: 2;
+    stroke: rgba(71,95,106,0.35);
+  }
+
+  .edge.dimmed {
+    opacity: 0.08;
+  }
+
+  .edge.highlighted {
+    stroke: var(--accent);
+    stroke-width: 2.2;
+    opacity: 1;
+  }
+
+  .node-group {
+    cursor: pointer;
+  }
+
+  .node-circle {
+    transition: r 0.2s ease, fill 0.2s ease;
+  }
+
+  .node-group.dimmed .node-circle {
+    opacity: 0.2;
+  }
+
+  .node-group.dimmed .node-label {
+    opacity: 0.15;
+  }
+
+  .node-label {
+    font-family: var(--font);
+    font-size: 11.5px;
+    font-weight: 500;
+    fill: var(--text);
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .node-num {
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 600;
+    fill: #ffffff;
+    pointer-events: none;
+    dominant-baseline: central;
+    text-anchor: middle;
+  }
+
+  .center-node circle {
+    fill: var(--text);
+  }
+
+  .center-label {
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 500;
+    fill: var(--text);
+    text-anchor: middle;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  #tooltip {
+    position: absolute;
+    background: var(--bg);
+    border: 1px solid rgba(71,95,106,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    max-width: 260px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    box-shadow: 0 4px 24px rgba(48,62,68,0.10);
+  }
+
+  #tooltip.visible { opacity: 1; }
+
+  #tooltip .tt-cluster {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.55;
+  }
+
+  #tooltip .tt-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  #tooltip .tt-desc {
+    font-size: 12px;
+    color: var(--accent);
+    line-height: 1.55;
+  }
+
+  #tooltip .tt-links {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(71,95,106,0.12);
+    font-size: 11px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  #legend {
+    position: absolute;
+    bottom: 28px;
+    left: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--accent);
+    opacity: 0.75;
+  }
+
+  .legend-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  #hint {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    font-size: 11px;
+    color: var(--accent);
+    opacity: 0.4;
+    font-style: italic;
+  }
+
+  #title-block {
+    position: absolute;
+    top: 28px;
+    left: 32px;
+  }
+
+  #title-block h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  #title-block p {
+    font-size: 11.5px;
+    color: var(--accent);
+    opacity: 0.65;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<div id="canvas-wrap">
+  <svg id="svg"></svg>
+  <div id="tooltip">
+    <div class="tt-cluster"></div>
+    <div class="tt-title"></div>
+    <div class="tt-desc"></div>
+    <div class="tt-links"></div>
+  </div>
+  <div id="title-block">
+    <h1>Fieldwork Toolkit — Competency Map</h1>
+    <p>Accessibility · Disability Justice · Emergent Learning</p>
+  </div>
+  <div id="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#475f6a"></div>Structural</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#303e44"></div>Relational</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b8a96"></div>Dynamic</div>
+  </div>
+  <div id="hint">hover to explore · click to focus</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const nodes = [
+  {
+    id: 'c1', num: '1', label: 'Methodological\nInquiry', cluster: 'dynamic',
+    desc: 'Gathering real-time data through surveys and check-ins to drive evidence-informed decisions during live learning.',
+    short: 'Evidence-gathering in action'
+  },
+  {
+    id: 'c2', num: '2', label: 'Technical\nCompliance', cluster: 'structural',
+    desc: 'Applying WCAG 2.1 Level AA and Accessible Canada Act standards proactively — not reactively — from the very start of design.',
+    short: 'WCAG / ACA standards'
+  },
+  {
+    id: 'c3', num: '3', label: 'Proactive &\nUniversal Design', cluster: 'structural',
+    desc: 'Building UDL pathways — visual, auditory, kinesthetic — so every learner can reach the same goal through the right route for them.',
+    short: 'UDL from the ground up'
+  },
+  {
+    id: 'c4', num: '4', label: 'Intersectional\nAnalysis', cluster: 'relational',
+    desc: 'Recognising that learners hold multiple, layered identities. Barriers are compounded — one-size solutions erase real people.',
+    short: 'Layered identity & barriers'
+  },
+  {
+    id: 'c5', num: '5', label: 'Collaborative\nStakeholder\nEngagement', cluster: 'relational',
+    desc: 'Facilitating inclusive consultations with learners themselves — not designing for them, but with them and under their leadership.',
+    short: 'Design with, not for'
+  },
+  {
+    id: 'c6', num: '6', label: 'Facilitating\nEmergent\nAdaptation', cluster: 'dynamic',
+    desc: 'Treating curriculum as a living system. Pivoting when real-time conditions demand it — not as failure, but as skilled response.',
+    short: 'Curriculum as living system'
+  },
+  {
+    id: 'c7', num: '7', label: 'Neuroeducational\nLiteracy', cluster: 'dynamic',
+    desc: 'Using knowledge of neuroplasticity, spaced repetition, and active learning to design sessions that work with how brains actually function.',
+    short: 'How the brain learns'
+  },
+  {
+    id: 'c8', num: '8', label: 'Iterative\nReflective\nPractice', cluster: 'dynamic',
+    desc: 'Reflection-in-action and between sessions. The practitioner-researcher stance that keeps the whole system honest and adaptive.',
+    short: 'Reflection in & on action'
+  },
+  {
+    id: 'c9', num: '9', label: 'Backward\nCurriculum\nDesign', cluster: 'structural',
+    desc: 'Starting from the end goal — social transformation and genuine participation — and designing every pathway backwards from there.',
+    short: 'Start from the end goal'
+  },
+  {
+    id: 'c10', num: '10', label: 'Collective\nAccess &\nInterdependence', cluster: 'relational',
+    desc: 'Moving beyond individual "fixes" toward community-supported learning — where mutual aid and shared resources strengthen everyone.',
+    short: 'Community over independence'
+  },
+];
+
+const edges = [
+  { source: 'c2', target: 'c3', strength: 'strong' },
+  { source: 'c3', target: 'c9', strength: 'strong' },
+  { source: 'c2', target: 'c9', strength: 'strong' },
+  { source: 'c4', target: 'c5', strength: 'strong' },
+  { source: 'c5', target: 'c10', strength: 'strong' },
+  { source: 'c4', target: 'c10', strength: 'strong' },
+  { source: 'c1', target: 'c6', strength: 'strong' },
+  { source: 'c6', target: 'c8', strength: 'strong' },
+  { source: 'c7', target: 'c8', strength: 'strong' },
+  { source: 'c1', target: 'c7', strength: 'strong' },
+  { source: 'c1', target: 'c8', strength: 'normal' },
+  { source: 'c6', target: 'c7', strength: 'normal' },
+  { source: 'c2', target: 'c4', strength: 'normal' },
+  { source: 'c3', target: 'c5', strength: 'normal' },
+  { source: 'c9', target: 'c6', strength: 'normal' },
+  { source: 'c10', target: 'c3', strength: 'normal' },
+  { source: 'c7', target: 'c6', strength: 'normal' },
+  { source: 'c8', target: 'c1', strength: 'normal' },
+  { source: 'c5', target: 'c4', strength: 'normal' },
+  { source: 'c10', target: 'c2', strength: 'normal' },
+  { source: 'c9', target: 'c1', strength: 'normal' },
+  { source: 'c4', target: 'c7', strength: 'normal' },
+  { source: 'c3', target: 'c10', strength: 'normal' },
+];
+
+const clusterColors = {
+  structural: '#475f6a',
+  relational: '#303e44',
+  dynamic: '#6b8a96',
+};
+
+const clusterNames = {
+  structural: 'Structural',
+  relational: 'Relational',
+  dynamic: 'Dynamic',
+};
+
+const clusterFocus = {
+  structural: 'Infrastructure · building the system',
+  relational: 'Ethics · centring those most impacted',
+  dynamic: 'Pedagogy · keeping learning alive',
+};
+
+let W, H, svg, sim, activeNode = null;
+
+function init() {
+  W = document.getElementById('canvas-wrap').clientWidth;
+  H = document.getElementById('canvas-wrap').clientHeight;
+
+  d3.select('#svg').selectAll('*').remove();
+  svg = d3.select('#svg');
+
+  const clusterCenters = {
+    structural: { x: W * 0.28, y: H * 0.38 },
+    relational:  { x: W * 0.72, y: H * 0.38 },
+    dynamic:     { x: W * 0.50, y: H * 0.72 },
+  };
+
+  nodes.forEach(n => {
+    if (!n.x) {
+      n.x = clusterCenters[n.cluster].x + (Math.random() - 0.5) * 120;
+      n.y = clusterCenters[n.cluster].cy || clusterCenters[n.cluster].y + (Math.random() - 0.5) * 120;
+    }
+  });
+
+  const defs = svg.append('defs');
+  defs.append('marker')
+    .attr('id', 'arr')
+    .attr('viewBox', '0 0 10 10')
+    .attr('refX', 28).attr('refY', 5)
+    .attr('markerWidth', 5).attr('markerHeight', 5)
+    .attr('orient', 'auto-start-reverse')
+    .append('path')
+    .attr('d', 'M2 1L8 5L2 9')
+    .attr('fill', 'none')
+    .attr('stroke', '#475f6a')
+    .attr('stroke-width', '1.5')
+    .attr('stroke-linecap', 'round')
+    .attr('stroke-linejoin', 'round');
+
+  const edgeGroup = svg.append('g').attr('class', 'edges');
+  const nodeGroup = svg.append('g').attr('class', 'nodes');
+
+  const edgeSel = edgeGroup.selectAll('line')
+    .data(edges)
+    .enter()
+    .append('line')
+    .attr('class', d => 'edge' + (d.strength === 'strong' ? ' strong' : ''));
+
+  const radius = d => {
+    const counts = edges.filter(e => e.source === d.id || e.target === d.id || e.source.id === d.id || e.target.id === d.id).length;
+    return 20 + Math.min(counts * 1.2, 8);
+  };
+
+  const nodeG = nodeGroup.selectAll('g.node-group')
+    .data(nodes)
+    .enter()
+    .append('g')
+    .attr('class', 'node-group')
+    .call(d3.drag()
+      .on('start', dragStart)
+      .on('drag', dragged)
+      .on('end', dragEnd))
+    .on('mouseenter', onNodeEnter)
+    .on('mouseleave', onNodeLeave)
+    .on('click', onNodeClick);
+
+  nodeG.append('circle')
+    .attr('class', 'node-circle')
+    .attr('r', d => radius(d))
+    .attr('fill', d => clusterColors[d.cluster])
+    .attr('opacity', 0.88);
+
+  nodeG.append('text')
+    .attr('class', 'node-num')
+    .attr('dy', '0.05em')
+    .text(d => d.num);
+
+  nodeG.each(function(d) {
+    const g = d3.select(this);
+    const r = radius(d);
+    const lines = d.label.split('\n');
+    const offsetY = r + 10;
+    const textG = g.append('g');
+    lines.forEach((line, i) => {
+      textG.append('text')
+        .attr('class', 'node-label')
+        .attr('text-anchor', 'middle')
+        .attr('x', 0)
+        .attr('y', offsetY + i * 14)
+        .text(line);
+    });
+  });
+
+  sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(edges)
+      .id(d => d.id)
+      .distance(d => d.strength === 'strong' ? 115 : 175)
+      .strength(d => d.strength === 'strong' ? 0.7 : 0.2))
+    .force('charge', d3.forceManyBody().strength(-320))
+    .force('cluster', clusterForce(clusterCenters, 0.22))
+    .force('collision', d3.forceCollide().radius(d => radius(d) + 36))
+    .force('x', d3.forceX(W / 2).strength(0.04))
+    .force('y', d3.forceY(H / 2).strength(0.04))
+    .on('tick', () => {
+      edgeSel
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+
+      nodeG.attr('transform', d => {
+        d.x = Math.max(40, Math.min(W - 40, d.x));
+        d.y = Math.max(40, Math.min(H - 40, d.y));
+        return `translate(${d.x},${d.y})`;
+      });
+    });
+
+  function clusterForce(centers, strength) {
+    return function(alpha) {
+      nodes.forEach(n => {
+        const c = centers[n.cluster];
+        n.vx += (c.x - n.x) * strength * alpha;
+        n.vy += (c.y - n.y) * strength * alpha;
+      });
+    };
+  }
+
+  function dragStart(event, d) {
+    if (!event.active) sim.alphaTarget(0.3).restart();
+    d.fx = d.x; d.fy = d.y;
+  }
+  function dragged(event, d) {
+    d.fx = event.x; d.fy = event.y;
+  }
+  function dragEnd(event, d) {
+    if (!event.active) sim.alphaTarget(0);
+    d.fx = null; d.fy = null;
+  }
+
+  function onNodeEnter(event, d) {
+    if (activeNode) return;
+    highlightNode(d, nodeG, edgeSel);
+    showTooltip(event, d);
+  }
+
+  function onNodeLeave(event, d) {
+    if (activeNode) return;
+    resetHighlight(nodeG, edgeSel);
+    hideTooltip();
+  }
+
+  function onNodeClick(event, d) {
+    event.stopPropagation();
+    if (activeNode === d.id) {
+      activeNode = null;
+      resetHighlight(nodeG, edgeSel);
+      hideTooltip();
+    } else {
+      activeNode = d.id;
+      highlightNode(d, nodeG, edgeSel);
+      showTooltip(event, d, true);
+    }
+  }
+
+  svg.on('click', () => {
+    if (activeNode) {
+      activeNode = null;
+      resetHighlight(nodeG, edgeSel);
+      hideTooltip();
+    }
+  });
+}
+
+function highlightNode(d, nodeG, edgeSel) {
+  const connected = new Set();
+  edges.forEach(e => {
+    const sid = e.source.id || e.source;
+    const tid = e.target.id || e.target;
+    if (sid === d.id) connected.add(tid);
+    if (tid === d.id) connected.add(sid);
+  });
+
+  nodeG.classed('dimmed', n => n.id !== d.id && !connected.has(n.id));
+
+  edgeSel
+    .classed('highlighted', e => {
+      const sid = e.source.id || e.source;
+      const tid = e.target.id || e.target;
+      return sid === d.id || tid === d.id;
+    })
+    .classed('dimmed', e => {
+      const sid = e.source.id || e.source;
+      const tid = e.target.id || e.target;
+      return sid !== d.id && tid !== d.id;
+    });
+}
+
+function resetHighlight(nodeG, edgeSel) {
+  nodeG.classed('dimmed', false);
+  edgeSel.classed('highlighted', false).classed('dimmed', false);
+}
+
+const tt = document.getElementById('tooltip');
+
+function showTooltip(event, d, pinned) {
+  const connectedNodes = [];
+  edges.forEach(e => {
+    const sid = e.source.id || e.source;
+    const tid = e.target.id || e.target;
+    if (sid === d.id) connectedNodes.push(nodes.find(n => n.id === tid));
+    if (tid === d.id) connectedNodes.push(nodes.find(n => n.id === sid));
+  });
+
+  const uniqueConnected = [...new Set(connectedNodes.filter(Boolean).map(n => n.label.replace(/\n/g, ' ')))];
+
+  tt.querySelector('.tt-cluster').textContent = clusterFocus[d.cluster];
+  tt.querySelector('.tt-title').textContent = d.label.replace(/\n/g, ' ');
+  tt.querySelector('.tt-desc').textContent = d.desc;
+  tt.querySelector('.tt-links').textContent = uniqueConnected.length ? 'Connected to: ' + uniqueConnected.join(', ') : '';
+
+  positionTooltip(event);
+  tt.classList.add('visible');
+}
+
+function positionTooltip(event) {
+  const x = event.clientX || event.pageX;
+  const y = event.clientY || event.pageY;
+  const ttW = 264;
+  const left = x + 18 + ttW > W ? x - ttW - 18 : x + 18;
+  const top = Math.min(y - 10, H - 200);
+  tt.style.left = left + 'px';
+  tt.style.top = top + 'px';
+}
+
+function hideTooltip() {
+  tt.classList.remove('visible');
+}
+
+init();
+window.addEventListener('resize', () => {
+  nodes.forEach(n => { n.x = undefined; n.y = undefined; });
+  init();
+});
+</script>
+</body>
+</html>

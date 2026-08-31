@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldwork Toolkit &mdash; the competency map (linear, accessible version)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#303e44;      /* 11.06:1 on --bg */
+    --accent:#475f6a;   /*  6.75:1 */
+    --muted:#67747c;    /*  4.81:1 on --bg, 4.52:1 on --surface */
+    --line:#e4e8ea;
+    --surface:#f6f8f9;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:1.5rem;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Asap",system-ui,sans-serif;font-weight:400;
+    font-size:100%;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:4rem 1.5rem 5rem;}
+
+  .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;
+    padding:.6rem 1rem;border-radius:0 0 6px 0;z-index:10;}
+  .skip:focus{left:0;}
+  a:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+
+  .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin:0 0 1rem;}
+  h1{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;
+    margin:0 0 .9rem;letter-spacing:-.01em;}
+  .lede{font-size:1.05rem;margin:0 0 .5rem;}
+  a{color:var(--accent);text-underline-offset:.18em;}
+
+  .howto{margin:1.5rem 0 0;padding:1.2rem 1.3rem;background:var(--surface);border-radius:8px;}
+  .howto h2{font-size:.95rem;font-weight:600;margin:0 0 .5rem;}
+  .howto p{margin:0 0 .5rem;font-size:.92rem;}
+  .howto p:last-child{margin-bottom:0;}
+  .howto dt{font-weight:600;color:var(--accent);font-size:.9rem;margin-top:.5rem;}
+  .howto dd{margin:0;font-size:.9rem;}
+
+  /* Contents. Each entry is a 1.75rem (28px) target, past the 24px floor in
+     WCAG 2.2 SC 2.5.8, since these are navigation rather than prose links. */
+  nav#contents{margin:2rem 0 0;padding:1.2rem 1.3rem;background:var(--surface);border-radius:8px;}
+  nav#contents h2{font-size:.95rem;font-weight:600;margin:0 0 .4rem;}
+  nav#contents ul{margin:0;padding-left:1.2rem;}
+  nav#contents ul ul{margin:.15rem 0 .5rem;}
+  nav#contents li{font-size:.92rem;margin:.1rem 0;}
+  nav#contents a{display:inline-block;min-height:1.75rem;padding:.2rem 0;}
+
+  table{border-collapse:collapse;width:100%;margin:1rem 0 0;font-size:.92rem;}
+  caption{text-align:left;font-size:.9rem;color:var(--muted);margin:0 0 .5rem;}
+  th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--line);
+    vertical-align:top;}
+  thead th{border-bottom:2px solid var(--line);font-size:.85rem;}
+  th[scope="row"]{font-weight:500;}
+
+  .cluster{margin:3rem 0 0;padding-top:1.4rem;border-top:2px solid var(--line);}
+  .cluster h2{font-size:1.3rem;font-weight:600;margin:0 0 .3rem;}
+  .cluster-focus{font-size:.95rem;color:var(--muted);margin:0 0 1rem;}
+  .comp{margin:1.9rem 0 0;}
+  .comp h3{font-size:1.08rem;font-weight:600;margin:0 0 .35rem;}
+  .short{margin:0 0 .5rem;color:var(--muted);font-size:.95rem;}
+  .desc{margin:0 0 .6rem;font-size:.97rem;}
+  .meta{margin:0 0 .4rem;font-size:.95rem;line-height:1.6;}
+  .meta .label{color:var(--accent);font-weight:600;}
+
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);
+    font-size:.88rem;color:var(--muted);}
+  footer a{color:var(--accent);}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition-duration:.001ms !important;animation:none !important;}
+  }
+  @media print{
+    .skip,nav#contents{display:none !important;}
+    body{font-size:11pt;color:#000;background:#fff;}
+    .cluster{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the competencies</a>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Accessible Learning Labs</p>
+    <h1>Fieldwork Toolkit &mdash; the competency map</h1>
+    <p class="lede">Linear, accessible version. Ten competencies in three groups, and the
+      relationships between them.</p>
+
+    <div class="howto">
+      <h2>How to read this</h2>
+      <p>This is the plain-text, screen-reader and keyboard-friendly version of the interactive
+        competency map. Nothing is hidden and nothing needs to be opened: every competency
+        appears in full, in order, with its group and its relationships written out. Use your
+        screen reader&rsquo;s heading navigation to move between groups (heading level 2) and
+        competencies (heading level 3).</p>
+      <p>On the interactive map, position and colour carry the grouping and the lines carry the
+        relationships. Here both are stated in words, so nothing depends on seeing the diagram.</p>
+      <dl>
+        <dt>Group</dt>
+        <dd>Which of the three families the competency belongs to, and what that family is for.</dd>
+        <dt>Closely linked to</dt>
+        <dd>The strongest relationships &mdash; drawn as heavy lines on the map.</dd>
+        <dt>Also linked to</dt>
+        <dd>Supporting relationships &mdash; drawn as light lines.</dd>
+      </dl>
+    </div>
+
+    <nav id="contents" aria-label="Contents">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#structural">Structural</a>
+          <ul>
+            <li><a href="#c2">2. Technical Compliance</a></li>
+            <li><a href="#c3">3. Proactive &amp; Universal Design</a></li>
+            <li><a href="#c9">9. Backward Curriculum Design</a></li>
+          </ul>
+        </li>
+        <li><a href="#relational">Relational</a>
+          <ul>
+            <li><a href="#c4">4. Intersectional Analysis</a></li>
+            <li><a href="#c5">5. Collaborative Stakeholder Engagement</a></li>
+            <li><a href="#c10">10. Collective Access &amp; Interdependence</a></li>
+          </ul>
+        </li>
+        <li><a href="#dynamic">Dynamic</a>
+          <ul>
+            <li><a href="#c1">1. Methodological Inquiry</a></li>
+            <li><a href="#c6">6. Facilitating Emergent Adaptation</a></li>
+            <li><a href="#c7">7. Neuroeducational Literacy</a></li>
+            <li><a href="#c8">8. Iterative Reflective Practice</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <h2>The ten competencies at a glance</h2>
+    <table>
+      <caption>Each competency, the group it belongs to, and how many relationships it holds.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Competency</th>
+          <th scope="col">Group</th>
+          <th scope="col">Links</th>
+          <th scope="col">Of those, close</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr><th scope="row"><a href="#c1">1. Methodological Inquiry</a></th><td>Dynamic</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c2">2. Technical Compliance</a></th><td>Structural</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c3">3. Proactive &amp; Universal Design</a></th><td>Structural</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c4">4. Intersectional Analysis</a></th><td>Relational</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c5">5. Collaborative Stakeholder Engagement</a></th><td>Relational</td><td>3</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c6">6. Facilitating Emergent Adaptation</a></th><td>Dynamic</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c7">7. Neuroeducational Literacy</a></th><td>Dynamic</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c8">8. Iterative Reflective Practice</a></th><td>Dynamic</td><td>3</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c9">9. Backward Curriculum Design</a></th><td>Structural</td><td>4</td><td>2</td></tr>
+          <tr><th scope="row"><a href="#c10">10. Collective Access &amp; Interdependence</a></th><td>Relational</td><td>4</td><td>2</td></tr>
+      </tbody>
+    </table>
+
+    <section class="cluster">
+      <h2 id="structural">Structural</h2>
+      <p class="cluster-focus">Infrastructure · building the system</p>
+      <article class="comp" id="c2">
+        <h3>2. Technical Compliance</h3>
+        <p class="short">WCAG / ACA standards</p>
+        <p class="desc">Applying WCAG 2.1 Level AA and Accessible Canada Act standards proactively — not reactively — from the very start of design.</p>
+        <p class="meta"><span class="label">Group.</span> Structural &mdash; infrastructure · building the system</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c3">3. Proactive &amp; Universal Design</a>, <a href="#c9">9. Backward Curriculum Design</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c4">4. Intersectional Analysis</a>, <a href="#c10">10. Collective Access &amp; Interdependence</a></p>
+      </article>
+      <article class="comp" id="c3">
+        <h3>3. Proactive &amp; Universal Design</h3>
+        <p class="short">UDL from the ground up</p>
+        <p class="desc">Building UDL pathways — visual, auditory, kinesthetic — so every learner can reach the same goal through the right route for them.</p>
+        <p class="meta"><span class="label">Group.</span> Structural &mdash; infrastructure · building the system</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c2">2. Technical Compliance</a>, <a href="#c9">9. Backward Curriculum Design</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c5">5. Collaborative Stakeholder Engagement</a>, <a href="#c10">10. Collective Access &amp; Interdependence</a></p>
+      </article>
+      <article class="comp" id="c9">
+        <h3>9. Backward Curriculum Design</h3>
+        <p class="short">Start from the end goal</p>
+        <p class="desc">Starting from the end goal — social transformation and genuine participation — and designing every pathway backwards from there.</p>
+        <p class="meta"><span class="label">Group.</span> Structural &mdash; infrastructure · building the system</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c2">2. Technical Compliance</a>, <a href="#c3">3. Proactive &amp; Universal Design</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c1">1. Methodological Inquiry</a>, <a href="#c6">6. Facilitating Emergent Adaptation</a></p>
+      </article>
+    </section>
+    <section class="cluster">
+      <h2 id="relational">Relational</h2>
+      <p class="cluster-focus">Ethics · centring those most impacted</p>
+      <article class="comp" id="c4">
+        <h3>4. Intersectional Analysis</h3>
+        <p class="short">Layered identity &amp; barriers</p>
+        <p class="desc">Recognising that learners hold multiple, layered identities. Barriers are compounded — one-size solutions erase real people.</p>
+        <p class="meta"><span class="label">Group.</span> Relational &mdash; ethics · centring those most impacted</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c5">5. Collaborative Stakeholder Engagement</a>, <a href="#c10">10. Collective Access &amp; Interdependence</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c2">2. Technical Compliance</a>, <a href="#c7">7. Neuroeducational Literacy</a></p>
+      </article>
+      <article class="comp" id="c5">
+        <h3>5. Collaborative Stakeholder Engagement</h3>
+        <p class="short">Design with, not for</p>
+        <p class="desc">Facilitating inclusive consultations with learners themselves — not designing for them, but with them and under their leadership.</p>
+        <p class="meta"><span class="label">Group.</span> Relational &mdash; ethics · centring those most impacted</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c4">4. Intersectional Analysis</a>, <a href="#c10">10. Collective Access &amp; Interdependence</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c3">3. Proactive &amp; Universal Design</a></p>
+      </article>
+      <article class="comp" id="c10">
+        <h3>10. Collective Access &amp; Interdependence</h3>
+        <p class="short">Community over independence</p>
+        <p class="desc">Moving beyond individual "fixes" toward community-supported learning — where mutual aid and shared resources strengthen everyone.</p>
+        <p class="meta"><span class="label">Group.</span> Relational &mdash; ethics · centring those most impacted</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c4">4. Intersectional Analysis</a>, <a href="#c5">5. Collaborative Stakeholder Engagement</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c2">2. Technical Compliance</a>, <a href="#c3">3. Proactive &amp; Universal Design</a></p>
+      </article>
+    </section>
+    <section class="cluster">
+      <h2 id="dynamic">Dynamic</h2>
+      <p class="cluster-focus">Pedagogy · keeping learning alive</p>
+      <article class="comp" id="c1">
+        <h3>1. Methodological Inquiry</h3>
+        <p class="short">Evidence-gathering in action</p>
+        <p class="desc">Gathering real-time data through surveys and check-ins to drive evidence-informed decisions during live learning.</p>
+        <p class="meta"><span class="label">Group.</span> Dynamic &mdash; pedagogy · keeping learning alive</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c6">6. Facilitating Emergent Adaptation</a>, <a href="#c7">7. Neuroeducational Literacy</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c8">8. Iterative Reflective Practice</a>, <a href="#c9">9. Backward Curriculum Design</a></p>
+      </article>
+      <article class="comp" id="c6">
+        <h3>6. Facilitating Emergent Adaptation</h3>
+        <p class="short">Curriculum as living system</p>
+        <p class="desc">Treating curriculum as a living system. Pivoting when real-time conditions demand it — not as failure, but as skilled response.</p>
+        <p class="meta"><span class="label">Group.</span> Dynamic &mdash; pedagogy · keeping learning alive</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c1">1. Methodological Inquiry</a>, <a href="#c8">8. Iterative Reflective Practice</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c7">7. Neuroeducational Literacy</a>, <a href="#c9">9. Backward Curriculum Design</a></p>
+      </article>
+      <article class="comp" id="c7">
+        <h3>7. Neuroeducational Literacy</h3>
+        <p class="short">How the brain learns</p>
+        <p class="desc">Using knowledge of neuroplasticity, spaced repetition, and active learning to design sessions that work with how brains actually function.</p>
+        <p class="meta"><span class="label">Group.</span> Dynamic &mdash; pedagogy · keeping learning alive</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c1">1. Methodological Inquiry</a>, <a href="#c8">8. Iterative Reflective Practice</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c4">4. Intersectional Analysis</a>, <a href="#c6">6. Facilitating Emergent Adaptation</a></p>
+      </article>
+      <article class="comp" id="c8">
+        <h3>8. Iterative Reflective Practice</h3>
+        <p class="short">Reflection in &amp; on action</p>
+        <p class="desc">Reflection-in-action and between sessions. The practitioner-researcher stance that keeps the whole system honest and adaptive.</p>
+        <p class="meta"><span class="label">Group.</span> Dynamic &mdash; pedagogy · keeping learning alive</p>
+        <p class="meta"><span class="label">Closely linked to.</span> <a href="#c6">6. Facilitating Emergent Adaptation</a>, <a href="#c7">7. Neuroeducational Literacy</a></p>
+        <p class="meta"><span class="label">Also linked to.</span> <a href="#c1">1. Methodological Inquiry</a></p>
+      </article>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Fieldwork Toolkit &mdash; competency map, linear version. The same ten competencies and
+      nineteen relationships as the interactive map, in reading order.</p>
+  </footer>
+</div>
+</body>
+</html>
