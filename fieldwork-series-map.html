@@ -8,97 +8,46 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#ffffff;
-    --ink:#303e44;
-    --accent:#475f6a;
-    --muted:#6b7880;
-    --line:#e4e8ea;
-    --surface:#f6f8f9;
-  }
-  *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:"Asap",system-ui,sans-serif;
-    font-weight:400;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
+  :root{--bg:#ffffff;--ink:#303e44;--accent:#475f6a;--muted:#67747c;--line:#e4e8ea;--surface:#f6f8f9;}
+  *{box-sizing:border-box;} html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Asap",system-ui,sans-serif;font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 1rem;}
+  h1{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;margin:0 0 .9rem;letter-spacing:-.01em;}
+  .lede{font-size:1.05rem;margin:0 0 .9rem;}
+  .question{margin:0 0 .9rem;padding:1rem 1.2rem;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:.97rem;}
+  .limits{font-size:.9rem;color:var(--muted);margin:0;}
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted);}
+  footer a{color:var(--accent);} a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
   .wrap{max-width:760px;margin:0 auto;padding:4rem 1.5rem 5rem;}
-
-  .eyebrow{
-    font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--accent);font-weight:600;margin:0 0 1rem;
-  }
-  h1{
-    font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;
-    margin:0 0 .9rem;letter-spacing:-.01em;
-  }
-  .lede{font-size:1.05rem;color:var(--ink);margin:0 0 0;max-width:54ch;}
-
-  .legend{
-    display:flex;flex-wrap:wrap;gap:1.1rem 2rem;
-    margin:1.6rem 0 0;padding:1.3rem 0 0;border-top:1px solid var(--line);
-  }
-  .legend div{max-width:15rem;}
-  .legend .flabel{margin-bottom:.2rem;}
-  .legend p{margin:0;font-size:.85rem;color:var(--muted);line-height:1.45;}
-
+  .legend{display:flex;flex-wrap:wrap;gap:1.1rem 2rem;margin:1.6rem 0 0;padding:1.3rem 0 0;border-top:1px solid var(--line);}
+  .legend div{max-width:15rem;} .legend .flabel{margin-bottom:.2rem;} .legend p{margin:0;font-size:.85rem;color:var(--muted);line-height:1.45;}
   .controls{margin:2.2rem 0 0;}
-  .toggle-all{
-    font:inherit;font-size:.8rem;font-weight:500;letter-spacing:.02em;
-    color:var(--accent);background:none;border:1px solid var(--line);
-    border-radius:999px;padding:.35rem .9rem;cursor:pointer;
-  }
-  .toggle-all:hover{border-color:var(--accent);}
-  .toggle-all:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-
-  .phase{margin:2.6rem 0 0;}
-  .phase-head{margin:0 0 .4rem;}
-  .phase-eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;}
-  .phase-title{font-size:1.2rem;font-weight:600;margin:.2rem 0 .25rem;}
-  .phase-goal{font-size:.9rem;color:var(--muted);font-style:italic;margin:0;}
-
-  .weeks{position:relative;list-style:none;margin:1rem 0 0;padding:0;}
-  .weeks::before{content:"";position:absolute;left:7px;top:18px;bottom:18px;width:2px;background:var(--line);}
-  .week{position:relative;}
-
-  .wbtn{
-    display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;
-    width:100%;text-align:left;background:none;border:0;
-    border-bottom:1px solid var(--line);
-    padding:.95rem .25rem .95rem 30px;cursor:pointer;color:var(--ink);font:inherit;
-  }
-  .wbtn:hover .wtitle{color:var(--accent);}
-  .wbtn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px;}
-  .wnode{
-    position:absolute;left:1px;top:1.25rem;width:14px;height:14px;border-radius:50%;
-    background:var(--bg);border:2px solid var(--line);transition:background .2s,border-color .2s;
-  }
-  .week[data-open="true"] .wnode{border-color:var(--accent);background:var(--accent);}
+  .toggle-all{font:inherit;font-size:.8rem;font-weight:500;letter-spacing:.02em;color:var(--accent);background:none;border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer;}
+  .toggle-all:hover{border-color:var(--accent);} .toggle-all:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .part{margin:2.6rem 0 0;} .part-head{margin:0 0 .4rem;}
+  .part-eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;}
+  .part-title{font-size:1.2rem;font-weight:600;margin:.2rem 0 .25rem;} .part-goal{font-size:.9rem;color:var(--muted);font-style:italic;margin:0;}
+  .posts{position:relative;list-style:none;margin:1rem 0 0;padding:0;}
+  .posts::before{content:"";position:absolute;left:7px;top:18px;bottom:18px;width:2px;background:var(--line);}
+  .post{position:relative;}
+  .wbtn{display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:.95rem .25rem .95rem 30px;cursor:pointer;color:var(--ink);font:inherit;}
+  .wbtn:hover .wtitle{color:var(--accent);} .wbtn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px;}
+  .wnode{position:absolute;left:1px;top:1.25rem;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--line);transition:background .2s,border-color .2s;}
+  .post[data-open="true"] .wnode{border-color:var(--accent);background:var(--accent);}
+  .post[data-opened="true"] .wnode{border-color:var(--accent);}
   .wnum{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;font-weight:600;}
   .wtitle{font-size:1.02rem;font-weight:500;color:var(--ink);transition:color .15s;}
   .wchev{font-size:1.4rem;line-height:1;color:var(--accent);font-weight:400;width:1rem;text-align:center;}
-
-  .panel{padding:.4rem .25rem 1.3rem 30px;}
-  .panel[hidden]{display:none;}
-  .facet{margin:0 0 .85rem;}
-  .facet:last-child{margin-bottom:0;}
+  .panel{padding:.4rem .25rem 1.3rem 30px;} .panel[hidden]{display:none;}
+  .facet{margin:0 0 .85rem;} .facet:last-child{margin-bottom:0;}
   .flabel{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.2rem;}
   .facet p{margin:0;font-size:.95rem;line-height:1.55;color:var(--ink);max-width:58ch;}
-
+  .facet.pending p{color:var(--muted);font-style:italic;}
   @keyframes reveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
   .panel:not([hidden]){animation:reveal .26s ease;}
   @media (prefers-reduced-motion:reduce){.panel:not([hidden]){animation:none;}.wnode{transition:none;}}
-
-  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted);}
-  footer a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line);}
-  footer a:hover{border-color:var(--accent);}
-
-  .noscript{margin:2rem 0;padding:1rem 1.2rem;background:var(--surface);border-radius:8px;font-size:.9rem;color:var(--ink);}
+  .noscript{margin:2rem 0;padding:1rem 1.2rem;background:var(--surface);border-radius:8px;font-size:.9rem;}
 </style>
 </head>
 <body>
@@ -106,11 +55,15 @@
   <header>
     <p class="eyebrow">Accessible Learning Labs</p>
     <h1>Fieldwork — the series map</h1>
-    <p class="lede">Fieldwork is a research method for inclusive learning design, practised in public. It asks one question: in education and at work, how does learning design decide who is included? Twenty-four posts, one every two weeks, in four phases. Open any post to see what it works, what page of the working file it makes, and what can be done afterwards.</p>
-    <div class="legend" aria-hidden="false">
+    <p class="lede">Fieldwork is a research method for inclusive learning design, practised in public. It asks one question: in education, at work, in public service, how does learning design decide who is included? Twenty-four posts in four parts. Each one reads a single adjudicated decision from the public record through the same instrument, adds one finding to the tally, and hands the reader one entry to make from a setting of their own. Open any post to see what it reads, what entry it adds to the audit, and what can be done afterwards.</p>
+    <p class="question">The question the series carries from the first post to the last: when a learning or working system was found to have failed someone, which of the three conditions could not act, and did anything in the outcome require the system to learn?</p>
+    <p class="limits">Three limits, stated here and returned to in Post 24. Adjudicated cases are the failures that were fought, so the corpus cannot see the ones that never reached a tribunal. Reading a judgment is not reading an institution. The series reads for learning design; it is not legal advice.</p>
+    <div class="legend">
       <div><span class="flabel">Encounter</span><p>What the post opens on, and the claim it makes.</p></div>
-      <div><span class="flabel">Make</span><p>The page this post adds to the working file.</p></div>
-      <div><span class="flabel">Afterwards</span><p>What can be done in a setting of one's own once the page is made.</p></div>
+      <div><span class="flabel">Decision</span><p>The adjudicated decision the post reads. Named only once it has been opened and read in full.</p></div>
+      <div><span class="flabel">Make</span><p>The entry this post adds to the reader&#x27;s own audit.</p></div>
+      <div><span class="flabel">Afterwards</span><p>What can be done in a setting of one&#x27;s own once the entry is made.</p></div>
+      <div><span class="flabel">Finding</span><p>The post&#x27;s one-line answer to the running question, added when the post publishes.</p></div>
     </div>
   </header>
 
@@ -122,7 +75,7 @@
     <p class="noscript">This map is interactive; JavaScript is needed to open each post. The same content is available in full in the linear version, fieldwork-series-map-linear.html.</p>
   </noscript>
 
-  <main id="series" aria-label="Fieldwork series, four phases of six posts"></main>
+  <main id="series" aria-label="Fieldwork series, four parts of six posts"></main>
 
   <footer>
     <p>Fieldwork is published by Accessible Learning Labs · <a href="https://www.accessiblelearninglabs.com">accessiblelearninglabs.com</a></p>
@@ -130,269 +83,292 @@
 </div>
 
 <script>
-const PHASES = [
- {
-  "n": 1,
-  "title": "Foundations",
-  "goal": "Find where a right declared and a right delivered have come apart, for one population in one setting, and draw a plan that can be corrected by what it finds.",
-  "weeks": [
-   {
-    "n": 1,
-    "title": "The right on the wall",
-    "e": "A policy that was meant, and a learner it did not reach. A right declared and a right delivered are two documents, and the distance between them is where inclusion is decided.",
-    "b": "A gap map: the population named in its setting, one policy, what it says, what the record shows was delivered, and the gap between them, dated.",
-    "t": "Locate a policy–practice gap for a named population before locating it anywhere else, from documents a stranger could open."
-   },
-   {
-    "n": 2,
-    "title": "Who set the floor",
-    "e": "Three questions the hypothesis asks of any environment. Accessibility asks what the floor is. Disability justice asks who set it. Emergent learning asks whether it can move. Only the first can be answered once.",
-    "b": "A pillar audit: for each pillar, the document that shows it able to act, or the blank where that document should be.",
-    "t": "Tell, from an institution's own record, which of the three pillars is not able to act."
-   },
-   {
-    "n": 3,
-    "title": "Where the road runs out",
-    "e": "A system can change a rule and never say what the rule was resting on. Knowledge travels only as far as the systems that carry it, and every system has a file for the people it was not built for.",
-    "b": "A delivery-system scan: what the system writes down, which entries carry a number, when each was set, the assumption under each, and where the side file is.",
-    "t": "Find the assumption a rule was resting on, and the place where the system recorded who it was not built for."
-   },
-   {
-    "n": 4,
-    "title": "The generous blur",
-    "e": "A question that names everyone names no one. The care that started this is real and vast, and it has to be narrowed until one person could recognise themselves in it.",
-    "b": "A one-sentence question naming the population, the setting and the phenomenon, and the version of it one person from that population broke.",
-    "t": "Write a question specific enough to answer, and hand it to someone it names before it is fixed."
-   },
-   {
-    "n": 5,
-    "title": "What you can carry the whole way",
-    "e": "A signature is a photograph of one instant, and the study it belongs to runs for months. A study that cannot be finished is a promise made to the people most used to being dropped.",
-    "b": "A feasibility and consent sheet: time, money, access, who checks the work, the consent position as a dated statement, and which governance route applies.",
-    "t": "Scope an inquiry that can be carried to the end, and write its consent position before anything is gathered."
-   },
-   {
-    "n": 6,
-    "title": "A plan allowed to learn",
-    "e": "A proposal everyone admired, and a finding three weeks in that it had left no room for. A plan is trustworthy when a reader can tell what it promised and see where reality revised it.",
-    "b": "A one-page blueprint: objectives, method, the population, the consent position, success criteria a stranger could apply, and the date it is next revised. The working file is complete.",
-    "t": "Hold a six-page working file for one population in one setting, and say what the next phase takes it into."
-   }
-  ]
- },
- {
-  "n": 2,
-  "title": "The question in the literature",
-  "goal": "Take the question into what has already been asked, found and written about this population, and come back with a gap statement.",
-  "weeks": [
-   {
-    "n": 7,
-    "title": "What the law requires, and what it cannot",
-    "e": "The law can require a floor, a process and a review date. It cannot require a system to keep learning from the people it serves. Fieldwork begins where the requirement stops.",
-    "b": "A rights map: each instrument, the obligation it creates for this population and setting, and what it leaves out.",
-    "t": "Read an institution's policy against the rights instruments that bind it, and name what those instruments do not reach."
-   },
-   {
-    "n": 8,
-    "title": "Who asked before",
-    "e": "Every population has been studied. The question is by whom, from where, and whether the people studied were ever asked what the question should be.",
-    "b": "A literature ledger: prior research on this population and setting, with the evidence type and the route for each source.",
-    "t": "Find and record what has already been found about a population, with the type and reachability of every source."
-   },
-   {
-    "n": 9,
-    "title": "Knowledge already on record",
-    "e": "Disabled people's own published accounts are evidence, not colour. They are also, often, the only record of what a policy felt like from underneath.",
-    "b": "An account register: first-person published accounts from this population, with what each establishes and its route.",
-    "t": "Treat first-person published accounts as evidence, at the scope each one supports."
-   },
-   {
-    "n": 10,
-    "title": "The institution's own archive",
-    "e": "A policy's history is a record of who it was written for. Every revision had a reason, and the reason is usually in the minutes.",
-    "b": "A policy timeline: each version of the policy, its date, and the decision record behind it.",
-    "t": "Trace a policy's revisions to the decisions that made them, from the institution's published record."
-   },
-   {
-    "n": 11,
-    "title": "Weighing what you found",
-    "e": "A source is only as strong as the route by which it can be checked. The series weighs its own sources the same way, in front of the reader.",
-    "b": "An evidence ladder, filled: every source in the file placed by type, scope and route.",
-    "t": "Rank sources by what each can establish and by whether a reader without institutional access could check it."
-   },
-   {
-    "n": 12,
-    "title": "The gap statement",
-    "e": "What is known, what is not, and what only the room can supply. The question, revised, goes into Phase 3 knowing exactly what it is asking for.",
-    "b": "A gap statement and the revised question.",
-    "t": "State the gap between what the literature establishes and what the question needs, and revise the question to it."
-   }
-  ]
- },
- {
-  "n": 3,
-  "title": "In the room",
-  "goal": "Gather evidence with the learners the question names. Paced by the practice: written as the method is applied in a real setting, with permission.",
-  "weeks": [
-   {
-    "n": 13,
-    "title": "Before anything is gathered",
-    "e": "Consent is written down before the first conversation, and the governance route is chosen in the open.",
-    "b": "Agreements: the consent position in force, the governance route, and who can stop the work.",
-    "t": "Put an inquiry's consent and governance in writing before it enters the room."
-   },
-   {
-    "n": 14,
-    "title": "The co-design relationship",
-    "e": "Who is in the room, on what terms, with what recognition. Findings gathered on a population's behalf, without them, are not Fieldwork findings.",
-    "b": "Terms of the relationship: who is a co-researcher, what they decide, and what they are given for it.",
-    "t": "Set up a co-design relationship in which the people the question names hold decision authority."
-   },
-   {
-    "n": 15,
-    "title": "Listening",
-    "e": "What people say when the question is theirs.",
-    "b": "A listening record.",
-    "t": "Gather accounts with learners in a form they have agreed to and can correct."
-   },
-   {
-    "n": 16,
-    "title": "Counting",
-    "e": "What the institution's numbers show, and what they were never built to see.",
-    "b": "A counting record: which numbers exist, what each was collected for, and what the file cannot count.",
-    "t": "Use an institution's own numbers at the scope they support, and say what they cannot show."
-   },
-   {
-    "n": 17,
-    "title": "Who checks the work",
-    "e": "A second reader on the record, and the learners' own verification.",
-    "b": "A check record: what the second reader found, and what the learners corrected.",
-    "t": "Build verification into an inquiry so that the people it names can correct its record."
-   },
-   {
-    "n": 18,
-    "title": "The findings session",
-    "e": "The learners hear it first.",
-    "b": "Findings, as heard: what was presented, what was said back, what changed.",
-    "t": "Return preliminary findings to the people they concern before anyone else, and record what they change."
-   }
-  ]
- },
- {
-  "n": 4,
-  "title": "Giving it back",
-  "goal": "Say which pillar could not act, design what would let it, test it with the learners, and leave a record the institution can keep acting on.",
-  "weeks": [
-   {
-    "n": 19,
-    "title": "Analysis, together",
-    "e": "What the record says when the people it names read it.",
-    "b": "A joint analysis.",
-    "t": "Analyse evidence with co-researchers rather than about them."
-   },
-   {
-    "n": 20,
-    "title": "The diagnosis",
-    "e": "Which pillar could not act, by the indicators, for this population.",
-    "b": "A diagnosis: the pillar, the evidence, and what would count against it.",
-    "t": "Make a diagnosis from the indicators that a stranger could check and that states its own counter-evidence."
-   },
-   {
-    "n": 21,
-    "title": "The change",
-    "e": "What would let the pillar act.",
-    "b": "A change design.",
-    "t": "Design a change aimed at the pillar the diagnosis named, not at the symptom."
-   },
-   {
-    "n": 22,
-    "title": "Testing the change",
-    "e": "With the learners named in the question.",
-    "b": "A test record.",
-    "t": "Test a change with the people it is for, and record what they report."
-   },
-   {
-    "n": 23,
-    "title": "The record",
-    "e": "Written so governance can read it, and so the pillar keeps acting after the inquiry ends.",
-    "b": "An institutional record: the finding, the change, the revision date, and the mechanism by which it will be revisited.",
-    "t": "Write a record an institution's governance can act on, with a date and a mechanism for its own revision."
-   },
-   {
-    "n": 24,
-    "title": "The return",
-    "e": "To the institution, to the learners, and one thing back to the series.",
-    "b": "The return: what went back to each, and what the series now holds that it did not before.",
-    "t": "Close an inquiry by giving it back, and hold a complete working file, a finding, and a record of how it was gathered."
-   }
-  ]
- }
-];
+const DATA = {
+ "parts": [
+  {
+   "n": 1,
+   "title": "What was promised",
+   "goal": "A right declared, and what reached the person. Where a commitment on paper and a service delivered came apart, and what the record shows was decided in between.",
+   "posts": [
+    {
+     "n": 1,
+     "title": "The right on the wall",
+     "e": "A policy that was meant, and a learner it did not reach. A right declared and a right delivered are two documents, and the distance between them is where inclusion is decided.",
+     "d": "Moore v. British Columbia (Education), 2012 SCC 61. Supreme Court of Canada; free to read.",
+     "b": "First entry: one declared document and one delivered document from a setting of your own, both dated, and who was consulted between them.",
+     "t": "Find where a right declared and a right delivered have come apart, from documents a stranger could open."
+    },
+    {
+     "n": 2,
+     "title": "The floor, and who set it",
+     "e": "Three questions the hypothesis asks of any environment. Accessibility asks what the floor is. Disability justice asks who set it. Emergent learning asks whether it can move. Only the first can be answered once. This is the instrument the series applies twenty-three times.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "The pillar audit, in full: for each of the three conditions, the document that shows it able to act, or the blank where that document should be.",
+     "t": "Tell, from an institution's own record, which of the three conditions is not able to act."
+    },
+    {
+     "n": 3,
+     "title": "The standard existed",
+     "e": "A standard can be written, adopted and published and still never be applied. A system that had the rule and did not act on it, and what a court made of the distance.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one standard your setting has adopted, and the evidence it has been applied.",
+     "t": "Separate a standard adopted from a standard applied, with dates for each."
+    },
+    {
+     "n": 4,
+     "title": "Who decides what is best",
+     "e": "When a system and a family disagree about where a learner belongs, someone decides, and the record shows on whose account.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one decision about placement or pathway in your setting, and whose account it rested on.",
+     "t": "Trace a decision about a person to the evidence it rested on and who supplied it."
+    },
+    {
+     "n": 5,
+     "title": "A plan with a date",
+     "e": "A court can order a plan and a date to report back. What it orders, and what it cannot, is the clearest statement there is of what law can require of a system.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one commitment in your setting that carries a date it is revisited, or the absence of one.",
+     "t": "Find whether a commitment carries a revision date and a mechanism, or only a sentence."
+    },
+    {
+     "n": 6,
+     "title": "The gap, stated by a body with authority",
+     "e": "What a right required, what provision existed, and the distance between them stated by a body whose statement counts. The first part closes with the series' own gap statement.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "A gap statement for your setting, written from the five entries so far.",
+     "t": "Write a gap statement from an audit's first entries, and say what it cannot yet show."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Getting in",
+   "goal": "Requirements, admission, hiring. What is asked of people to enter a program, a profession or a post, and how a standard is justified when someone asks.",
+   "posts": [
+    {
+     "n": 7,
+     "title": "Who the standard was written for",
+     "e": "Every standard has a history, and the history records who it was written for. The test Canadian law applies when a standard is challenged, and what it asks the institution to show.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one essential requirement in your setting, and the evidence that it is necessary rather than customary.",
+     "t": "Separate what a program genuinely requires from what convention carried forward."
+    },
+    {
+     "n": 8,
+     "title": "The rule that never asked",
+     "e": "A blanket standard applied to a person it had never assessed, and a court requiring that the person be looked at.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one blanket rule in your setting, and whether individual assessment is possible under it.",
+     "t": "Find where a rule substitutes for an assessment."
+    },
+    {
+     "n": 9,
+     "title": "The narrowest question",
+     "e": "One person, one program, one institution. The question narrowed until it named him, at the boundary between education and work.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one accommodation decision in a professional program, read for what was asked, by whom, and when.",
+     "t": "Write the question an accommodation decision was actually answering."
+    },
+    {
+     "n": 10,
+     "title": "What it costs to listen",
+     "e": "Listening has a cost and a design. An institution's decision about whether to pay it, and what a treaty body said about that decision.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one access cost your setting has declined or deferred, and the record of that decision.",
+     "t": "Find the decision record behind a declined accommodation."
+    },
+    {
+     "n": 11,
+     "title": "At the door",
+     "e": "A learner refused admission, and a standard stated afterwards for everyone who came next.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: the admission criteria in your setting, and what they exclude.",
+     "t": "Read admission criteria for who they exclude, not only for what they require."
+    },
+    {
+     "n": 12,
+     "title": "Equal treatment that is unequal",
+     "e": "An early statement in Canadian law that the same arrangement for everyone can be discrimination. The second part closes with the tally so far.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Interim tally: twelve entries from your setting, which condition each named, and what would count against each.",
+     "t": "State an interim finding and its counter-evidence."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Being measured and kept",
+   "goal": "Assessment, discipline, dismissal, and the limits of accommodation. What a system does when someone is already inside it.",
+   "posts": [
+    {
+     "n": 13,
+     "title": "The honest limit",
+     "e": "What an institution said it could not carry, and how a court tested that claim.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one limit your setting has stated, and the evidence that it was tested rather than asserted.",
+     "t": "Distinguish a tested limit from an asserted one."
+    },
+    {
+     "n": 14,
+     "title": "Two readings of one record",
+     "e": "A majority and a dissent diagnose the same dismissal two ways. The instrument applied to both.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one decision in your setting read two ways, and the evidence that would settle it.",
+     "t": "Hold two readings of one record and name what would decide between them."
+    },
+    {
+     "n": 15,
+     "title": "The check that was not done",
+     "e": "A disclosure, a dismissal days later, and the duty to inquire that sits between them.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: what your setting does between learning of a need and deciding about it.",
+     "t": "Find the inquiry step, and whether it exists."
+    },
+    {
+     "n": 16,
+     "title": "The comparator",
+     "e": "A student excluded for behaviour connected to disability, a divided court, and a dissent. Whose comparison prevails decides the case.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one conduct or discipline rule in your setting, and who it compares people against.",
+     "t": "Name the comparison a rule relies on."
+    },
+    {
+     "n": 17,
+     "title": "Counting",
+     "e": "What a scheme's numbers were built to do, and who they were built to exclude.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one number your setting reports, what it was collected for, and what it cannot count.",
+     "t": "Use a number at the scope it supports, and say what it cannot show."
+    },
+    {
+     "n": 18,
+     "title": "Whose knowledge of a condition counted",
+     "e": "A scheme that excluded a condition, and the evidence and assumptions a court examined behind the exclusion. The third part closes with the tally.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one category your setting uses, and the evidence behind it.",
+     "t": "Trace a category to its evidence, and to who supplied it."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Whether the system learned",
+   "goal": "Remedies, compliance, consent, participation in the bodies that decide, and the cases the claimant lost. Then the diagnosis of the record itself.",
+   "posts": [
+    {
+     "n": 19,
+     "title": "Consent, decided on evidence",
+     "e": "Capacity to refuse, decided on evidence, before anything is done. What consent looks like when it is the person's.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: your setting's consent position, written and dated.",
+     "t": "Put consent in writing before anything is gathered."
+    },
+    {
+     "n": 20,
+     "title": "Participation in the body that decides",
+     "e": "Excluded from the body that makes findings, because interpretation would not be provided. Hearing it first as a right.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: who sits on the bodies that decide in your setting, and what would be needed for others to.",
+     "t": "Find who is absent from a deciding body, and why."
+    },
+    {
+     "n": 21,
+     "title": "The remedy that could be paced",
+     "e": "A system ordered to remedy barriers it had bought, arguing cost, and a court deciding what it must do and by when.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: one change your setting has been required to make, and its date.",
+     "t": "Find whether a required change carries a date, and who checks it."
+    },
+    {
+     "n": 22,
+     "title": "Tested in public, again",
+     "e": "A change tested repeatedly, in public, by the body that ordered it. The closest the record comes to a system required to learn.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: the compliance record for one change in your setting.",
+     "t": "Read a compliance record for whether the system learned, not only whether it complied."
+    },
+    {
+     "n": 23,
+     "title": "When the claim lost",
+     "e": "A decision the series does not have to agree with, read on the same ladder: what the evidence and the law established, and what they could not.",
+     "d": "Named when the post is drafted, once the decision has been opened and read in full.",
+     "b": "Entry: the counter-evidence to your own running finding.",
+     "t": "Weigh a decision that goes against you by the same instrument."
+    },
+    {
+     "n": 24,
+     "title": "The diagnosis of the record",
+     "e": "Across twenty-three decisions: which condition could not act, how often, in which settings, and whether anything in the outcome required the system to learn. With its limits: the cases that were fought are not the cases that happened.",
+     "d": "The twenty-three decisions above, read as one corpus.",
+     "b": "Your audit, complete: twenty-three entries from your setting beside the series' twenty-three from the record.",
+     "t": "Hold a diagnosis of your own setting, its counter-evidence, and a record of how it was made."
+    }
+   ]
+  }
+ ],
+ "pendingDecision": "Named when the post is drafted, once the decision has been opened and read in full.",
+ "pendingFinding": "Added when the post publishes."
+};
 
 const series = document.getElementById('series');
 let idc = 0;
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function facet(label, text, pending){
+  return '<div class="facet' + (pending ? ' pending' : '') + '"><span class="flabel">' + label + '</span><p>' + esc(text) + '</p></div>';
+}
 
-PHASES.forEach(phase => {
+DATA.parts.forEach(part => {
   const sec = document.createElement('section');
-  sec.className = 'phase';
-
+  sec.className = 'part';
   const head = document.createElement('div');
-  head.className = 'phase-head';
-  head.innerHTML =
-    '<p class="phase-eyebrow">Phase ' + phase.n + '</p>' +
-    '<h2 class="phase-title">' + phase.title + '</h2>' +
-    '<p class="phase-goal">' + phase.goal + '</p>';
+  head.className = 'part-head';
+  head.innerHTML = '<p class="part-eyebrow">Part ' + part.n + '</p><h2 class="part-title">' + esc(part.title) + '</h2><p class="part-goal">' + esc(part.goal) + '</p>';
   sec.appendChild(head);
 
   const ol = document.createElement('ol');
-  ol.className = 'weeks';
-
-  phase.weeks.forEach(w => {
+  ol.className = 'posts';
+  part.posts.forEach(w => {
     const id = 'panel-' + (++idc);
     const li = document.createElement('li');
-    li.className = 'week';
+    li.className = 'post';
+    const decisionOpened = w.d !== DATA.pendingDecision;
+    li.setAttribute('data-opened', String(decisionOpened));
+    const findingText = w.f || DATA.pendingFinding;
 
     const btn = document.createElement('button');
     btn.className = 'wbtn';
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', id);
-    btn.innerHTML =
-      '<span class="wnode" aria-hidden="true"></span>' +
-      '<span><span class="wnum">Post ' + w.n + '</span>' +
-      '<span class="wtitle">' + w.title + '</span></span>' +
-      '<span class="wchev" aria-hidden="true">+</span>';
+    btn.innerHTML = '<span class="wnode" aria-hidden="true"></span><span><span class="wnum">Post ' + w.n + '</span><span class="wtitle">' + esc(w.title) + '</span></span><span class="wchev" aria-hidden="true">+</span>';
 
     const panel = document.createElement('div');
     panel.className = 'panel';
     panel.id = id;
     panel.hidden = true;
     panel.innerHTML =
-      '<div class="facet"><span class="flabel">Encounter</span><p>' + w.e + '</p></div>' +
-      '<div class="facet"><span class="flabel">Make</span><p>' + w.b + '</p></div>' +
-      '<div class="facet"><span class="flabel">Afterwards</span><p>' + w.t + '</p></div>';
+      facet('Encounter', w.e, false) +
+      facet('Decision', w.d, !decisionOpened) +
+      facet('Make', w.b, false) +
+      facet('Afterwards', w.t, false) +
+      facet('Finding', findingText, !w.f);
 
     btn.addEventListener('click', () => {
       const open = btn.getAttribute('aria-expanded') === 'true';
-      setWeek(btn, panel, li, !open);
+      setPost(btn, panel, li, !open);
       syncToggleAll();
     });
-
-    li.appendChild(btn);
-    li.appendChild(panel);
-    ol.appendChild(li);
+    li.appendChild(btn); li.appendChild(panel); ol.appendChild(li);
   });
-
   sec.appendChild(ol);
   series.appendChild(sec);
 });
 
-function setWeek(btn, panel, li, open){
+function setPost(btn, panel, li, open){
   btn.setAttribute('aria-expanded', String(open));
   panel.hidden = !open;
   li.setAttribute('data-open', String(open));
   btn.querySelector('.wchev').textContent = open ? '\u2212' : '+';
 }
-
 const toggleAllBtn = document.getElementById('toggleAll');
 function allButtons(){ return Array.from(document.querySelectorAll('.wbtn')); }
 function syncToggleAll(){
@@ -402,10 +378,7 @@ function syncToggleAll(){
 }
 toggleAllBtn.addEventListener('click', () => {
   const expand = toggleAllBtn.textContent === 'Open all';
-  allButtons().forEach(b => {
-    const panel = document.getElementById(b.getAttribute('aria-controls'));
-    setWeek(b, panel, b.closest('.week'), expand);
-  });
+  allButtons().forEach(b => { setPost(b, document.getElementById(b.getAttribute('aria-controls')), b.closest('.post'), expand); });
   syncToggleAll();
 });
 </script>
