@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldwork — what you make (linear, accessible version)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#ffffff;--ink:#303e44;--accent:#475f6a;--muted:#67747c;--line:#e4e8ea;--surface:#f6f8f9;}
+  *{box-sizing:border-box;} html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Asap",system-ui,sans-serif;font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 1rem;}
+  h1{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;margin:0 0 .9rem;letter-spacing:-.01em;}
+  .lede{font-size:1.05rem;margin:0 0 .9rem;}
+  .question{margin:0 0 .9rem;padding:1rem 1.2rem;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:.97rem;}
+  .limits{font-size:.9rem;color:var(--muted);margin:0;}
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted);}
+  a{color:var(--accent);} a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}
+  .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:.6rem 1rem;border-radius:0 0 6px 0;z-index:10;} .skip:focus{left:0;}
+  .sym{display:block;}
+  .wrap{max-width:680px;margin:0 auto;padding:4rem 1.5rem 5rem;}
+  .howto{margin:1.5rem 0 0;padding:1.2rem 1.3rem;background:var(--surface);border-radius:8px;}
+  .howto h2{font-size:.95rem;font-weight:600;margin:0 0 .5rem;} .howto p{margin:0 0 .5rem;font-size:.92rem;}
+  .howto dl{margin:.6rem 0 .8rem;} .howto dt{font-weight:600;color:var(--accent);font-size:.9rem;margin-top:.5rem;} .howto dd{margin:0;font-size:.9rem;}
+  nav.contents{margin:1.5rem 0 0;font-size:.92rem;} nav.contents h2{font-size:.95rem;font-weight:600;margin:0 0 .4rem;} nav.contents ul{margin:0;padding-left:1.2rem;} nav.contents li{margin:.15rem 0;}
+  .part{margin:3rem 0 0;padding-top:1.4rem;border-top:2px solid var(--line);}
+  h2.part-title{font-size:1.3rem;font-weight:600;margin:0 0 .3rem;} .part-goal{font-size:.95rem;color:var(--muted);margin:0 0 1rem;}
+  h3.post-title{font-size:1.08rem;font-weight:600;margin:0 0 .15rem;}
+  .from{font-size:.88rem;color:var(--muted);margin:0 0 .7rem;}
+  .facet{margin:0 0 .7rem;font-size:.97rem;line-height:1.6;} .facet .label{color:var(--accent);font-weight:600;}
+  .entry{display:grid;grid-template-columns:84px 1fr;gap:1.1rem;margin:1.8rem 0 0;padding:1.3rem 0 0;border-top:1px solid var(--line);}
+  .entry:first-of-type{border-top:0;padding-top:.4rem;}
+  .tile{width:84px;height:84px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;color:var(--accent);}
+  @media (max-width:520px){ .entry{grid-template-columns:1fr;gap:.7rem;} .tile{width:68px;height:68px;} .tile .sym{width:46px;height:46px;} }
+  @media print{ .skip{display:none;} .wrap{padding:1rem;} .entry{break-inside:avoid;} }
+</style>
+</head>
+<body>
+<a class="skip" href="#entries">Skip to the entries</a>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Accessible Learning Labs</p>
+    <h1>Fieldwork — what you make</h1>
+    <p class="lede">Linear, accessible version. Every post in Fieldwork reads one decision from the public record, and then hands the reader one entry to make from a setting of their own. This page lays those entries side by side: what each one is, why the series asks for it, and why it matters for inclusive learning where you are.</p>
+    <p class="question">Kept together, the entries become an audit of one setting, made the same way the series reads the record: from documents, with dates, saying what the evidence cannot show.</p>
+    <p class="limits">Twelve entries are set out in full, one for each published post. The twelve still to come are listed as the series map describes them, and will be filled in as their posts publish.</p>
+    <section class="howto" aria-labelledby="howto">
+      <h2 id="howto">How to read this</h2>
+      <p>This is the plain-text, screen-reader and keyboard-friendly version of the <a href="fieldwork-entries-map.html">interactive entries page</a>. Nothing is hidden and nothing needs to be opened: every entry appears in full, in order. Use your screen reader&#x27;s heading navigation to move between parts (heading level 2) and entries (heading level 3). The only things that take keyboard focus are links.</p>
+      <p>Each entry carries a symbol on the other page. Here the symbol is described in words, and then the entry names four things:</p>
+      <dl>
+        <dt>What you make</dt><dd>The entry itself, as the post sets it out.</dd><dt>Why the series asks for it</dt><dd>What the entry does inside the method.</dd><dt>Why it matters where you are</dt><dd>What the entry can show about inclusive learning in a setting you know.</dd><dt>What it can&#x27;t yet show</dt><dd>The entry&#x27;s limit, in the post&#x27;s own words.</dd>
+      </dl>
+      <p>Three habits run through all of them. Work from documents, and only ones you are entitled to read. Hand the entry to someone else and keep what they say separate from what the documents show. Write down what the entry cannot show.</p>
+    </section>
+    <nav class="contents" aria-labelledby="contents">
+      <h2 id="contents">Contents</h2>
+      <ul>
+        <li><a href="#part-1">Part 1: What was promised, entries 1 to 6</a></li><li><a href="#part-2">Part 2: Getting in, entries 7 to 12</a></li><li><a href="#part-3">Part 3: Being measured and kept, entries 13 to 18</a></li><li><a href="#part-4">Part 4: Whether the system learned, entries 19 to 24</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="entries">
+
+    <section class="part" aria-labelledby="part-1">
+      <h2 class="part-title" id="part-1">Part 1 — What was promised</h2>
+      <p class="part-goal">Six entries about what a setting has committed to, and what reached the people it serves.</p>
+
+      <article class="entry" aria-labelledby="entry-1">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="20" height="26" rx="2"/><path d="M12 13h12M12 18h12M12 23h7"/><rect x="20" y="16" width="20" height="26" rx="2" fill="var(--bg)"/><path d="M24 23h12M24 28h12M24 33h7"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-1">Entry 1 — Two documents</h3>
+        <p class="from">From Post 1, <cite>Twenty-five Days</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> Two overlapping pages.</p>
+        <p class="facet"><span class="label">What you make.</span> One declared document and one delivered document from a setting you know, each with its date and who produced it. Then one sentence on whom the setting consulted between the two, and one on whom it did not.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> Every reading in the series starts from the same pair: what a system said and what it did. Your pair is the first line of an audit that sits beside the series’ own.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> A commitment to include is easy to find and easy to mean. The delivered document shows what reached a learner, and the time between the two dates is where a decision was made.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> One entry shows one distance. It does not show which of the three conditions failed, or why.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-2">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><circle cx="12" cy="20" r="6"/><circle cx="24" cy="20" r="6"/><circle cx="36" cy="20" r="6"/><path d="M12 26v14M24 26v14M36 26v14"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-2">Entry 2 — Three questions</h3>
+        <p class="from">From Post 2, <cite>0.0025 Percent</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> Three markers standing on one floor line.</p>
+        <p class="facet"><span class="label">What you make.</span> For each of the three questions, the dated document that answers it, or the blank where that document should be. Then one sentence on what sat within the setting’s reach to change, and what sat outside it.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> These are the three conditions the series tests in every decision: what the floor is, who decided what it covers, and whether it can move. Answering them once gives your audit its frame.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> It separates a floor that is missing from a floor that exists and was narrowed by a decision, and both from a setting with no way to notice. An entry that cannot tell reach from constraint will be read as an argument for more money, or as an excuse.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> One entry answers three questions about one setting on one date. It does not show whether the answer to the second or third question was ever different, or whether it could be.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-3">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="22" height="30" rx="2"/><path d="M13 14h12M13 20h12M13 26h6"/><circle cx="33" cy="33" r="9" fill="var(--bg)"/><path d="M28.5 33l3 3 6-6"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-3">Entry 3 — A standard and its evidence</h3>
+        <p class="from">From Post 3, <cite>The Help Number Was Not In Service</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A page with a check mark beside it.</p>
+        <p class="facet"><span class="label">What you make.</span> One standard the setting has adopted, with its date and who is named as responsible for it. Then the evidence that it has been applied, with its date and who produced it, or a note that none was found and the date you looked.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> It separates a standard adopted from a standard applied, which is the distance the third reading measures.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> An accessibility standard on paper reaches no one until somebody checks a real page, form, or course against it. The entry shows whether anyone has, and when.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show that a standard was not applied. It cannot show why, or who should have decided.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-4">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="5"/><circle cx="24" cy="14" r="5"/><circle cx="36" cy="14" r="5" stroke-dasharray="3 3"/><path d="M12 22v6M24 22v6M36 22v6" /><rect x="8" y="30" width="32" height="12" rx="2"/><path d="M13 36h22"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-4">Entry 4 — Whose account</h3>
+        <p class="from">From Post 4, <cite>Written Consent</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> Three voices above one decision, the third drawn as a dotted outline.</p>
+        <p class="facet"><span class="label">What you make.</span> One decision the setting made about who would receive what, from documents you are entitled to read. A list of every account the decision rested on, with each author’s role and date. Then one line on whether the people the decision was about are among the authors.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> The second condition asks whose knowledge shaped a decision. This entry makes the answer visible as a list.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> Decisions about learners are often made from reports written about them. The list shows whether the learner’s own account was part of the evidence, and whether the documents say why if it was not.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show which accounts a decision rested on. It cannot show whether a missing account would have changed the decision, or whether the setting had any way to receive it.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-5">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="34" height="30" rx="3"/><path d="M7 18h34M15 6v8M33 6v8"/><circle cx="31" cy="30" r="4"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-5">Entry 5 — A date</h3>
+        <p class="from">From Post 5, <cite>Three Numbers</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A calendar with one day circled.</p>
+        <p class="facet"><span class="label">What you make.</span> One commitment the setting has made in writing, with its date. Then the date on which it will be revisited and how: who reports, to whom, in what form. If it carries only a sentence, the entry says so, with the date you looked.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> The third condition asks whether a system can notice and change. A review date and a reporting line are the smallest evidence that it can.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> An accessibility plan with no review date depends on someone remembering it. A date and a named reporter make the commitment one a person can ask about.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> A commitment with a date is a mechanism for learning. This entry shows whether the mechanism exists. It cannot show whether the setting has ever used one.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-6">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="14" width="12" height="20" rx="2"/><rect x="30" y="14" width="12" height="20" rx="2"/><path d="M20 40h8M20 37v6M28 37v6" /><path d="M21 24h6" stroke-dasharray="2 3"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-6">Entry 6 — A gap statement</h3>
+        <p class="from">From Post 6, <cite>Two Tables</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> Two blocks with a measured gap between them.</p>
+        <p class="facet"><span class="label">What you make.</span> One page written from the entries so far: whether the floor exists, who decided what it covers and where, and whether any mechanism would notice that the floor was wrong. Then one line on whether the setting could measure its own progress, and from what.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> The first part of the series closes by saying what its six readings show, what that rests on, and what it cannot reach. This is the same statement at the scale of one setting.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> A page in which every sentence can be checked against a document is one another person can verify for themselves, without relying on who wrote it.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> The entries so far are about what the setting promised and whether the promise reached anyone. They say nothing about what the setting asks of people to get in.</p>
+        </div>
+      </article>
+    </section>
+    <section class="part" aria-labelledby="part-2">
+      <h2 class="part-title" id="part-2">Part 2 — Getting in</h2>
+      <p class="part-goal">Six entries about what a setting asks of people before they can enter a program, a profession, or a post.</p>
+
+      <article class="entry" aria-labelledby="entry-7">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="17" width="38" height="14" rx="2"/><path d="M11 17v6M17 17v4M23 17v6M29 17v4M35 17v6"/><path d="M24 36v6M20 42h8"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-7">Entry 7 — Where a number came from</h3>
+        <p class="from">From Post 7, <cite>Eleven Minutes</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A ruler with its markings.</p>
+        <p class="facet"><span class="label">What you make.</span> One requirement that carries a number: a score, a time, a minimum of hours, a word count, a grade. Where the number came from, who or what was measured to set it, and when. Then two lines: whether any document shows it was tested on people it was not set from, and whether any document shows it is necessary to the work.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> The second part of the series reads what systems ask of people at the door. A number looks neutral, and this entry records its history.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> Pass marks, time limits, and minimum hours decide who gets in and who gets through. Knowing whom a number was measured on is the first step toward knowing whom it fits.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show where a number came from and who it was measured on. It cannot show that the number is wrong, or what a better one would be.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-8">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12v28M42 12v28"/><path d="M6 24h36"/><path d="M6 16h36M6 32h36" stroke-dasharray="3 4"/><circle cx="24" cy="24" r="6" fill="var(--bg)"/><path d="M28.5 28.5l5 5"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-8">Entry 8 — Room to look</h3>
+        <p class="from">From Post 8, <cite>Ten Years Earlier</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A barrier with a magnifying glass over it.</p>
+        <p class="facet"><span class="label">What you make.</span> One rule that applies to a whole category of people without exception: a cutoff, a prerequisite, an automatic refusal. Who wrote it, when, and what it rests on. Then two lines: whether the setting considered assessing people individually under this rule, and whether it already does so somewhere else for a requirement of the same kind.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> It tests whether a rule has taken the place of looking at a person, which is what the eighth reading found.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> Blanket prerequisites and automatic refusals are common in admissions and in course design. Where a setting already assesses people one at a time for a similar requirement, the entry puts the two practices side by side.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show whether a rule leaves room to look at a person. It cannot show what looking would have found.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-9">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h9v-8h9v-8h9v-8h9"/><path d="M6 40v2M42 16v-6"/><circle cx="19.5" cy="26" r="1.2" fill="currentColor"/><circle cx="28.5" cy="18" r="1.2" fill="currentColor"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-9">Entry 9 — The ordinary steps</h3>
+        <p class="from">From Post 9, <cite>This Did Not Occur</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A flight of steps.</p>
+        <p class="facet"><span class="label">What you make.</span> One decision that ended or narrowed someone’s place: a dismissal, a failed placement, a required withdrawal. The steps the setting says it takes before such a decision. Then two lines: which of those steps the documents show were taken, and whether the person was part of the discussion before the decision, and where that is recorded.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> It reads a setting against its own stated process, in the setting’s own words.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> Extra time, a second attempt, added supervision, a warning: most programs list them. The entry shows whether they reached the learner before a decision was made.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show which steps were skipped. It cannot show what the person would have done with them.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-10">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8h14l18 18-14 14L8 22z"/><circle cx="16" cy="16" r="2.5"/><path d="M24 24l6 6"/><path d="M30 6h12v9h-5l-3 3v-3h-4z" fill="var(--bg)"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-10">Entry 10 — Before a cost was refused</h3>
+        <p class="from">From Post 10, <cite>Before Any Consultation</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A price tag with a speech mark above it.</p>
+        <p class="facet"><span class="label">What you make.</span> One accommodation or adjustment that was declined, deferred, or never offered because of cost. The figure, who calculated it, and what single arrangement it priced. Then two lines: whether the person was asked how else the need could be met before the decision, and whether any document shows what other funding was looked for.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> It records what was discussed before a cost was refused, which is where the tenth reading found the gap.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> A figure can close a conversation before it opens. The entry shows whether the person who needed the adjustment was asked about other ways first.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show that a conversation did not happen. It cannot show what the conversation would have decided.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-11">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="26" height="36" rx="2"/><path d="M13 14h16M13 20h16"/><path d="M13 34c3-5 5 4 8-1s4 2 7-1"/><path d="M38 12l4 4-10 12-5 1 1-5z" fill="var(--bg)"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-11">Entry 11 — Who holds the definition</h3>
+        <p class="from">From Post 11, <cite>Where Eyesight is Unnecessary</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> A form with a signature line and a pen.</p>
+        <p class="facet"><span class="label">What you make.</span> One entry requirement that depends on someone else’s sign-off: a medical form, a reference, a fitness declaration, a clearance. What the form asks the signer to certify, in its exact words. Then two lines: who decides whether a completed form is good enough and whether any document says how, and whether the setting has ever sent one back.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> It finds who holds the definition of a requirement, and whether that definition is written anywhere.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> Forms and clearances stand between people and programs. Where nothing sets out what counts as good enough, the entry records who decides in practice.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> An entry can show who holds the definition. It cannot show how they would use it.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-12">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12v24M17 12v24M24 12v24M31 12v24"/><path d="M6 32l29-16"/><path d="M40 12v24"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-12">Entry 12 — An interim tally</h3>
+        <p class="from">From Post 12, <cite>Only in the Mind of Other People</cite></p>
+        <p class="facet"><span class="label">Symbol.</span> Tally marks, four struck through and one more.</p>
+        <p class="facet"><span class="label">What you make.</span> Your entries so far, set out in order. Beside each, which of the three conditions the documents showed was least able to act. Then two lines: what the entries show when read together, in one sentence that claims no more than they hold, and one document that would count against that sentence if it existed.</p>
+        <p class="facet"><span class="label">Why the series asks for it.</span> The series keeps its own tally in the open and names what would count against it. This is the same move at the scale of one setting.</p>
+        <p class="facet"><span class="label">Why it matters where you are.</span> A pattern across several entries says more than any one of them. Naming the document that would count against it lets someone else test the pattern.</p>
+        <p class="facet"><span class="label">What it can&#x27;t yet show.</span> A tally can show where the documents point. It cannot show what the documents never recorded.</p>
+        </div>
+      </article>
+    </section>
+    <section class="part" aria-labelledby="part-3">
+      <h2 class="part-title" id="part-3">Part 3 — Being measured and kept</h2>
+      <p class="part-goal">Six entries still to come, about what a setting does when someone is already inside it. Listed as the series map describes them.</p>
+
+      <article class="entry" aria-labelledby="entry-13">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8v32M12 40h24"/><path d="M8 16h32"/><path d="M8 16l-4 12h8zM40 16l-4 12h8z"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-13">Entry 13 — A limit, tested or asserted</h3>
+        <p class="facet"><span class="label">Symbol.</span> A balance scale.</p>
+        <p class="facet"><span class="label">What you make.</span> One limit your setting has stated, and the evidence that it was tested rather than asserted.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-14">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 12v28"/><path d="M24 12c-5-4-12-4-18-2v28c6-2 13-2 18 2"/><path d="M24 12c5-4 12-4 18-2v28c-6-2-13-2-18 2"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-14">Entry 14 — Two readings</h3>
+        <p class="facet"><span class="label">Symbol.</span> An open book with two facing pages.</p>
+        <p class="facet"><span class="label">What you make.</span> One decision in your setting read two ways, and the evidence that would settle it.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-15">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="24" r="4"/><circle cx="39" cy="24" r="4"/><path d="M13 24h7M28 24h7"/><rect x="20" y="18" width="8" height="12" rx="2" stroke-dasharray="3 3"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-15">Entry 15 — The step in between</h3>
+        <p class="facet"><span class="label">Symbol.</span> Two points joined by a path with a dotted step in the middle.</p>
+        <p class="facet"><span class="label">What you make.</span> What your setting does between learning of a need and deciding about it.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-16">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><rect x="11" y="16" width="9" height="24"/><rect x="28" y="24" width="9" height="16"/><path d="M8 12h32" stroke-dasharray="3 4"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-16">Entry 16 — The comparison</h3>
+        <p class="facet"><span class="label">Symbol.</span> Two columns of different heights under one dotted line.</p>
+        <p class="facet"><span class="label">What you make.</span> One conduct or discipline rule in your setting, and who it compares people against.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-17">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="34" height="32" rx="2"/><path d="M7 18h34M7 30h34"/><circle cx="15" cy="13" r="2.5"/><circle cx="23" cy="13" r="2.5"/><circle cx="19" cy="24" r="2.5"/><circle cx="33" cy="24" r="2.5"/><circle cx="29" cy="35" r="2.5"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-17">Entry 17 — What a number can count</h3>
+        <p class="facet"><span class="label">Symbol.</span> An abacus.</p>
+        <p class="facet"><span class="label">What you make.</span> One number your setting reports, what it was collected for, and what it cannot count.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-18">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14h13l4 4h19v20H6z"/><path d="M14 28h20"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-18">Entry 18 — A category and its evidence</h3>
+        <p class="facet"><span class="label">Symbol.</span> A labelled folder.</p>
+        <p class="facet"><span class="label">What you make.</span> One category your setting uses, and the evidence behind it.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+    </section>
+    <section class="part" aria-labelledby="part-4">
+      <h2 class="part-title" id="part-4">Part 4 — Whether the system learned</h2>
+      <p class="part-goal">Six entries still to come, about remedies, consent, and who sits on the bodies that decide. Listed as the series map describes them.</p>
+
+      <article class="entry" aria-labelledby="entry-19">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="3"/><path d="M15 25l6 6 12-13"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-19">Entry 19 — Consent, written and dated</h3>
+        <p class="facet"><span class="label">Symbol.</span> A ticked box.</p>
+        <p class="facet"><span class="label">What you make.</span> Your setting’s consent position, written and dated.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-20">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="26" rx="12" ry="7"/><circle cx="10" cy="14" r="3.5"/><circle cx="24" cy="10" r="3.5"/><circle cx="38" cy="14" r="3.5"/><circle cx="24" cy="41" r="3.5" stroke-dasharray="2.5 2.5"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-20">Entry 20 — Who sits at the table</h3>
+        <p class="facet"><span class="label">Symbol.</span> A table with three seats taken and one drawn as a dotted outline.</p>
+        <p class="facet"><span class="label">What you make.</span> Who sits on the bodies that decide in your setting, and what would be needed for others to.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-21">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="26" r="15"/><path d="M24 17v9l6 4"/><path d="M18 6h12"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-21">Entry 21 — A required change and its date</h3>
+        <p class="facet"><span class="label">Symbol.</span> A clock.</p>
+        <p class="facet"><span class="label">What you make.</span> One change your setting has been required to make, and its date.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-22">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="30" height="34" rx="2"/><rect x="18" y="5" width="12" height="7" rx="2" fill="var(--bg)"/><path d="M15 20l2 2 4-4M25 20h9M15 29l2 2 4-4M25 29h9M15 37h4M25 37h9"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-22">Entry 22 — A compliance record</h3>
+        <p class="facet"><span class="label">Symbol.</span> A clipboard checklist.</p>
+        <p class="facet"><span class="label">What you make.</span> The compliance record for one change in your setting.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-23">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h30M30 12l6 6-6 6"/><path d="M42 32H12M18 26l-6 6 6 6"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-23">Entry 23 — The counter-evidence</h3>
+        <p class="facet"><span class="label">Symbol.</span> Two arrows pointing in opposite directions.</p>
+        <p class="facet"><span class="label">What you make.</span> The counter-evidence to your own running finding.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+      <article class="entry" aria-labelledby="entry-24">
+        <div class="tile"><svg class="sym" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="26" height="34" rx="2"/><path d="M8 12v30h26"/><path d="M18 15h14M18 21h14M18 27h9"/></svg></div>
+        <div class="body">
+          <h3 class="post-title" id="entry-24">Entry 24 — The audit, complete</h3>
+        <p class="facet"><span class="label">Symbol.</span> A stack of finished pages.</p>
+        <p class="facet"><span class="label">What you make.</span> Your audit, complete: twenty-three entries from your setting beside the series’ twenty-three from the record.</p>
+        <p class="facet"><span class="label">Why it matters.</span> Set out in full when the post publishes.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>See also the <a href="fieldwork-entries-map.html">interactive version of this page</a>, the <a href="fieldwork-series-map.html">series map</a>, and the series map&#x27;s <a href="fieldwork-series-map-linear.html">linear version</a>.</p>
+    <p>Fieldwork is published by Accessible Learning Labs · <a href="https://www.accessiblelearninglabs.com">accessiblelearninglabs.com</a></p>
+  </footer>
+</div>
+</body>
+</html>
